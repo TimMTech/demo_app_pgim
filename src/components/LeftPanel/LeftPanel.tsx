@@ -1,8 +1,15 @@
+import Navigation from "./Navigation"
 import TemplateSelection from "./Templates/TemplateSelection"
 
-const LeftPanel:React.FC = () => {
+interface LeftPanelProps {
+    step : number;
+    handleNextStep: () => void;
+    handlePreviousStep: () => void;
+}
+
+const LeftPanel:React.FC<LeftPanelProps> = ({step, handleNextStep, handlePreviousStep}) => {
     return (
-        <div className="w-screen h-screen bg-red-500">
+        <div className="w-full h-full">
             <TemplateSelection />
         </div>
     )

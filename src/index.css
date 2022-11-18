@@ -6,14 +6,25 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  
 }
 
-.mce-tinymce,.mce-stack-layout, .mce-edit-area{
-  display: flex!important;
-  flex-direction: column;
-  flex: 1;
-  align-items:stretch;
+body {
+  background: rgb(93, 84, 240);
+  background: linear-gradient(
+    120deg,
+    rgba(93, 84, 240, 1) 0%,
+    rgba(152, 152, 255, 1) 28%,
+    rgba(30, 141, 168, 1) 100%,
+    rgba(0, 212, 255, 1) 100%
+  );
+ 
+  
 }
-.mce-tinymce iframe{
-  flex: 1;
+
+.tox-tinymce {
+  height: 100% !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
 }
