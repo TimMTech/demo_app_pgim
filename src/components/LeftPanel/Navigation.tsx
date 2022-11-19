@@ -7,7 +7,7 @@ interface NavigationProps {
 
 const Navigation: React.FC<NavigationProps> = ({step, handleNextStep, handlePreviousStep}) => {
   return (
-    <nav className="">
+    <nav className="absolute top-[-10%] left-0 right-0 text-lg flex gap-4 items-center justify-center">
       <button
         onClick={handlePreviousStep}
         disabled={step === 1}
