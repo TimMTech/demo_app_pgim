@@ -1,27 +1,33 @@
+import { BsArrowRightCircleFill, BsArrowLeftCircleFill } from "react-icons/bs";
+
 interface NavigationProps {
-    step: number;
-    handleNextStep: () => void;
-    handlePreviousStep: () => void;
+  step: number;
+  handleNextStep: () => void;
+  handlePreviousStep: () => void;
 }
 
-
-const Navigation: React.FC<NavigationProps> = ({step, handleNextStep, handlePreviousStep}) => {
+const Navigation: React.FC<NavigationProps> = ({
+  step,
+  handleNextStep,
+  handlePreviousStep,
+}) => {
   return (
-    <nav className="absolute top-[-10%] left-0 right-0 text-lg flex gap-4 items-center justify-center">
-      <button
+    <nav
+      className={`${
+        step === 2 && "hidden"
+      } absolute top-[-12%] left-0 right-0 text-lg flex gap-4 items-center justify-center`}
+    >
+      <BsArrowLeftCircleFill
         onClick={handlePreviousStep}
-        disabled={step === 1}
         className={`${step === 1 && "opacity-20"}`}
-      >
-        Back
-      </button>
-      <button
+        size={25}
+      />
+
+      <BsArrowRightCircleFill
         onClick={handleNextStep}
-        disabled={step === 4}
         className={`${step === 4 && "opacity-20"}`}
-      >
-        Next
-      </button>
+        size={25}
+      />
     </nav>
   );
 };

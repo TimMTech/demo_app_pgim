@@ -1,5 +1,8 @@
 import TemplateSelection from "./Template/TemplateSelection";
 import { MouseEvent } from "react";
+import TemplateOne from "./Template/Templates/TemplateOne";
+import TemplateTwo from "./Template/Templates/TemplateTwo";
+import className from 'classnames'
 
 interface LeftPanelProps {
   step: number;
@@ -17,14 +20,34 @@ const LeftPanel: React.FC<LeftPanelProps> = ({
   handleSelectedTemplate,
 }) => {
   return (
-    <div className="w-full h-full p-4">
-      <TemplateSelection
-        step={step}
-        handleNextStep={handleNextStep}
-        handlePreviousStep={handlePreviousStep}
-        selectedTemplate={selectedTemplate}
-        handleSelectedTemplate={handleSelectedTemplate}
-      />
+    <div className="w-full h-full ">
+      {step === 1 && (
+        <TemplateSelection
+          step={step}
+          handleNextStep={handleNextStep}
+          handlePreviousStep={handlePreviousStep}
+          selectedTemplate={selectedTemplate}
+          handleSelectedTemplate={handleSelectedTemplate}
+        />
+      )}
+      {step === 2 && selectedTemplate.template_1 && (
+        <TemplateOne
+          step={step}
+          handleNextStep={handleNextStep}
+          handlePreviousStep={handlePreviousStep}
+          selectedTemplate={selectedTemplate}
+          handleSelectedTemplate={handleSelectedTemplate}
+        />
+      )}
+      {step === 2 && selectedTemplate.template_2 && (
+        <TemplateTwo
+          step={step}
+          handleNextStep={handleNextStep}
+          handlePreviousStep={handlePreviousStep}
+          selectedTemplate={selectedTemplate}
+          handleSelectedTemplate={handleSelectedTemplate}
+        />
+      )}
     </div>
   );
 };

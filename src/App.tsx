@@ -1,5 +1,6 @@
 import LeftPanel from "./components/LeftPanel/LeftPanel";
 import RightPanel from "./components/RightPanel/RightPanel";
+import Navbar from "./components/Navbar";
 import { useState, MouseEvent } from "react";
 
 interface AppStateProps {
@@ -29,7 +30,7 @@ const App: React.FC<AppStateProps> = () => {
         template_1: false,
       });
   };
-console.log(selectedTemplate)
+
   const handleNextStep = () => {
     setStep((prevState) => prevState + 1);
   };
@@ -39,15 +40,18 @@ console.log(selectedTemplate)
   };
 
   return (
-    <div className="lg:flex-row lg:items-center lg:justify-center lg:h-screen h-screen w-screen flex flex-col gap-4">
-      <LeftPanel
-        step={step}
-        selectedTemplate={selectedTemplate}
-        handleNextStep={handleNextStep}
-        handlePreviousStep={handlePreviousStep}
-        handleSelectedTemplate={handleSelectedTemplate}
-      />
-      <RightPanel />
+    <div className="flex flex-col h-screen w-screen">
+      <Navbar />
+      <div className="lg:flex-row flex flex-col h-full w-full">
+        <LeftPanel
+          step={step}
+          selectedTemplate={selectedTemplate}
+          handleNextStep={handleNextStep}
+          handlePreviousStep={handlePreviousStep}
+          handleSelectedTemplate={handleSelectedTemplate}
+        />
+        <RightPanel />
+      </div>
     </div>
   );
 };

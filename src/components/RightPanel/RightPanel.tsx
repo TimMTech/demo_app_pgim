@@ -2,7 +2,7 @@ import TemplateCatalog from "./Catalog/TemplateCatalog"
 
 const RightPanel:React.FC = () => {
     return (
-        <div className="w-full h-full p-4">
+        <div className="lg:min-w-[200px] lg:max-w-[500px] w-full h-full bg-white ">
             <TemplateCatalog />
         </div>
     )

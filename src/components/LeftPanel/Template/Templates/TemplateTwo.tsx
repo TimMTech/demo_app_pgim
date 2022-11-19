@@ -1,6 +1,7 @@
 import { Editor } from "@tinymce/tinymce-react";
 import { MouseEvent } from "react";
 import Navigation from "../../Navigation";
+import classNames from "classnames";
 
 interface TemplateTwoProps {
   step: number;
@@ -21,11 +22,13 @@ const TemplateTwo: React.FC<TemplateTwoProps> = ({
     <div
       onClick={handleSelectedTemplate}
       id="template_2"
-      className={`${
-        selectedTemplate.template_2 && "border-[5px] border-red-500"
-      } lg:w-[28vw] lg:h-[42vw] relative w-[250px] h-[400px] border border-black bg-white flex flex-col`}
+      className={classNames("bg-white flex flex-col relative", {
+        "border-[5px] border-red-500": selectedTemplate.template_2,
+        "lg:w-[18vw] lg:h-[25vw] w-[250px] h-[400px]": step === 1,
+        "w-full h-full border-r-[2px] border-l-[2px] border-t-0 border-b-0 border-blue-500 ": step === 2,
+      })}
     >
-      <header className="w-full text-center border-b border-dotted border-black h-[250px]">
+      <header className="h-full border-b border-dotted border-black ">
         <Editor
           apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
           id="header-id-template-2"
@@ -83,7 +86,7 @@ const TemplateTwo: React.FC<TemplateTwoProps> = ({
           </div>
         </div>
       </section>
-      <footer className="w-full  text-center border-t border-dotted border-black h-[250px]">
+      <footer className="h-full border-t border-dotted border-black">
         <Editor
           apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
           id="footer-id-template-2"

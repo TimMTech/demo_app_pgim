@@ -9,20 +9,15 @@
   
 }
 
-body {
-  background: rgb(93, 84, 240);
-  background: linear-gradient(
-    120deg,
-    rgba(93, 84, 240, 1) 0%,
-    rgba(152, 152, 255, 1) 28%,
-    rgba(30, 141, 168, 1) 100%,
-    rgba(0, 212, 255, 1) 100%
-  );
- 
+
+
+html, body {
+  background-color: rgba(128, 128, 128, 0.3);
   
 }
 
 .tox-tinymce {
+
   height: 100% !important;
   border-radius: 0 !important;
   box-shadow: none !important;
