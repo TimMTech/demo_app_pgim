@@ -18,7 +18,7 @@ const TemplateSelection: React.FC<TemplateSelectionProps> = ({
   handlePreviousStep,
 }) => {
   return (
-    <div className="lg:flex-row w-full h-full flex gap-3 items-center justify-center">
+    <div className="lg:flex-row w-full h-full flex gap-3 items-center justify-center py-24">
       
       <TemplateOne
         step={step}

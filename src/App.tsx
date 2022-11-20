@@ -1,7 +1,9 @@
 import LeftPanel from "./components/LeftPanel/LeftPanel";
 import RightPanel from "./components/RightPanel/RightPanel";
 import Navbar from "./components/Navbar";
-import { useState, MouseEvent } from "react";
+import LeftMenu from "./components/LeftMenu";
+import { useState, MouseEvent, useEffect } from "react";
+import ScreenWarning from "./components/ScreenWarning";
 
 interface AppStateProps {
   [key: string]: boolean;
@@ -10,10 +12,20 @@ interface AppStateProps {
 const App: React.FC<AppStateProps> = () => {
   const [step, setStep] = useState(1);
 
+  const [resizeWarning, setResizeWarning] = useState(false);
+
   const [selectedTemplate, setSelectedTemplate] = useState({
     template_1: false,
     template_2: false,
   });
+
+  const handleDesignWidth = () => {
+    if (window.innerWidth < 1450 && window.innerWidth > 1022) {
+      setResizeWarning(true);
+    } else  {
+      setResizeWarning(false);
+    }
+  };
 
   const handleSelectedTemplate = (e: MouseEvent<HTMLDivElement>) => {
     const { id } = e.currentTarget;
@@ -39,10 +51,19 @@ const App: React.FC<AppStateProps> = () => {
     setStep((prevState) => prevState - 1);
   };
 
+  useEffect(() => {
+    window.addEventListener("resize", handleDesignWidth);
+    return () => {
+      window.removeEventListener("resize", handleDesignWidth);
+    };
+  }, []);
+
   return (
     <div className="flex flex-col h-screen w-screen">
+      <ScreenWarning resizeWarning={resizeWarning} step={step} />
       <Navbar />
       <div className="lg:flex-row flex flex-col h-full w-full">
+        <LeftMenu />
         <LeftPanel
           step={step}
           selectedTemplate={selectedTemplate}
