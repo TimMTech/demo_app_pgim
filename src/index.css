@@ -6,22 +6,28 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  
 }
 
-
-
-html, body {
+html,
+body {
   background-color: rgba(128, 128, 128, 0.3);
   width: 100%;
-  
+
   overflow-x: hidden;
 }
 
 .tox-tinymce {
-
   height: 100% !important;
   border-radius: 0 !important;
   box-shadow: none !important;
   border: none !important;
 }
+
+.tox-editor-header {
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+
+}
+
+

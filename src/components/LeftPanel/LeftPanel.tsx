@@ -19,7 +19,7 @@ const LeftPanel: React.FC<LeftPanelProps> = ({
   handleSelectedTemplate,
 }) => {
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full ">
       {step === 1 && (
         <TemplateSelection
           step={step}

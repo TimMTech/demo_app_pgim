@@ -71,7 +71,7 @@ const App: React.FC<AppStateProps> = () => {
           handlePreviousStep={handlePreviousStep}
           handleSelectedTemplate={handleSelectedTemplate}
         />
-        <RightPanel />
+        <RightPanel step={step}/>
       </div>
     </div>
   );

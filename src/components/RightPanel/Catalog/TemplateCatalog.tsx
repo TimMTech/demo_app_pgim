@@ -13,7 +13,7 @@ import {
 
 const TemplateCatalog: React.FC = () => {
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full w-full flex flex-col">
       
       <div className="h-full w-full">
         <div className="flex w-full  ">

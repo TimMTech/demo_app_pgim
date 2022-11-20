@@ -10,7 +10,7 @@ import { MdOutlineContactSupport } from "react-icons/md";
 
 const LeftMenu: React.FC = () => {
   return (
-    <div className="lg:w-[300px] lg:h-full bg-blue-800/70 min-w-[200px] h-[400px] w-full">
+    <div className="lg:w-[300px] lg:h-full bg-blue-800/70 min-w-[200px] h-[400px] w-full border-r-2 border-white/10">
       <div className="lg:flex-col flex flex-row flex-wrap items-start text-white justify-center gap-8 p-4 font-prompt font-bold">
         <div className="flex items-center justify-center gap-2">
             <AiOutlineHome size={50}/>
@@ -23,10 +23,6 @@ const LeftMenu: React.FC = () => {
         <div className="flex items-center justify-center gap-2">
             <AiOutlineSearch size={50}/>
             <span>Search</span>
-        </div>
-        <div className="flex items-center justify-center gap-2">
-            <AiOutlineRobot size={50}/>
-            <span>Automation</span>
         </div>
         <div className="flex items-center justify-center gap-2">
             <AiOutlineFileImage size={50}/>
