@@ -1,11 +1,66 @@
-const MediaUpload: React.FC = () => {
+import { IKContext, IKUpload } from "imagekitio-react";
+import IKMedia from "./IKMedia";
+
+interface MediaUploadProps {
+  imageFilePath: object[];
+  videoFilePath: object[];
+  handleImageOnSuccess: (response: any) => void;
+  handleImageOnError: (response: any) => void;
+  handleVideoOnSuccess: (response: any) => void;
+  handleVideoOnError: (response: any) => void;
+}
+
+const MediaUpload: React.FC<MediaUploadProps> = ({
+  imageFilePath,
+  videoFilePath,
+  handleImageOnSuccess,
+  handleImageOnError,
+  handleVideoOnSuccess,
+  handleVideoOnError,
+}) => {
   return (
     <div className="h-full w-full flex flex-col">
-      <div className="h-full w-full ">
-        <div className="flex items-center justify-evenly p-6 font-prompt text-white border-b">
-          <button className="border px-6 py-3 rounded-lg bg-indigo-400">Upload Images</button>
-          <button className="border px-6 py-3 rounded-lg bg-indigo-400">Upload Videos</button>
-        </div>
+      <div className="h-full w-full">
+        <IKContext
+          urlEndpoint={process.env.REACT_APP_IMAGEKIT_URLENDPOINT}
+          publicKey={process.env.REACT_APP_IMAGEKIT_PUBLICKEY}
+          authenticationEndpoint={
+            process.env.REACT_APP_IMAGEKIT_AUTHENTICATION_ENDPOINT
+          }
+        >
+          <div className="flex items-center justify-evenly p-6 font-prompt text-white border-b gap-2">
+            <IKUpload
+              hidden
+              id="image-upload"
+              multiple
+              onSuccess={handleImageOnSuccess}
+              onError={handleImageOnError}
+            />
+            <label
+              htmlFor="image-upload"
+              className="text-center w-full border px-6 py-3 rounded-lg bg-indigo-400"
+            >
+              Upload Images
+            </label>
+            <IKUpload
+              hidden
+              id="video-upload"
+              multiple
+              onSuccess={handleVideoOnSuccess}
+              onError={handleVideoOnError}
+            />
+            <label
+              htmlFor="video-upload"
+              className="text-center w-full border px-6 py-3 rounded-lg bg-indigo-400"
+            >
+              Upload Videos
+            </label>
+          </div>
+          <IKMedia
+            imageFilePath={imageFilePath}
+            videoFilePath={videoFilePath}
+          />
+        </IKContext>
       </div>
     </div>
   );

@@ -19,10 +19,13 @@ const App: React.FC<AppStateProps> = () => {
     template_2: false,
   });
 
+  const [imageFilePath, setImageFilePath] = useState<object[]>([]);
+  const [videoFilePath, setVideoFilePath] = useState<object[]>([])
+
   const handleDesignWidth = () => {
     if (window.innerWidth < 1450 && window.innerWidth > 1022) {
       setResizeWarning(true);
-    } else  {
+    } else {
       setResizeWarning(false);
     }
   };
@@ -42,6 +45,7 @@ const App: React.FC<AppStateProps> = () => {
         template_1: false,
       });
   };
+  
 
   const handleNextStep = () => {
     setStep((prevState) => prevState + 1);
@@ -51,13 +55,30 @@ const App: React.FC<AppStateProps> = () => {
     setStep((prevState) => prevState - 1);
   };
 
+  const handleImageOnSuccess = (response: any) => {
+    setImageFilePath((prevState) => [...prevState, response]);
+  };
+
+  const handleImageOnError = (response: any) => {
+    console.log("error", response);
+  };
+
+  const handleVideoOnSuccess = (response: any) => {
+    setVideoFilePath((prevState) => [...prevState, response]);
+  };
+
+  const handleVideoOnError = (response: any) => {
+    console.log("error", response);
+  };
+
   useEffect(() => {
     window.addEventListener("resize", handleDesignWidth);
     return () => {
       window.removeEventListener("resize", handleDesignWidth);
     };
   }, []);
-
+console.log(videoFilePath)
+console.log(imageFilePath)
   return (
     <div className="flex flex-col h-screen w-screen">
       <ScreenWarning resizeWarning={resizeWarning} step={step} />
@@ -71,7 +92,15 @@ const App: React.FC<AppStateProps> = () => {
           handlePreviousStep={handlePreviousStep}
           handleSelectedTemplate={handleSelectedTemplate}
         />
-        <RightPanel step={step}/>
+        <RightPanel
+          step={step}
+          imageFilePath={imageFilePath}
+          videoFilePath={videoFilePath}
+          handleImageOnSuccess={handleImageOnSuccess}
+          handleImageOnError={handleImageOnError}
+          handleVideoOnSuccess={handleVideoOnSuccess}
+          handleVideoOnError={handleVideoOnError}
+        />
       </div>
     </div>
   );

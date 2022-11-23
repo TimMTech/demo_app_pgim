@@ -29,7 +29,7 @@ const TemplateOne: React.FC<TemplateOneProps> = ({
           step === 2,
       })}
     >
-      <header className="relative h-full border-b-2 border-dotted h-[200px] mceNonEditable">
+      <header className="relative h-full border-b-2 border-dotted h-[200px]">
         <Editor
           apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
           id="header-id-template-1"
