@@ -25,7 +25,14 @@ body {
   border: none !important;
   box-shadow: none !important;
   padding: 0 !important;
+}
 
+@layer utilities {
+  .square {
+    width: 50%;
+    padding-bottom: 50%;
+    background-color: teal;
+  }
 }
 
 

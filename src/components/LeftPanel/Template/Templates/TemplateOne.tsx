@@ -7,16 +7,12 @@ interface TemplateOneProps {
   step: number;
   selectedTemplate: { [key: string]: boolean };
   handleSelectedTemplate: (e: MouseEvent<HTMLDivElement>) => void;
-  handleNextStep: () => void;
-  handlePreviousStep: () => void;
 }
 
 const TemplateOne: React.FC<TemplateOneProps> = ({
   step,
   selectedTemplate,
   handleSelectedTemplate,
-  handleNextStep,
-  handlePreviousStep,
 }) => {
   return (
     <div
@@ -26,7 +22,7 @@ const TemplateOne: React.FC<TemplateOneProps> = ({
         "border-[5px] border-red-500": selectedTemplate.template_1,
         "lg:w-[18vw] lg:h-[25vw] w-[200px] h-[300px]": step === 1,
         "lg:border-r-[2px] lg:border-l-[2px]  w-full h-full  border-0 border-blue-500":
-          step === 2,
+          step >= 2,
       })}
     >
       <header className="relative h-full border-b-2 border-dotted h-[200px]">
@@ -143,13 +139,6 @@ const TemplateOne: React.FC<TemplateOneProps> = ({
           FOOTER
         </span>
       </footer>
-      {selectedTemplate.template_1 && (
-        <Navigation
-          step={step}
-          handleNextStep={handleNextStep}
-          handlePreviousStep={handlePreviousStep}
-        />
-      )}
     </div>
   );
 };

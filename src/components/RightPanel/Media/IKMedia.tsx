@@ -17,7 +17,7 @@ const IKMedia: React.FC<IKMediaProps> = ({ imageFilePath, videoFilePath }) => {
         {imageFilePath.map((image: any, index: number) => {
           const { fileId, filePath, fileType, size, thumbnailUrl, url } = image;
           return (
-            <div key={index}>
+            <div key={index} className="flex flex-col">
               <IKImage src={url} draggable />
               <div className="flex">
                 <IKImage src={thumbnailUrl} draggable />
@@ -27,7 +27,7 @@ const IKMedia: React.FC<IKMediaProps> = ({ imageFilePath, videoFilePath }) => {
           );
         })}
       </div>
-      <div className="flex-1 max-h-[600px]  overflow-y-auto ">
+      <div className="flex-1 max-h-[600px] overflow-y-auto">
         {videoFilePath.length !== 0 && (
           <h2 className="text-center font-prompt font-semibold text-lg p-3">
             Videos

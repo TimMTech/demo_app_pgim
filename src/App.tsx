@@ -5,6 +5,8 @@ import LeftMenu from "./components/LeftMenu";
 import { useState, MouseEvent, useEffect } from "react";
 import ScreenWarning from "./components/ScreenWarning";
 
+import { Predictions } from "@aws-amplify/predictions";
+
 interface AppStateProps {
   [key: string]: boolean;
 }
@@ -12,15 +14,18 @@ interface AppStateProps {
 const App: React.FC<AppStateProps> = () => {
   const [step, setStep] = useState(1);
 
-  const [resizeWarning, setResizeWarning] = useState(false);
+  const [resizeWarning, setResizeWarning] = useState<boolean>(false);
 
   const [selectedTemplate, setSelectedTemplate] = useState({
     template_1: false,
     template_2: false,
   });
 
+  const [selectedLanguages, setSelectedLanguages] = useState<[]>([]);
+  const [activeLanguage, setActiveLanguage] = useState<string>("");
+
   const [imageFilePath, setImageFilePath] = useState<object[]>([]);
-  const [videoFilePath, setVideoFilePath] = useState<object[]>([])
+  const [videoFilePath, setVideoFilePath] = useState<object[]>([]);
 
   const handleDesignWidth = () => {
     if (window.innerWidth < 1450 && window.innerWidth > 1022) {
@@ -45,7 +50,26 @@ const App: React.FC<AppStateProps> = () => {
         template_1: false,
       });
   };
-  
+
+  const handleTranslate = async (language: string) => {
+    setActiveLanguage(language);
+    Predictions.convert({
+      translateText: {
+        source: {
+          text: "Hello World",
+        },
+        targetLanguage: language,
+      },
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const handleMultiSelect = (value: any) => {
+    setSelectedLanguages(value);
+  };
 
   const handleNextStep = () => {
     setStep((prevState) => prevState + 1);
@@ -55,7 +79,7 @@ const App: React.FC<AppStateProps> = () => {
     setStep((prevState) => prevState - 1);
   };
 
-  const handleImageOnSuccess = (response: any) => {
+  const handleImageOnSuccess = async (response: any) => {
     setImageFilePath((prevState) => [...prevState, response]);
   };
 
@@ -73,28 +97,36 @@ const App: React.FC<AppStateProps> = () => {
 
   useEffect(() => {
     window.addEventListener("resize", handleDesignWidth);
+    window.addEventListener("load", handleDesignWidth);
     return () => {
-      window.removeEventListener("resize", handleDesignWidth);
+      window.removeEventListener("resize load", handleDesignWidth);
     };
   }, []);
 
   return (
     <div className="w-full h-full flex flex-col">
       <ScreenWarning resizeWarning={resizeWarning} step={step} />
-      <Navbar />
-      <div className="lg:flex-row  flex flex-col ">
+      <Navbar
+        step={step}
+        selectedTemplate={selectedTemplate}
+        handleNextStep={handleNextStep}
+        handlePreviousStep={handlePreviousStep}
+      />
+      <div className="lg:flex-row flex flex-col ">
         <LeftMenu />
         <LeftPanel
           step={step}
           selectedTemplate={selectedTemplate}
-          handleNextStep={handleNextStep}
-          handlePreviousStep={handlePreviousStep}
           handleSelectedTemplate={handleSelectedTemplate}
         />
         <RightPanel
           step={step}
           imageFilePath={imageFilePath}
           videoFilePath={videoFilePath}
+          selectedLanguages={selectedLanguages}
+          activeLanguage={activeLanguage}
+          handleTranslate={handleTranslate}
+          handleMultiSelect={handleMultiSelect}
           handleImageOnSuccess={handleImageOnSuccess}
           handleImageOnError={handleImageOnError}
           handleVideoOnSuccess={handleVideoOnSuccess}

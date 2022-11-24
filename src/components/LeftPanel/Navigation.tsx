@@ -1,31 +1,43 @@
 import { BsArrowRightCircleFill, BsArrowLeftCircleFill } from "react-icons/bs";
+import classNames from "classnames";
 
 interface NavigationProps {
   step: number;
+  selectedTemplate: { [key: string]: boolean };
   handleNextStep: () => void;
   handlePreviousStep: () => void;
 }
 
 const Navigation: React.FC<NavigationProps> = ({
   step,
+  selectedTemplate,
   handleNextStep,
   handlePreviousStep,
 }) => {
   return (
-    <nav
-      className={`${
-        step === 2 && "hidden"
-      } absolute top-[-12%] left-0 right-0 text-lg flex gap-4 items-center justify-center`}
-    >
+    <nav className="flex-2 w-full flex items-center justify-center gap-2">
       <BsArrowLeftCircleFill
         onClick={handlePreviousStep}
-        className={`${step === 1 && "opacity-20"}`}
+        className={classNames({
+          hidden: step === 1,
+        })}
         size={25}
       />
-
+      <p>
+        {step === 1 && "Select A Template"}
+        {step === 2 && "Create Your Content"}
+        {step === 3 && "Choose Translation Language"}
+        {step === 4 && "Final Preview"}
+      </p>
       <BsArrowRightCircleFill
         onClick={handleNextStep}
-        className={`${step === 4 && "opacity-20"}`}
+        className={classNames({
+          hidden: step === 4,
+          "pointer-events-none opacity-20":
+            !selectedTemplate.template_1 &&
+            !selectedTemplate.template_2 &&
+            step === 1,
+        })}
         size={25}
       />
     </nav>
