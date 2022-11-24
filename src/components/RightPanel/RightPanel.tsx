@@ -21,7 +21,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
   handleVideoOnError
 }) => {
   return (
-    <div className="lg:min-w-[200px] lg:max-w-[500px] w-full h-full bg-white border-l-2 border-black/10">
+    <div className="lg:min-h-screen lg:max-w-[400px] w-full h-full bg-white border-l-2 border-black/10">
       {step === 1 && <TemplateCatalog />}
       {step === 2 && (
         <MediaUpload

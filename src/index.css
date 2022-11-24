@@ -11,9 +11,7 @@
 html,
 body {
   background-color: rgba(128, 128, 128, 0.3);
-  width: 100%;
-
-  overflow-x: hidden;
+  min-height: 100vh !important;
 }
 
 .tox-tinymce {

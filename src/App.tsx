@@ -77,13 +77,12 @@ const App: React.FC<AppStateProps> = () => {
       window.removeEventListener("resize", handleDesignWidth);
     };
   }, []);
-console.log(videoFilePath)
-console.log(imageFilePath)
+
   return (
-    <div className="flex flex-col h-screen w-screen">
+    <div className="w-full h-full flex flex-col">
       <ScreenWarning resizeWarning={resizeWarning} step={step} />
       <Navbar />
-      <div className="lg:flex-row flex flex-col h-full w-full">
+      <div className="lg:flex-row  flex flex-col ">
         <LeftMenu />
         <LeftPanel
           step={step}

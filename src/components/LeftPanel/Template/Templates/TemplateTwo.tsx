@@ -25,7 +25,7 @@ const TemplateTwo: React.FC<TemplateTwoProps> = ({
       className={classNames("bg-white flex flex-col relative", {
         "border-[5px] border-red-500": selectedTemplate.template_2,
         "lg:w-[18vw] lg:h-[25vw] w-[200px] h-[300px]": step === 1,
-        "w-full h-full border-r-[2px] border-l-[2px] border-t-0 border-b-0 border-blue-500 ":
+        "lg:border-r-[2px] lg:border-l-[2px]  w-full h-full border-0 border-blue-500 ":
           step === 2,
       })}
     >

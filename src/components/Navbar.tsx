@@ -2,7 +2,7 @@ import { FcDocument } from "react-icons/fc";
 
 const Navbar: React.FC = () => {
   return (
-    <nav className="w-full h-[85px] bg-white text-black font-prompt flex items-center px-20 border-b-2 border-black/10">
+    <nav className="w-full  bg-white text-black font-prompt flex items-center px-20 border-b-2 border-black/10">
       <FcDocument size={75}/>
       
       <div className="flex items-center w-full justify-end  gap-4">
