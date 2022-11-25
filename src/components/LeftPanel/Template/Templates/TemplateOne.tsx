@@ -1,18 +1,22 @@
 import { Editor } from "@tinymce/tinymce-react";
 import { MouseEvent } from "react";
-import Navigation from "../../Navigation";
+
 import classNames from "classnames";
 
 interface TemplateOneProps {
   step: number;
   selectedTemplate: { [key: string]: boolean };
+  editorContent: { [key: string]: string };
   handleSelectedTemplate: (e: MouseEvent<HTMLDivElement>) => void;
+  handleEditorChange: (e: any, editor: any) => void;
 }
 
 const TemplateOne: React.FC<TemplateOneProps> = ({
   step,
   selectedTemplate,
+  editorContent,
   handleSelectedTemplate,
+  handleEditorChange,
 }) => {
   return (
     <div
@@ -27,8 +31,10 @@ const TemplateOne: React.FC<TemplateOneProps> = ({
     >
       <header className="relative h-full border-b-2 border-dotted h-[200px]">
         <Editor
+          value={editorContent.header}
+          onEditorChange={handleEditorChange}
           apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
-          id="header-id-template-1"
+          id="header"
           disabled={step <= 1}
           init={{
             height: "100%",
@@ -56,8 +62,10 @@ const TemplateOne: React.FC<TemplateOneProps> = ({
           </div>
           <article className="relative flex-1 text-center">
             <Editor
+              value={editorContent.article_1}
+              onEditorChange={handleEditorChange}
               apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
-              id="article-id-1-template-1"
+              id="article_1"
               disabled={step <= 1}
               init={{
                 height: "100%",
@@ -85,8 +93,10 @@ const TemplateOne: React.FC<TemplateOneProps> = ({
         <div className="flex flex-col w-full h-full">
           <article className="relative flex-1 text-center">
             <Editor
+              value={editorContent.article_2}
+              onEditorChange={handleEditorChange}
               apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
-              id="article-id-2-template-1"
+              id="article_2"
               disabled={step <= 1}
               init={{
                 height: "100%",
@@ -117,8 +127,10 @@ const TemplateOne: React.FC<TemplateOneProps> = ({
       </section>
       <footer className="relative h-full border-t-2 border-dotted h-[200px]">
         <Editor
+          value={editorContent.footer}
+          onEditorChange={handleEditorChange}
           apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
-          id="footer-id-template-1"
+          id="footer"
           disabled={step <= 1}
           init={{
             height: "100%",

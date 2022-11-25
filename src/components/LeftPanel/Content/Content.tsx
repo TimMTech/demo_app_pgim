@@ -5,13 +5,16 @@ import TemplateTwo from "../Template/Templates/TemplateTwo";
 interface ContentProps {
   step: number;
   selectedTemplate: { [key: string]: boolean };
+  editorContent: { [key: string]: string };
   handleSelectedTemplate: (e: MouseEvent<HTMLDivElement>) => void;
+  handleEditorChange: (e: any, editor: any) => void;
 }
 
 const Content: React.FC<ContentProps> = ({
   step,
   selectedTemplate,
-
+  editorContent,
+  handleEditorChange,
   handleSelectedTemplate,
 }) => {
   return (
@@ -20,14 +23,18 @@ const Content: React.FC<ContentProps> = ({
         <TemplateOne
           step={step}
           selectedTemplate={selectedTemplate}
+          editorContent={editorContent}
           handleSelectedTemplate={handleSelectedTemplate}
+          handleEditorChange={handleEditorChange}
         />
       )}
       {step >= 2 && selectedTemplate.template_2 && (
         <TemplateTwo
           step={step}
           selectedTemplate={selectedTemplate}
+          editorContent={editorContent}
           handleSelectedTemplate={handleSelectedTemplate}
+          handleEditorChange={handleEditorChange}
         />
       )}
     </div>

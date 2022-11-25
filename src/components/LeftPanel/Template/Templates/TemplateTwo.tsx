@@ -6,13 +6,17 @@ import classNames from "classnames";
 interface TemplateTwoProps {
   step: number;
   selectedTemplate: { [key: string]: boolean };
+  editorContent: { [key: string]: string };
   handleSelectedTemplate: (e: MouseEvent<HTMLDivElement>) => void;
+  handleEditorChange: (e: any, editor: any) => void;
 }
 
 const TemplateTwo: React.FC<TemplateTwoProps> = ({
   step,
   selectedTemplate,
+  editorContent,
   handleSelectedTemplate,
+  handleEditorChange,
 }) => {
   return (
     <div
@@ -28,7 +32,7 @@ const TemplateTwo: React.FC<TemplateTwoProps> = ({
       <header className="relative h-full border-b-2 border-dotted  h-[200px]">
         <Editor
           apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
-          id="header-id-template-2"
+          id="header"
           disabled={step <= 1}
           init={{
             height: "100%",
@@ -57,7 +61,7 @@ const TemplateTwo: React.FC<TemplateTwoProps> = ({
           <article className="relative flex-1 text-center  text-black/40">
             <Editor
               apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
-              id="article-id-1-template-2"
+              id="article_1"
               disabled={step <= 1}
               init={{
                 height: "100%",
@@ -86,7 +90,7 @@ const TemplateTwo: React.FC<TemplateTwoProps> = ({
           <article className="relative flex-1 text-center  text-black/40">
             <Editor
               apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
-              id="article-id-2-template-2"
+              id="article_2"
               disabled={step <= 1}
               init={{
                 height: "100%",
@@ -119,7 +123,7 @@ const TemplateTwo: React.FC<TemplateTwoProps> = ({
       <footer className="relative h-full border-t-2 border-dotted  h-[200px]">
         <Editor
           apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
-          id="footer-id-template-2"
+          id="footer"
           disabled={step <= 1}
           init={{
             height: "100%",

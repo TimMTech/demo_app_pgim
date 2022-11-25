@@ -8,7 +8,7 @@ import ScreenWarning from "./components/ScreenWarning";
 import { Predictions } from "@aws-amplify/predictions";
 
 interface AppStateProps {
-  [key: string]: boolean;
+  [key: string]: boolean | string;
 }
 
 const App: React.FC<AppStateProps> = () => {
@@ -19,6 +19,20 @@ const App: React.FC<AppStateProps> = () => {
   const [selectedTemplate, setSelectedTemplate] = useState({
     template_1: false,
     template_2: false,
+  });
+
+  const [editorContent, setEditorContent] = useState({
+    header: "",
+    article_1: "",
+    article_2: "",
+    footer: "",
+  });
+
+  const [translatedContent, setTranslatedContent] = useState<object>({
+    header_translated: "",
+    article_1_translated: "",
+    article_2_translated: "",
+    footer_translated: "",
   });
 
   const [selectedLanguages, setSelectedLanguages] = useState<[]>([]);
@@ -34,7 +48,7 @@ const App: React.FC<AppStateProps> = () => {
       setResizeWarning(false);
     }
   };
-
+console.log(translatedContent)
   const handleSelectedTemplate = (e: MouseEvent<HTMLDivElement>) => {
     const { id } = e.currentTarget;
     id === "template_1" &&
@@ -50,19 +64,34 @@ const App: React.FC<AppStateProps> = () => {
         template_1: false,
       });
   };
+  
+  const handleEditorChange = (content: any, editor: any) => {
+    const { id } = editor;
+    setEditorContent((prevState) => ({
+      ...prevState,
+      [id]: content,
+    }));
+  };
 
   const handleTranslate = async (language: string) => {
+    const finalContent = Object.values(editorContent).join(":");
     setActiveLanguage(language);
     Predictions.convert({
       translateText: {
         source: {
-          text: "Hello World",
+          text: finalContent,
         },
         targetLanguage: language,
       },
     })
       .then((response) => {
-        console.log(response);
+        const contentArray = response.text.split(":");
+        setTranslatedContent({
+          header_translated: contentArray[0],
+          article_1_translated: contentArray[1],
+          article_2_translated: contentArray[2],
+          footer_translated: contentArray[3],
+        });
       })
       .catch((error) => console.log(error));
   };
@@ -102,7 +131,7 @@ const App: React.FC<AppStateProps> = () => {
       window.removeEventListener("resize load", handleDesignWidth);
     };
   }, []);
-
+  
   return (
     <div className="w-full h-full flex flex-col">
       <ScreenWarning resizeWarning={resizeWarning} step={step} />
@@ -117,7 +146,9 @@ const App: React.FC<AppStateProps> = () => {
         <LeftPanel
           step={step}
           selectedTemplate={selectedTemplate}
+          editorContent={editorContent}
           handleSelectedTemplate={handleSelectedTemplate}
+          handleEditorChange={handleEditorChange}
         />
         <RightPanel
           step={step}
