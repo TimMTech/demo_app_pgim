@@ -31,7 +31,7 @@ const TemplateOne: React.FC<TemplateOneProps> = ({
     >
       <header className="relative h-full border-b-2 border-dotted h-[200px]">
         <Editor
-          value={editorContent.header}
+          value={step <= 1 ? "" : editorContent.header}
           onEditorChange={handleEditorChange}
           apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
           id="header"
@@ -57,12 +57,41 @@ const TemplateOne: React.FC<TemplateOneProps> = ({
       </header>
       <section className="flex w-full h-full">
         <div className="flex flex-col h-full w-full border-r-2 border-dotted ">
-          <div className="flex-1 h-full flex items-center justify-center p-6  border-b-2 border-dotted ">
-            <p className="text-sm text-black/20">IMAGE</p>
+          <div className=" relative flex-1 flex flex-col border-b-2 border-dotted ">
+            <Editor
+              disabled={step <= 1}
+              apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
+              id="image"
+              init={{
+                width: "100%",
+                height: "100%",
+                menubar: false,
+                resize: false,
+                branding: false,
+                statusbar: false,
+                forced_root_block: "div",
+                toolbar: step > 1 ? "undo redo | media" : false,
+                plugins: ["lists", "emoticons", "media"],
+                content_style:
+                  "div {caret-color: transparent; cursor: default;}",
+                setup: (editor) => {
+                  editor.on("keydown", (e) => {
+                    return false;
+                  });
+                },
+              }}
+            />
+            <span
+              className={`${
+                step > 1 && "hidden"
+              } text-sm absolute top-0 left-0 bottom-0 right-0 w-full h-full flex items-center justify-center text-black/20`}
+            >
+              IMAGE
+            </span>
           </div>
           <article className="relative flex-1 text-center">
             <Editor
-              value={editorContent.article_1}
+              value={step <= 1 ? "" : editorContent.article_1}
               onEditorChange={handleEditorChange}
               apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
               id="article_1"
@@ -90,10 +119,10 @@ const TemplateOne: React.FC<TemplateOneProps> = ({
             </span>
           </article>
         </div>
-        <div className="flex flex-col w-full h-full">
+        <div className="flex flex-col h-full w-full ">
           <article className="relative flex-1 text-center">
             <Editor
-              value={editorContent.article_2}
+              value={step <= 1 ? "" : editorContent.article_2}
               onEditorChange={handleEditorChange}
               apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
               id="article_2"
@@ -120,14 +149,39 @@ const TemplateOne: React.FC<TemplateOneProps> = ({
               CONTENT
             </span>
           </article>
-          <div className="flex-1  flex items-center justify-center p-6  border-t-2 border-dotted ">
-            <p className="text-sm text-black/20">VIDEO</p>
+          <div className="relative flex-1 flex flex-col border-t-2 border-dotted ">
+            <Editor
+              disabled={step <= 1}
+              apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
+              id="video"
+              init={{
+                width: "100%",
+                height: "100%",
+                menubar: false,
+                resize: false,
+                branding: false,
+                statusbar: false,
+                forced_root_block: "div",
+                toolbar:
+                  step > 1
+                    ? "undo redo | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | outdent indent"
+                    : false,
+                plugins: ["lists", "emoticons"],
+              }}
+            />
+            <span
+              className={`${
+                step > 1 && "hidden"
+              } text-sm absolute top-0 left-0 bottom-0 right-0 w-full h-full flex items-center justify-center text-black/20`}
+            >
+              VIDEO
+            </span>
           </div>
         </div>
       </section>
       <footer className="relative h-full border-t-2 border-dotted h-[200px]">
         <Editor
-          value={editorContent.footer}
+          value={step <= 1 ? "" : editorContent.footer}
           onEditorChange={handleEditorChange}
           apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
           id="footer"

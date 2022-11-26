@@ -48,7 +48,7 @@ const App: React.FC<AppStateProps> = () => {
       setResizeWarning(false);
     }
   };
-console.log(translatedContent)
+
   const handleSelectedTemplate = (e: MouseEvent<HTMLDivElement>) => {
     const { id } = e.currentTarget;
     id === "template_1" &&
@@ -123,6 +123,8 @@ console.log(translatedContent)
   const handleVideoOnError = (response: any) => {
     console.log("error", response);
   };
+
+ 
 
   useEffect(() => {
     window.addEventListener("resize", handleDesignWidth);
