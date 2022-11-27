@@ -9,6 +9,7 @@ interface RightPanelProps {
   selectedLanguages: any;
   activeLanguage: string;
   handleTranslate: (languages: string) => void;
+  handleTestEditorTranslate: (languages: string) => void;
   handleMultiSelect: (value: any) => void;
   handleImageOnSuccess: (response: any) => void;
   handleImageOnError: (response: any) => void;
@@ -23,6 +24,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
   selectedLanguages,
   activeLanguage,
   handleTranslate,
+  handleTestEditorTranslate,
   handleMultiSelect,
   handleImageOnSuccess,
   handleImageOnError,
@@ -47,6 +49,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
           selectedLanguages={selectedLanguages}
           activeLanguage={activeLanguage}
           handleTranslate={handleTranslate}
+          handleTestEditorTranslate={handleTestEditorTranslate}
           handleMultiSelect={handleMultiSelect}
         />
       )}

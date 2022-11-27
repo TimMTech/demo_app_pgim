@@ -5,6 +5,7 @@ interface LanguagesProps {
   selectedLanguages: any;
   activeLanguage: string;
   handleTranslate: (languages: string) => void;
+  handleTestEditorTranslate:(languages:string) => void;
   handleMultiSelect: (value: any) => void;
 }
 
@@ -12,8 +13,10 @@ const Languages: React.FC<LanguagesProps> = ({
   selectedLanguages,
   activeLanguage,
   handleTranslate,
+  handleTestEditorTranslate,
   handleMultiSelect,
 }) => {
+  
   return (
     <div className="h-full w-full flex flex-col">
       <div className="w-full h-full">
@@ -40,9 +43,9 @@ const Languages: React.FC<LanguagesProps> = ({
               <div
                 key={index}
                 className={`${
-                  activeLanguage === label && "bg-orange-400"
-                } w-[75px] h-[75px] bg-black/20 border rounded-lg flex items-center justify-center`}
-                onClick={() => handleTranslate(label)}
+                  activeLanguage === label ? "bg-orange-400" : "bg-gray-400"
+                } w-[75px] h-[75px]  border rounded-lg flex items-center justify-center`}
+                onClick={() => handleTestEditorTranslate(label)}
               >
                 {label}
               </div>

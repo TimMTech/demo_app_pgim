@@ -1,9 +1,4 @@
-export const thumbnailSizeConversion: Function = async (src: string) => {
-  await fetch(src)
-    .then((response) => {
-      return response.blob();
-    })
-    .then((image) => {
-      return image.size;
-    });
+export const formatBytes = (bytes: any) => {
+  const i = Math.floor(Math.log(bytes) / Math.log(1024));
+  return (bytes / Math.pow(1024, i)).toFixed(2);
 };

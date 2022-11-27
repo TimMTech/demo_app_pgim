@@ -20,7 +20,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "node ./postinstall.js"
   },
   "eslintConfig": {
     "extends": [
@@ -47,9 +48,11 @@
     "@tinymce/tinymce-react": "^4.2.0",
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-select": "^5.0.1",
+    "@types/tinymce": "^4.6.5",
     "autoprefixer": "^10.4.12",
     "classnames": "^2.3.2",
     "express": "^4.18.2",
+    "fs-extra": "^10.1.0",
     "html-react-parser": "^3.0.4",
     "imagekit": "^4.1.1",
     "imagekitio-react": "^2.0.0",
@@ -58,6 +61,7 @@
     "react-icons": "^4.6.0",
     "react-multi-select-component": "^4.3.4",
     "react-router-dom": "^6.4.2",
-    "tailwindcss": "^3.2.4"
+    "tailwindcss": "^3.2.4",
+    "tinymce": "^6.3.0"
   }
 }

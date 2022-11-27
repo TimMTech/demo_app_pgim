@@ -6,6 +6,7 @@ interface TemplateSelectionProps {
   step: number;
   selectedTemplate: { [key: string]: boolean };
   editorContent: { [key: string]: string };
+  translatedContent: { [key: string]: string };
   handleSelectedTemplate: (e: MouseEvent<HTMLDivElement>) => void;
   handleEditorChange: (e: any, editor: any) => void;
 }
@@ -14,6 +15,7 @@ const TemplateSelection: React.FC<TemplateSelectionProps> = ({
   step,
   selectedTemplate,
   editorContent,
+  translatedContent,
   handleSelectedTemplate,
   handleEditorChange,
 }) => {
@@ -23,6 +25,7 @@ const TemplateSelection: React.FC<TemplateSelectionProps> = ({
         step={step}
         selectedTemplate={selectedTemplate}
         editorContent={editorContent}
+        translatedContent={translatedContent}
         handleSelectedTemplate={handleSelectedTemplate}
         handleEditorChange={handleEditorChange}
       />
@@ -30,6 +33,7 @@ const TemplateSelection: React.FC<TemplateSelectionProps> = ({
         step={step}
         selectedTemplate={selectedTemplate}
         editorContent={editorContent}
+        translatedContent={translatedContent}
         handleSelectedTemplate={handleSelectedTemplate}
         handleEditorChange={handleEditorChange}
       />

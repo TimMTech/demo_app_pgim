@@ -6,6 +6,7 @@ interface ContentProps {
   step: number;
   selectedTemplate: { [key: string]: boolean };
   editorContent: { [key: string]: string };
+  translatedContent: { [key: string]: string };
   handleSelectedTemplate: (e: MouseEvent<HTMLDivElement>) => void;
   handleEditorChange: (e: any, editor: any) => void;
 }
@@ -14,6 +15,7 @@ const Content: React.FC<ContentProps> = ({
   step,
   selectedTemplate,
   editorContent,
+  translatedContent,
   handleEditorChange,
   handleSelectedTemplate,
 }) => {
@@ -24,6 +26,7 @@ const Content: React.FC<ContentProps> = ({
           step={step}
           selectedTemplate={selectedTemplate}
           editorContent={editorContent}
+          translatedContent={translatedContent}
           handleSelectedTemplate={handleSelectedTemplate}
           handleEditorChange={handleEditorChange}
         />
@@ -33,6 +36,7 @@ const Content: React.FC<ContentProps> = ({
           step={step}
           selectedTemplate={selectedTemplate}
           editorContent={editorContent}
+          translatedContent={translatedContent}
           handleSelectedTemplate={handleSelectedTemplate}
           handleEditorChange={handleEditorChange}
         />
