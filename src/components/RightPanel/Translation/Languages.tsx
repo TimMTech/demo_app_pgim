@@ -45,7 +45,7 @@ const Languages: React.FC<LanguagesProps> = ({
                 className={`${
                   activeLanguage === label ? "bg-orange-400" : "bg-gray-400"
                 } w-[75px] h-[75px]  border rounded-lg flex items-center justify-center`}
-                onClick={() => handleTestEditorTranslate(label)}
+                onClick={() => handleTranslate(label)} /**handleTestEditorTranslate for other design */
               >
                 {label}
               </div>

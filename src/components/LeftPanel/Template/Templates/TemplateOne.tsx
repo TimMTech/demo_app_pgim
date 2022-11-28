@@ -34,6 +34,10 @@ const TemplateOne: React.FC<TemplateOneProps> = ({
         <Editor
           apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
           value={step <= 1 ? "" : editorContent.header_template_1}
+          initialValue={
+            translatedContent.header_template_1_translated &&
+            translatedContent.header_template_1_translated
+          }
           onEditorChange={handleEditorChange}
           id="header_template_1"
           disabled={step <= 1}
@@ -96,6 +100,10 @@ const TemplateOne: React.FC<TemplateOneProps> = ({
           <article className="relative flex-1 text-center">
             <Editor
               value={step <= 1 ? "" : editorContent.article_1_template_1}
+              initialValue={
+                translatedContent.article_1_template_1_translated &&
+                translatedContent.article_1_template_1_translated
+              }
               onEditorChange={handleEditorChange}
               apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
               id="article_1_template_1"
@@ -129,6 +137,10 @@ const TemplateOne: React.FC<TemplateOneProps> = ({
         <div className="flex flex-col h-full w-full ">
           <article className="relative flex-1 text-center">
             <Editor
+              initialValue={
+                translatedContent.article_2_template_1_translated &&
+                translatedContent.article_2_template_1_translated
+              }
               value={step <= 1 ? "" : editorContent.article_2_template_1}
               onEditorChange={handleEditorChange}
               apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
@@ -195,6 +207,10 @@ const TemplateOne: React.FC<TemplateOneProps> = ({
       </section>
       <footer className="relative h-full border-t-2 border-dotted h-[200px]">
         <Editor
+          initialValue={
+            translatedContent.footer_template_1_translated &&
+            translatedContent.footer_template_1_translated
+          }
           value={step <= 1 ? "" : editorContent.footer_template_1}
           onEditorChange={handleEditorChange}
           apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"

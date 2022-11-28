@@ -14,19 +14,12 @@ body {
   min-height: 100vh !important;
 }
 
-
-
 .tox-tinymce {
   height: 100% !important;
   border-radius: 0 !important;
   box-shadow: none !important;
   border: none !important;
-}
-
-.tox-editor-header {
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0 !important;
+ 
 }
 
 
@@ -38,5 +31,3 @@ body {
     background-color: teal;
   }
 }
-
-

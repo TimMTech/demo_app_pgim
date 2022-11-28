@@ -11,7 +11,7 @@ interface AppStateProps {
 }
 
 const App: React.FC<AppStateProps> = () => {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
 
   const [resizeWarning, setResizeWarning] = useState<boolean>(false);
 
@@ -20,9 +20,14 @@ const App: React.FC<AppStateProps> = () => {
     template_2: false,
   });
 
-  const [testEditorContent, setTestEditorContent] = useState<string>("");
-  const [testEditorTranslatedContent, setTestEditorTranslatedContent] =
-    useState<string>("");
+  
+  const [testEditorContent, setTestEditorContent] = useState({
+    content: "",
+    translated_content: "",
+    
+  });
+
+
 
   const [editorContent, setEditorContent] = useState({
     header_template_1: "",
@@ -59,7 +64,8 @@ const App: React.FC<AppStateProps> = () => {
       setResizeWarning(false);
     }
   };
-
+console.log(editorContent)
+console.log(translatedContent)
   const handleSelectedTemplate = (e: MouseEvent<HTMLDivElement>) => {
     const { id } = e.currentTarget;
     id === "template_1" &&
@@ -76,13 +82,12 @@ const App: React.FC<AppStateProps> = () => {
       });
   };
 
-  console.log(testEditorContent)
-  console.log("--")
-  console.log(testEditorTranslatedContent)
-
-  const handleTestEditorChange = (content: string) => {
-    
-    setTestEditorContent(content);
+  const handleTestEditorChange = (content: string, editor: any) => {
+    const { id } = editor;
+    setTestEditorContent((prevState) => ({
+      ...prevState,
+      [id]: content,
+    }));
   };
 
   const handleEditorChange = (content: any, editor: any) => {
@@ -98,13 +103,16 @@ const App: React.FC<AppStateProps> = () => {
     Predictions.convert({
       translateText: {
         source: {
-          text: testEditorContent,
+          text: testEditorContent.content,
         },
         targetLanguage: language,
       },
     })
       .then((response) => {
-        setTestEditorTranslatedContent(response.text);
+        setTestEditorContent((prevState) => ({
+          ...prevState,
+          translated_content: response.text,
+        }));
       })
       .catch((error) => console.log(error));
   };
@@ -137,8 +145,6 @@ const App: React.FC<AppStateProps> = () => {
       .catch((error) => console.log(error));
   };
 
- 
-
   const handleMultiSelect = (value: any) => {
     setSelectedLanguages(value);
   };
@@ -166,7 +172,6 @@ const App: React.FC<AppStateProps> = () => {
   };
 
   const handleVideoOnSuccess = (response: any) => {
-    console.log(response);
     setVideoFilePath((prevState) => [...prevState, response]);
   };
 
@@ -206,11 +211,9 @@ const App: React.FC<AppStateProps> = () => {
           editorContent={editorContent}
           testEditorContent={testEditorContent}
           translatedContent={translatedContent}
-          testEditorTranslatedContent={testEditorTranslatedContent}
           handleSelectedTemplate={handleSelectedTemplate}
           handleEditorChange={handleEditorChange}
           handleTestEditorChange={handleTestEditorChange}
-         
         />
         <RightPanel
           step={step}
