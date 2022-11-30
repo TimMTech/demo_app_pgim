@@ -11,7 +11,7 @@ export const example = `
           <li>We also offer enterprise grade support as part of <a href="https://www.tiny.cloud/pricing">TinyMCE premium subscriptions</a>.</li>
         </ul>
       
-        <h2>A simple table to play with</h2>
+        <h2 style="text-align: center;">A simple table to play with</h2>
         <table style="border-collapse: collapse; width: 100%;" border="1">
           <thead>
             <tr>

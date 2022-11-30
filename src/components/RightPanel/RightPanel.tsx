@@ -1,4 +1,3 @@
-import TemplateCatalog from "./Catalog/TemplateCatalog";
 import MediaUpload from "./Media/MediaUpload";
 import Languages from "./Translation/Languages";
 
@@ -8,8 +7,8 @@ interface RightPanelProps {
   videoFilePath: object[];
   selectedLanguages: any;
   activeLanguage: string;
-  handleTranslate: (languages: string) => void;
-  handleTestEditorTranslate: (languages: string) => void;
+
+  handleEditorTranslate: (languages: string) => void;
   handleMultiSelect: (value: any) => void;
   handleImageOnSuccess: (response: any) => void;
   handleImageOnError: (response: any) => void;
@@ -23,8 +22,8 @@ const RightPanel: React.FC<RightPanelProps> = ({
   videoFilePath,
   selectedLanguages,
   activeLanguage,
-  handleTranslate,
-  handleTestEditorTranslate,
+
+  handleEditorTranslate,
   handleMultiSelect,
   handleImageOnSuccess,
   handleImageOnError,
@@ -32,8 +31,10 @@ const RightPanel: React.FC<RightPanelProps> = ({
   handleVideoOnError,
 }) => {
   return (
-    <div className="lg:min-h-screen lg:max-w-[400px] w-full h-full bg-white border-l-2 border-black/10">
-      {step === 1 && <TemplateCatalog />}
+    <div
+      hidden={step === 1}
+      className="lg:min-h-screen lg:max-w-[400px] w-full h-full bg-white border-l-2 border-black/10"
+    >
       {step === 2 && (
         <MediaUpload
           imageFilePath={imageFilePath}
@@ -48,8 +49,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
         <Languages
           selectedLanguages={selectedLanguages}
           activeLanguage={activeLanguage}
-          handleTranslate={handleTranslate}
-          handleTestEditorTranslate={handleTestEditorTranslate}
+          handleEditorTranslate={handleEditorTranslate}
           handleMultiSelect={handleMultiSelect}
         />
       )}

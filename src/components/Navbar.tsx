@@ -3,14 +3,14 @@ import Navigation from "./LeftPanel/Navigation";
 
 interface NavbarProps {
   step: number;
-  selectedTemplate: { [key: string]: boolean };
+ 
   handleNextStep: () => void;
   handlePreviousStep: () => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
   step,
-  selectedTemplate,
+  
   handleNextStep,
   handlePreviousStep,
 }) => {
@@ -19,7 +19,7 @@ const Navbar: React.FC<NavbarProps> = ({
       <FcDocument size={75} />
       <Navigation
         step={step}
-        selectedTemplate={selectedTemplate}
+  
         handleNextStep={handleNextStep}
         handlePreviousStep={handlePreviousStep}
       />

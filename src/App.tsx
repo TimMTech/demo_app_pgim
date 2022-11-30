@@ -2,54 +2,22 @@ import LeftPanel from "./components/LeftPanel/LeftPanel";
 import RightPanel from "./components/RightPanel/RightPanel";
 import Navbar from "./components/Navbar";
 import LeftMenu from "./components/LeftMenu";
-import { useState, MouseEvent, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ScreenWarning from "./components/ScreenWarning";
 import { Predictions } from "@aws-amplify/predictions";
+import { example } from "./utils/exampleContent";
 
-interface AppStateProps {
-  [key: string]: boolean | string;
-}
 
-const App: React.FC<AppStateProps> = () => {
+
+const App: React.FC= () => {
   const [step, setStep] = useState(1);
 
   const [resizeWarning, setResizeWarning] = useState<boolean>(false);
 
-  const [selectedTemplate, setSelectedTemplate] = useState({
-    template_1: false,
-    template_2: false,
-  });
+  const [editorContent, setEditorContent] = useState<string>("");
+  const [translatedContent, setTranslatedContent] = useState<string>("");
 
-  
-  const [testEditorContent, setTestEditorContent] = useState({
-    content: "",
-    translated_content: "",
-    
-  });
-
-
-
-  const [editorContent, setEditorContent] = useState({
-    header_template_1: "",
-    article_1_template_1: "",
-    article_2_template_1: "",
-    footer_template_1: "",
-    header_template_2: "",
-    article_1_template_2: "",
-    article_2_template_2: "",
-    footer_template_2: "",
-  });
-
-  const [translatedContent, setTranslatedContent] = useState({
-    header_template_1_translated: "",
-    article_1_template_1_translated: "",
-    article_2_template_1_translated: "",
-    footer_template_1_translated: "",
-    header_template_2_translated: "",
-    article_1_template_2_translated: "",
-    article_2_template_2_translated: "",
-    footer_template_2_translated: "",
-  });
+  const [demoContent, setDemoContent] = useState<any>(example);
 
   const [selectedLanguages, setSelectedLanguages] = useState<[]>([]);
   const [activeLanguage, setActiveLanguage] = useState<string>("");
@@ -64,83 +32,29 @@ const App: React.FC<AppStateProps> = () => {
       setResizeWarning(false);
     }
   };
-console.log(editorContent)
-console.log(translatedContent)
-  const handleSelectedTemplate = (e: MouseEvent<HTMLDivElement>) => {
-    const { id } = e.currentTarget;
-    id === "template_1" &&
-      setSelectedTemplate({
-        ...selectedTemplate,
-        template_1: true,
-        template_2: false,
-      });
-    id === "template_2" &&
-      setSelectedTemplate({
-        ...selectedTemplate,
-        template_2: true,
-        template_1: false,
-      });
+
+  const handleEditorChange = (content: string) => {
+    setEditorContent(content)
   };
 
-  const handleTestEditorChange = (content: string, editor: any) => {
-    const { id } = editor;
-    setTestEditorContent((prevState) => ({
-      ...prevState,
-      [id]: content,
-    }));
+ 
+
+  const handleDemoChange = (content: string) => {
+    setDemoContent(content);
   };
 
-  const handleEditorChange = (content: any, editor: any) => {
-    const { id } = editor;
-    setEditorContent((prevState) => ({
-      ...prevState,
-      [id]: content,
-    }));
-  };
-
-  const handleTestEditorTranslate = async (language: string) => {
+  const handleEditorTranslate = async (language: string) => {
     setActiveLanguage(language);
     Predictions.convert({
       translateText: {
         source: {
-          text: testEditorContent.content,
+          text: editorContent
         },
         targetLanguage: language,
       },
     })
       .then((response) => {
-        setTestEditorContent((prevState) => ({
-          ...prevState,
-          translated_content: response.text,
-        }));
-      })
-      .catch((error) => console.log(error));
-  };
-
-  const handleTranslate = async (language: string) => {
-    setActiveLanguage(language);
-    const finalContent = Object.values(editorContent).join(":");
-
-    Predictions.convert({
-      translateText: {
-        source: {
-          text: finalContent,
-        },
-        targetLanguage: language,
-      },
-    })
-      .then((response) => {
-        const contentArray = response.text.split(":");
-        setTranslatedContent({
-          header_template_1_translated: contentArray[0],
-          article_1_template_1_translated: contentArray[1],
-          article_2_template_1_translated: contentArray[2],
-          footer_template_1_translated: contentArray[3],
-          header_template_2_translated: contentArray[0],
-          article_1_template_2_translated: contentArray[1],
-          article_2_template_2_translated: contentArray[2],
-          footer_template_2_translated: contentArray[3],
-        });
+        setTranslatedContent(response.text)
       })
       .catch((error) => console.log(error));
   };
@@ -198,22 +112,18 @@ console.log(translatedContent)
       <ScreenWarning resizeWarning={resizeWarning} step={step} />
       <Navbar
         step={step}
-        selectedTemplate={selectedTemplate}
         handleNextStep={handleNextStep}
         handlePreviousStep={handlePreviousStep}
       />
       <div className="lg:flex-row flex flex-col ">
         <LeftMenu />
-
         <LeftPanel
           step={step}
-          selectedTemplate={selectedTemplate}
           editorContent={editorContent}
-          testEditorContent={testEditorContent}
           translatedContent={translatedContent}
-          handleSelectedTemplate={handleSelectedTemplate}
+          demoContent={demoContent}
+          handleDemoChange={handleDemoChange}
           handleEditorChange={handleEditorChange}
-          handleTestEditorChange={handleTestEditorChange}
         />
         <RightPanel
           step={step}
@@ -221,8 +131,7 @@ console.log(translatedContent)
           videoFilePath={videoFilePath}
           selectedLanguages={selectedLanguages}
           activeLanguage={activeLanguage}
-          handleTranslate={handleTranslate}
-          handleTestEditorTranslate={handleTestEditorTranslate}
+          handleEditorTranslate={handleEditorTranslate}
           handleMultiSelect={handleMultiSelect}
           handleImageOnSuccess={handleImageOnSuccess}
           handleImageOnError={handleImageOnError}

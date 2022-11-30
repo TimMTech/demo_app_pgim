@@ -1,70 +1,54 @@
-import TemplateSelection from "./Template/TemplateSelection";
-import { MouseEvent } from "react";
-import Content from "./Content/Content";
-import TestEditor from "../LeftPanel/Template/Templates/TestEditor";
-import ExampleEditor from "../LeftPanel/Template/Templates/ExampleEditor";
+import DemoDesktop from "../LeftPanel/Editors/Demos/DemoDesktop";
+import DemoMobile from "../LeftPanel/Editors/Demos/DemoMobile";
+import DesktopEditor from "../LeftPanel/Editors/DesktopEditor";
+import MobileEditor from "../LeftPanel/Editors/MobileEditor";
 
 interface LeftPanelProps {
   step: number;
-  selectedTemplate: { [key: string]: boolean };
-  editorContent: { [key: string]: string };
-  testEditorContent: { [key: string]: string };
-  translatedContent: { [key: string]: string };
-
-  handleSelectedTemplate: (e: MouseEvent<HTMLDivElement>) => void;
-  handleEditorChange: (e: any, editor: any) => void;
-  handleTestEditorChange: (content: string, editor: any) => void;
+  editorContent: string;
+  translatedContent: string;
+  demoContent: string;
+  handleEditorChange: (content: string, editor: any) => void;
+  handleDemoChange: (content: string) => void;
 }
 
 const LeftPanel: React.FC<LeftPanelProps> = ({
   step,
-  selectedTemplate,
   editorContent,
-  testEditorContent,
   translatedContent,
-
-  handleSelectedTemplate,
+  demoContent,
   handleEditorChange,
-  handleTestEditorChange,
+  handleDemoChange,
 }) => {
   return (
-    <div className="lg:min-h-screen  w-full h-full">
-      {/** 
+    <div className="lg:min-h-screen lg:px-24 flex w-full h-full">
       {step === 1 && (
-        <ExampleEditor />
+        <>
+          <DemoDesktop
+            demoContent={demoContent}
+            handleDemoChange={handleDemoChange}
+          />
+          <DemoMobile
+            demoContent={demoContent}
+            handleDemoChange={handleDemoChange}
+          />
+        </>
       )}
-      */}
-
-      {step === 1 && (
-        <TemplateSelection
-          step={step}
-          selectedTemplate={selectedTemplate}
-          editorContent={editorContent}
-          translatedContent={translatedContent}
-          handleSelectedTemplate={handleSelectedTemplate}
-          handleEditorChange={handleEditorChange}
-        />
-      )}
-      {/** 
       {step >= 2 && (
-        <TestEditor
-          step={step}
-          testEditorContent={testEditorContent}
-          translatedContent={translatedContent}
-          handleEditorChange={handleEditorChange}
-          handleTestEditorChange={handleTestEditorChange}
-        />
-      )}
-      */}
-      {step >= 2 && (
-        <Content
-          step={step}
-          selectedTemplate={selectedTemplate}
-          editorContent={editorContent}
-          translatedContent={translatedContent}
-          handleSelectedTemplate={handleSelectedTemplate}
-          handleEditorChange={handleEditorChange}
-        />
+        <>
+          <DesktopEditor
+            step={step}
+            editorContent={editorContent}
+            translatedContent={translatedContent}
+            handleEditorChange={handleEditorChange}
+          />
+          <MobileEditor
+            step={step}
+            editorContent={editorContent}
+            translatedContent={translatedContent}
+            handleEditorChange={handleEditorChange}
+          />
+        </>
       )}
     </div>
   );

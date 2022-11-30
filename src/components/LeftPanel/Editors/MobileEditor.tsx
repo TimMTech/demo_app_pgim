@@ -1,32 +1,30 @@
 import { Editor } from "@tinymce/tinymce-react";
 
-interface TestEditorProps {
+interface MobileEditorProps {
   step: number;
-  testEditorContent: { [key: string]: string };
-  translatedContent: { [key: string]: string };
-
-  handleEditorChange: (e: any, editor: any) => void;
-  handleTestEditorChange: (content: string, editor: any) => void;
+  editorContent: string;
+  translatedContent: string;
+  handleEditorChange: (content: string, editor: any) => void;
 }
 
-const TestEditor: React.FC<TestEditorProps> = ({
+const MobileEditor: React.FC<MobileEditorProps> = ({
   step,
-  testEditorContent,
+  editorContent,
+  translatedContent,
   handleEditorChange,
-  handleTestEditorChange,
 }) => {
   return (
-    <div className="lg:px-24 w-full h-screen flex flex-col">
+    <div className="flex-1 px-4 w-full h-screen flex flex-col items-center">
       <Editor
-        value={testEditorContent.content}
+        value={editorContent}
         apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
-        onEditorChange={handleTestEditorChange}
-        id="content"
+        onEditorChange={handleEditorChange}
+        id="mobileContent"
         disabled={step <= 1}
         init={{
           placeholder: "Design Here...",
           height: "100%",
-          width: "100%",
+          width: 500,
           menubar: false,
           resize: false,
           branding: false,
@@ -46,21 +44,19 @@ const TestEditor: React.FC<TestEditorProps> = ({
     font-weight:700;
     }
     `,
-          
         }}
       />
-      <div className="w-full border" />
+      <div className="w-[500px] border" />
       <Editor
-        value={testEditorContent.translated_content}
+        value={translatedContent}
         apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
-        onEditorChange={handleTestEditorChange}
-        id="translated_content"
+       
+        id="mobileContentTranslated"
         disabled={step <= 1}
         init={{
-          id: "test_editor_translated",
           placeholder: "Translated Content Will Be Here...",
           height: "100%",
-          width: "100%",
+          width: 500,
           menubar: false,
           resize: false,
           branding: false,
@@ -86,4 +82,4 @@ const TestEditor: React.FC<TestEditorProps> = ({
   );
 };
 
-export default TestEditor;
+export default MobileEditor;
