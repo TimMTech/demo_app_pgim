@@ -8,10 +8,10 @@ interface IKMediaProps {
 
 const IKMedia: React.FC<IKMediaProps> = ({ imageFilePath, videoFilePath }) => {
   return (
-    <div className="flex flex-col  gap-4">
+    <div className="text-white  flex flex-col gap-4">
       <div className="flex-1 flex flex-col gap-4 p-2 max-h-[600px] overflow-y-auto   ">
         {imageFilePath.length !== 0 && (
-          <h2 className="text-center font-prompt font-semibold text-lg">
+          <h2 className=" text-center font-prompt font-semibold ">
             Images
           </h2>
         )}
@@ -21,7 +21,7 @@ const IKMedia: React.FC<IKMediaProps> = ({ imageFilePath, videoFilePath }) => {
           return (
             <div
               key={index}
-              className="flex flex-col gap-4 font-prompt"
+              className="flex flex-col gap-4 font-prompt text-sm "
             >
               <div className="flex flex-col">
                 <span className="">{formatBytes(size)} KB (Original)</span>
@@ -58,7 +58,7 @@ const IKMedia: React.FC<IKMediaProps> = ({ imageFilePath, videoFilePath }) => {
       </div>
       <div className="flex-1 flex flex-col gap-4 p-2 max-h-[600px] overflow-y-auto ">
         {videoFilePath.length !== 0 && (
-          <h2 className="text-center font-prompt font-semibold text-lg ">
+          <h2 className="text-center font-prompt font-semibold ">
             Videos
           </h2>
         )}
@@ -67,7 +67,7 @@ const IKMedia: React.FC<IKMediaProps> = ({ imageFilePath, videoFilePath }) => {
           return (
             <div
               key={index}
-              className="flex flex-col gap-4  font-prompt"
+              className="flex flex-col gap-4 font-prompt text-sm"
             >
               <div className="flex flex-col">
                 <span>{formatBytes(size)} KB (Original)</span>

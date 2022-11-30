@@ -10,7 +10,7 @@ const DemoDesktop: React.FC<DemoDesktopProps> = ({
   handleDemoChange,
 }) => {
   return (
-    <div className="lg:px-24 flex-2  w-full h-screen flex flex-col">
+    <div className="w-full h-[1200px] flex flex-col max-w-[1200px] ">
       <Editor
         value={demoContent}
         onEditorChange={handleDemoChange}

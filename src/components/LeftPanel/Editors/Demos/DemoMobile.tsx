@@ -9,7 +9,7 @@ const DemoMobile: React.FC<DemoMobileProps> = ({
   handleDemoChange,
 }) => {
   return (
-    <div className="xl:flex hidden flex-1 w-full h-screen flex flex-col items-center">
+    <div className="w-full h-[1200px] flex flex-col items-center  max-w-[500px]">
       <Editor
         value={demoContent}
         onEditorChange={handleDemoChange}
@@ -19,7 +19,7 @@ const DemoMobile: React.FC<DemoMobileProps> = ({
           mobile: {
             menubar: true,
           },
-          width: 500,
+          width: "100%",
           height: "100%",
           menubar: false,
           resize: false,

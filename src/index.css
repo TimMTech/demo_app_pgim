@@ -10,8 +10,9 @@
 
 html,
 body {
-  background-color: rgba(128, 128, 128, 0.3);
+  background-color: #181c22;
   min-height: 100vh !important;
+  
 }
 
 .tox-tinymce {
@@ -20,6 +21,15 @@ body {
   box-shadow: none !important;
   border: none !important;
  
+}
+
+.rmsc .dropdown-container  {
+  background-color: #22262e !important;
+  
+}
+
+.dropdown-heading-value {
+  color: white !important;
 }
 
 

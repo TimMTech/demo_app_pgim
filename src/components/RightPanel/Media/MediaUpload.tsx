@@ -28,7 +28,7 @@ const MediaUpload: React.FC<MediaUploadProps> = ({
             process.env.REACT_APP_IMAGEKIT_AUTHENTICATION_ENDPOINT
           }
         >
-          <div className="flex items-center justify-evenly p-6 font-prompt text-white border-b gap-2">
+          <div className="flex items-center justify-evenly p-6 font-prompt text-white text-sm border-b border-white/20 mx-2 gap-2">
             <IKUpload
               hidden
               id="image-upload"
@@ -38,7 +38,7 @@ const MediaUpload: React.FC<MediaUploadProps> = ({
             />
             <label
               htmlFor="image-upload"
-              className="text-center w-full border px-6 py-3 rounded-lg bg-indigo-400"
+              className="text-center w-full border px-6 py-3 rounded-lg bg-[rgba(44,49,57,0.6);]"
             >
               Upload Images
             </label>
@@ -51,7 +51,7 @@ const MediaUpload: React.FC<MediaUploadProps> = ({
             />
             <label
               htmlFor="video-upload"
-              className="text-center w-full border px-6 py-3 rounded-lg bg-indigo-400"
+              className="text-center w-full border px-6 py-3 rounded-lg bg-[rgba(44,49,57,0.6);]"
             >
               Upload Videos
             </label>

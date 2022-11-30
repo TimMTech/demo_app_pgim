@@ -13,6 +13,7 @@ const App: React.FC= () => {
   const [step, setStep] = useState(1);
 
   const [resizeWarning, setResizeWarning] = useState<boolean>(false);
+  const [deviceView, setDeviceView] = useState<boolean>(false)
 
   const [editorContent, setEditorContent] = useState<string>("");
   const [translatedContent, setTranslatedContent] = useState<string>("");
@@ -26,19 +27,22 @@ const App: React.FC= () => {
   const [videoFilePath, setVideoFilePath] = useState<object[]>([]);
 
   const handleDesignWidth = () => {
-    if (window.innerWidth < 1850 && window.innerWidth > 1022) {
+    if (window.innerWidth < 1350 && window.innerWidth > 1022) {
       setResizeWarning(true);
     } else {
       setResizeWarning(false);
     }
   };
 
+  const handleDeviceView = () => {
+    setDeviceView(!deviceView)
+  }
+
   const handleEditorChange = (content: string) => {
     setEditorContent(content)
   };
 
  
-
   const handleDemoChange = (content: string) => {
     setDemoContent(content);
   };
@@ -109,7 +113,7 @@ const App: React.FC= () => {
 
   return (
     <div className="w-full h-full flex flex-col">
-      <ScreenWarning resizeWarning={resizeWarning} step={step} />
+     
       <Navbar
         step={step}
         handleNextStep={handleNextStep}
@@ -122,8 +126,10 @@ const App: React.FC= () => {
           editorContent={editorContent}
           translatedContent={translatedContent}
           demoContent={demoContent}
+          deviceView={deviceView}
           handleDemoChange={handleDemoChange}
           handleEditorChange={handleEditorChange}
+          handleDeviceView={handleDeviceView}
         />
         <RightPanel
           step={step}

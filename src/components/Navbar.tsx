@@ -15,8 +15,8 @@ const Navbar: React.FC<NavbarProps> = ({
   handlePreviousStep,
 }) => {
   return (
-    <nav className="w-full bg-white text-black font-prompt flex items-center justify-between px-20  border-b-2 border-black/10">
-      <FcDocument size={75} />
+    <nav className="w-full bg-[#2c3139] text-white font-prompt flex items-center justify-between px-20  border-b-2 border-black/10">
+      <FcDocument size={50} />
       <Navigation
         step={step}
   
@@ -24,10 +24,10 @@ const Navbar: React.FC<NavbarProps> = ({
         handlePreviousStep={handlePreviousStep}
       />
       <div className="flex-1 flex items-center w-full gap-4">
-        <button className="text-blue-500 py-3 px-6 rounded-md border">
+        <button className="text-blue-500 py-1 px-3 rounded-md ">
           Preview
         </button>
-        <button className="bg-blue-500 text-white py-3 px-6 rounded-md">
+        <button className="bg-blue-500 text-white py-1 px-3 rounded-md">
           Publish
         </button>
       </div>

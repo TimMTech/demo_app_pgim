@@ -33,7 +33,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
   return (
     <div
       hidden={step === 1}
-      className="lg:min-h-screen lg:max-w-[400px] w-full h-full bg-white border-l-2 border-black/10"
+      className="lg:min-h-screen lg:max-w-[300px] w-full h-full bg-[#22262e] border-l-2 border-black/10"
     >
       {step === 2 && (
         <MediaUpload

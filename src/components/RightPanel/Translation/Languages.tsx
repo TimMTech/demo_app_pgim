@@ -18,10 +18,10 @@ const Languages: React.FC<LanguagesProps> = ({
 }) => {
   return (
     <div className="h-full w-full flex flex-col">
-      <div className="w-full h-full">
+      <div className="w-full h-full ">
         <MultiSelect
           options={languages}
-          className="relative z-[98]"
+          className="relative z-[98] "
           value={selectedLanguages}
           labelledBy={"Select"}
           onChange={handleMultiSelect}
@@ -31,8 +31,8 @@ const Languages: React.FC<LanguagesProps> = ({
             allItemsAreSelected: "All Languages Selected",
           }}
         />
-        <div className="lg:grid lg:grid-cols-4 lg:gap-6 flex flex-wrap gap-3 p-2 max-h-[500px] overflow-y-auto font-prompt text-white border-b">
-          <div className="w-[75px] h-[75px] bg-green-600 border rounded-lg flex items-center justify-center">
+        <div className="lg:grid lg:grid-cols-4 lg:gap-x-0 flex flex-wrap gap-3 p-2 max-h-[500px] overflow-y-auto font-prompt text-white border-b">
+          <div className="w-[50px] h-[50px] bg-green-600 border rounded-lg flex items-center justify-center">
             en
           </div>
 
@@ -43,7 +43,7 @@ const Languages: React.FC<LanguagesProps> = ({
                 key={index}
                 className={`${
                   activeLanguage === label ? "bg-orange-400" : "bg-gray-400"
-                } w-[75px] h-[75px]  border rounded-lg flex items-center justify-center`}
+                } w-[50px] h-[50px]  border rounded-lg flex items-center justify-center`}
                 onClick={() => handleEditorTranslate(label)}
               >
                 {label}

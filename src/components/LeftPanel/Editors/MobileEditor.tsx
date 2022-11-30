@@ -14,7 +14,7 @@ const MobileEditor: React.FC<MobileEditorProps> = ({
   handleEditorChange,
 }) => {
   return (
-    <div className="xl:flex xl:pr-24 hidden flex-1 w-full h-screen flex flex-col items-center">
+    <div className="w-full h-[1200px] flex flex-col items-center max-w-[500px]">
       <Editor
         value={editorContent}
         apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
@@ -24,7 +24,7 @@ const MobileEditor: React.FC<MobileEditorProps> = ({
         init={{
           placeholder: "Design Here...",
           height: "100%",
-          width: 500,
+          width: "100%",
           menubar: false,
           resize: false,
           branding: false,
@@ -46,7 +46,7 @@ const MobileEditor: React.FC<MobileEditorProps> = ({
     `,
         }}
       />
-      <div className="w-[500px] border" />
+      <div className="w-full border" />
       <Editor
         value={translatedContent}
         apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
@@ -56,7 +56,7 @@ const MobileEditor: React.FC<MobileEditorProps> = ({
         init={{
           placeholder: "Translated Content Will Be Here...",
           height: "100%",
-          width: 500,
+          width: "100%",
           menubar: false,
           resize: false,
           branding: false,
