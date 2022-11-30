@@ -21,7 +21,7 @@ const LeftPanel: React.FC<LeftPanelProps> = ({
   handleDemoChange,
 }) => {
   return (
-    <div className="lg:min-h-screen lg:px-24 flex w-full h-full">
+    <div className="lg:min-h-screen  flex w-full h-full">
       {step === 1 && (
         <>
           <DemoDesktop

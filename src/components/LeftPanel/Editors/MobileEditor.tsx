@@ -14,7 +14,7 @@ const MobileEditor: React.FC<MobileEditorProps> = ({
   handleEditorChange,
 }) => {
   return (
-    <div className="flex-1 px-4 w-full h-screen flex flex-col items-center">
+    <div className="xl:flex xl:pr-24 hidden flex-1 w-full h-screen flex flex-col items-center">
       <Editor
         value={editorContent}
         apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"

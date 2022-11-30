@@ -26,7 +26,7 @@ const App: React.FC= () => {
   const [videoFilePath, setVideoFilePath] = useState<object[]>([]);
 
   const handleDesignWidth = () => {
-    if (window.innerWidth < 1450 && window.innerWidth > 1022) {
+    if (window.innerWidth < 1850 && window.innerWidth > 1022) {
       setResizeWarning(true);
     } else {
       setResizeWarning(false);

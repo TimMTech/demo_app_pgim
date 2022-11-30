@@ -9,7 +9,7 @@ const DemoMobile: React.FC<DemoMobileProps> = ({
   handleDemoChange,
 }) => {
   return (
-    <div className="flex-1 w-full h-screen flex flex-col">
+    <div className="xl:flex hidden flex-1 w-full h-screen flex flex-col items-center">
       <Editor
         value={demoContent}
         onEditorChange={handleDemoChange}
