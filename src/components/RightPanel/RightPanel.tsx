@@ -1,5 +1,6 @@
 import MediaUpload from "./Media/MediaUpload";
 import Languages from "./Translation/Languages";
+import { AiFillRightSquare, AiFillLeftSquare } from "react-icons/ai";
 
 interface RightPanelProps {
   step: number;
@@ -7,7 +8,9 @@ interface RightPanelProps {
   videoFilePath: object[];
   selectedLanguages: any;
   activeLanguage: string;
+  closeRightPanel: boolean;
 
+  handleCloseRightPanel: () => void;
   handleEditorTranslate: (languages: string) => void;
   handleMultiSelect: (value: any) => void;
   handleImageOnSuccess: (response: any) => void;
@@ -22,7 +25,9 @@ const RightPanel: React.FC<RightPanelProps> = ({
   videoFilePath,
   selectedLanguages,
   activeLanguage,
+  closeRightPanel,
 
+  handleCloseRightPanel,
   handleEditorTranslate,
   handleMultiSelect,
   handleImageOnSuccess,
@@ -31,11 +36,8 @@ const RightPanel: React.FC<RightPanelProps> = ({
   handleVideoOnError,
 }) => {
   return (
-    <div
-      hidden={step === 1}
-      className="lg:min-h-screen lg:max-w-[300px] w-full h-full bg-[#22262e] border-l-2 border-black/10"
-    >
-      {step === 2 && (
+    <div hidden={closeRightPanel} className=" w-[300px] absolute z-[10] py-14 right-0 h-full bg-[#22262e] border-l-2 border-black/10">
+      {step === 1 && (
         <MediaUpload
           imageFilePath={imageFilePath}
           videoFilePath={videoFilePath}
@@ -45,7 +47,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
           handleVideoOnError={handleVideoOnError}
         />
       )}
-      {step === 3 && (
+      {step === 2 && (
         <Languages
           selectedLanguages={selectedLanguages}
           activeLanguage={activeLanguage}

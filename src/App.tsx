@@ -1,19 +1,18 @@
-import LeftPanel from "./components/LeftPanel/LeftPanel";
+import Main from "./components/Main/Main";
 import RightPanel from "./components/RightPanel/RightPanel";
 import Navbar from "./components/Navbar";
-import LeftMenu from "./components/LeftMenu";
+import LeftPanel from "./components/LeftPanel";
 import { useState, useEffect } from "react";
-import ScreenWarning from "./components/ScreenWarning";
+
 import { Predictions } from "@aws-amplify/predictions";
 import { example } from "./utils/exampleContent";
+import DeviceBar from "./components/Main/DeviceBar";
+import { AiFillLeftSquare, AiFillRightSquare } from "react-icons/ai";
 
-
-
-const App: React.FC= () => {
+const App: React.FC = () => {
   const [step, setStep] = useState(1);
 
-  const [resizeWarning, setResizeWarning] = useState<boolean>(false);
-  const [deviceView, setDeviceView] = useState<boolean>(false)
+  const [deviceView, setDeviceView] = useState<boolean>(false);
 
   const [editorContent, setEditorContent] = useState<string>("");
   const [translatedContent, setTranslatedContent] = useState<string>("");
@@ -26,23 +25,17 @@ const App: React.FC= () => {
   const [imageFilePath, setImageFilePath] = useState<object[]>([]);
   const [videoFilePath, setVideoFilePath] = useState<object[]>([]);
 
-  const handleDesignWidth = () => {
-    if (window.innerWidth < 1350 && window.innerWidth > 1022) {
-      setResizeWarning(true);
-    } else {
-      setResizeWarning(false);
-    }
-  };
+  const [closeLeftPanel, setCloseLeftPanel] = useState<boolean>(false);
+  const [closeRightPanel, setCloseRightPanel] = useState<boolean>(false);
 
   const handleDeviceView = () => {
-    setDeviceView(!deviceView)
-  }
-
-  const handleEditorChange = (content: string) => {
-    setEditorContent(content)
+    setDeviceView(!deviceView);
   };
 
- 
+  const handleEditorChange = (content: string) => {
+    setEditorContent(content);
+  };
+
   const handleDemoChange = (content: string) => {
     setDemoContent(content);
   };
@@ -52,13 +45,13 @@ const App: React.FC= () => {
     Predictions.convert({
       translateText: {
         source: {
-          text: editorContent
+          text: editorContent,
         },
         targetLanguage: language,
       },
     })
       .then((response) => {
-        setTranslatedContent(response.text)
+        setTranslatedContent(response.text);
       })
       .catch((error) => console.log(error));
   };
@@ -97,31 +90,28 @@ const App: React.FC= () => {
     console.log("error", response);
   };
 
-  useEffect(() => {
-    window.addEventListener("resize", handleDesignWidth);
-    return () => {
-      window.removeEventListener("resize", handleDesignWidth);
-    };
-  }, []);
+  const handleCloseLeftPanel = () => {
+    setCloseLeftPanel(!closeLeftPanel);
+  };
 
-  useEffect(() => {
-    window.addEventListener("load", handleDesignWidth);
-    return () => {
-      window.removeEventListener("load", handleDesignWidth);
-    };
-  }, []);
+  const handleCloseRightPanel = () => {
+    setCloseRightPanel(!closeRightPanel);
+  };
 
   return (
-    <div className="w-full h-full flex flex-col">
-     
+    <div className="absolute z-[1] top-0 bottom-0 left-0 right-0 ">
       <Navbar
         step={step}
         handleNextStep={handleNextStep}
         handlePreviousStep={handlePreviousStep}
       />
-      <div className="lg:flex-row flex flex-col ">
-        <LeftMenu />
+      <DeviceBar deviceView={deviceView} handleDeviceView={handleDeviceView} />
+      <div className="flex w-full h-full relative">
         <LeftPanel
+          closeLeftPanel={closeLeftPanel}
+          handleCloseLeftPanel={handleCloseLeftPanel}
+        />
+        <Main
           step={step}
           editorContent={editorContent}
           translatedContent={translatedContent}
@@ -129,14 +119,15 @@ const App: React.FC= () => {
           deviceView={deviceView}
           handleDemoChange={handleDemoChange}
           handleEditorChange={handleEditorChange}
-          handleDeviceView={handleDeviceView}
         />
         <RightPanel
+          closeRightPanel={closeRightPanel}
           step={step}
           imageFilePath={imageFilePath}
           videoFilePath={videoFilePath}
           selectedLanguages={selectedLanguages}
           activeLanguage={activeLanguage}
+          handleCloseRightPanel={handleCloseRightPanel}
           handleEditorTranslate={handleEditorTranslate}
           handleMultiSelect={handleMultiSelect}
           handleImageOnSuccess={handleImageOnSuccess}
@@ -144,6 +135,44 @@ const App: React.FC= () => {
           handleVideoOnSuccess={handleVideoOnSuccess}
           handleVideoOnError={handleVideoOnError}
         />
+      </div>
+      <div
+        className={`${
+          closeLeftPanel && "left-[-5px]"
+        }  absolute bottom-0 top-0 left-[150px] z-[1000] flex items-center justify-center`}
+      >
+        {closeLeftPanel ? (
+          <AiFillRightSquare
+            className="bg-black text-white"
+            size={40}
+            onClick={handleCloseLeftPanel}
+          />
+        ) : (
+          <AiFillLeftSquare
+            className="bg-black text-white"
+            size={40}
+            onClick={handleCloseLeftPanel}
+          />
+        )}
+      </div>
+      <div
+        className={`${
+          closeRightPanel && "right-[0px]"
+        }  absolute bottom-0 top-0 right-[275px] z-[1000] flex items-center justify-center`}
+      >
+        {closeRightPanel ? (
+          <AiFillLeftSquare
+            className="bg-black text-white"
+            size={40}
+            onClick={handleCloseRightPanel}
+          />
+        ) : (
+          <AiFillRightSquare
+            className="bg-black text-white"
+            size={40}
+            onClick={handleCloseRightPanel}
+          />
+        )}
       </div>
     </div>
   );

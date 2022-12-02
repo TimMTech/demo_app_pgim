@@ -1,6 +1,5 @@
 import { Editor } from "@tinymce/tinymce-react";
 
-
 interface DesktopEditorProps {
   step: number;
   editorContent: string;
@@ -15,13 +14,13 @@ const DesktopEditor: React.FC<DesktopEditorProps> = ({
   handleEditorChange,
 }) => {
   return (
-    <div className=" w-full h-[1200px] flex flex-col items-center max-w-[1200px]">
+    <div className=" w-full h-[1200px] flex flex-col items-center w-[1200px] ">
       <Editor
         value={editorContent}
         apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
         onEditorChange={handleEditorChange}
         id="desktopContent"
-        disabled={step <= 1}
+      
         init={{
           placeholder: "Design Here...",
           height: "100%",
@@ -31,9 +30,8 @@ const DesktopEditor: React.FC<DesktopEditorProps> = ({
           branding: false,
           statusbar: false,
           toolbar:
-            step > 1
-              ? "undo redo | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | outdent indent | media"
-              : false,
+            "undo redo | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | outdent indent | media",
+
           plugins: ["lists", "emoticons", "media"],
           external_plugins: {
             N1ED: "http://localhost:3001/public/tinymce/N1ED/plugin.min.js",
@@ -51,11 +49,9 @@ const DesktopEditor: React.FC<DesktopEditorProps> = ({
       <Editor
         value={translatedContent}
         apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
-        
         id="desktopContentTranslated"
-        disabled={step <= 1}
+      
         init={{
-         
           placeholder: "Translated Content Will Be Here...",
           height: "100%",
           width: "100%",
@@ -64,9 +60,7 @@ const DesktopEditor: React.FC<DesktopEditorProps> = ({
           branding: false,
           statusbar: false,
           toolbar:
-            step > 1
-              ? "undo redo | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | outdent indent | media"
-              : false,
+            "undo redo | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | outdent indent | media",
           plugins: ["lists", "emoticons", "media"],
           external_plugins: {
             N1ED: "http://localhost:3001/public/tinymce/N1ED/plugin.min.js",
