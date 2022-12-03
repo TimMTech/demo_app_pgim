@@ -31,7 +31,7 @@ const Languages: React.FC<LanguagesProps> = ({
             allItemsAreSelected: "All Languages Selected",
           }}
         />
-        <div className="lg:grid lg:grid-cols-4 lg:gap-x-0 flex flex-wrap gap-3 p-2 max-h-[500px] overflow-y-auto font-prompt text-white border-b">
+        <div className="lg:grid lg:grid-cols-4 lg:gap-x-0 flex flex-wrap gap-3 p-2 max-h-[500px] overflow-y-auto font-prompt text-white border-b border-white/20 mx-2">
           <div className="w-[50px] h-[50px] bg-green-600 border rounded-lg flex items-center justify-center">
             en
           </div>

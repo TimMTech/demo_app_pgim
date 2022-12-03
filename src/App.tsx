@@ -2,7 +2,7 @@ import Main from "./components/Main/Main";
 import RightPanel from "./components/RightPanel/RightPanel";
 import Navbar from "./components/Navbar";
 import LeftPanel from "./components/LeftPanel";
-import { useState, useEffect } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 
 import { Predictions } from "@aws-amplify/predictions";
 import { example } from "./utils/exampleContent";
@@ -14,6 +14,13 @@ const App: React.FC = () => {
 
   const [deviceView, setDeviceView] = useState<boolean>(false);
 
+  const [generalContent, setGeneralContent] = useState<{ [key: string]: any }>({
+    data: {
+      title: "",
+      author: "",
+      description: "",
+    },
+  });
   const [editorContent, setEditorContent] = useState<string>("");
   const [translatedContent, setTranslatedContent] = useState<string>("");
 
@@ -30,6 +37,40 @@ const App: React.FC = () => {
 
   const handleDeviceView = () => {
     setDeviceView(!deviceView);
+  };
+
+  const handleGeneralContentChange = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { id, value } = e.target;
+    setGeneralContent((prevState) => ({
+      ...prevState,
+      data: {
+        ...prevState.data,
+        [id]: value,
+      },
+    }));
+  };
+ 
+  const handleGeneralContentSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await fetch("http://localhost:1337/api/blogs", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(generalContent),
+    })
+      .then((response) => {
+        if (!response.ok) console.log("error");
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleEditorChange = (content: string) => {
@@ -107,10 +148,7 @@ const App: React.FC = () => {
       />
       <DeviceBar deviceView={deviceView} handleDeviceView={handleDeviceView} />
       <div className="flex w-full h-full relative">
-        <LeftPanel
-          closeLeftPanel={closeLeftPanel}
-          handleCloseLeftPanel={handleCloseLeftPanel}
-        />
+        <LeftPanel closeLeftPanel={closeLeftPanel} />
         <Main
           step={step}
           editorContent={editorContent}
@@ -123,11 +161,13 @@ const App: React.FC = () => {
         <RightPanel
           closeRightPanel={closeRightPanel}
           step={step}
+          generalContent={generalContent}
           imageFilePath={imageFilePath}
           videoFilePath={videoFilePath}
           selectedLanguages={selectedLanguages}
           activeLanguage={activeLanguage}
-          handleCloseRightPanel={handleCloseRightPanel}
+          handleGeneralContentChange={handleGeneralContentChange}
+          handleGeneralContentSubmit={handleGeneralContentSubmit}
           handleEditorTranslate={handleEditorTranslate}
           handleMultiSelect={handleMultiSelect}
           handleImageOnSuccess={handleImageOnSuccess}
@@ -138,7 +178,7 @@ const App: React.FC = () => {
       </div>
       <div
         className={`${
-          closeLeftPanel && "left-[-5px]"
+          closeLeftPanel && "left-[1px]"
         }  absolute bottom-0 top-0 left-[150px] z-[1000] flex items-center justify-center`}
       >
         {closeLeftPanel ? (
@@ -157,7 +197,7 @@ const App: React.FC = () => {
       </div>
       <div
         className={`${
-          closeRightPanel && "right-[0px]"
+          closeRightPanel && "right-[1px]"
         }  absolute bottom-0 top-0 right-[275px] z-[1000] flex items-center justify-center`}
       >
         {closeRightPanel ? (

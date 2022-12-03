@@ -24,10 +24,10 @@ const Navigation: React.FC<NavigationProps> = ({
         size={25}
       />
       <p>
-        {step === 1 && "Create Content"}
-        {step === 2 && "Choose Translation Language"}
-        {step === 3 && "Final Preview"}
-       
+        {step === 1 && "General"}
+        {step === 2 && "Create Content"}
+        {step === 3 && "Choose Translation Language"}
+        {step === 4 && "Final Preview"}
       </p>
       <BsArrowRightCircleFill
         onClick={handleNextStep}

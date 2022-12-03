@@ -1,16 +1,22 @@
 import MediaUpload from "./Media/MediaUpload";
 import Languages from "./Translation/Languages";
+import User from "./UserForm/User";
 import { AiFillRightSquare, AiFillLeftSquare } from "react-icons/ai";
+import { ChangeEvent, FormEvent } from "react";
 
 interface RightPanelProps {
   step: number;
+  generalContent: { [key: string]: any };
   imageFilePath: object[];
   videoFilePath: object[];
   selectedLanguages: any;
   activeLanguage: string;
   closeRightPanel: boolean;
 
-  handleCloseRightPanel: () => void;
+  handleGeneralContentSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  handleGeneralContentChange: (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  ) => void;
   handleEditorTranslate: (languages: string) => void;
   handleMultiSelect: (value: any) => void;
   handleImageOnSuccess: (response: any) => void;
@@ -21,13 +27,15 @@ interface RightPanelProps {
 
 const RightPanel: React.FC<RightPanelProps> = ({
   step,
+  generalContent,
   imageFilePath,
   videoFilePath,
   selectedLanguages,
   activeLanguage,
   closeRightPanel,
 
-  handleCloseRightPanel,
+  handleGeneralContentSubmit,
+  handleGeneralContentChange,
   handleEditorTranslate,
   handleMultiSelect,
   handleImageOnSuccess,
@@ -36,8 +44,18 @@ const RightPanel: React.FC<RightPanelProps> = ({
   handleVideoOnError,
 }) => {
   return (
-    <div hidden={closeRightPanel} className=" w-[300px] absolute z-[10] py-14 right-0 h-full bg-[#22262e] border-l-2 border-black/10">
+    <div
+      hidden={closeRightPanel}
+      className=" w-[300px] absolute z-[10] py-14 right-0 h-full bg-[#22262e] border-l-2 border-black/10"
+    >
       {step === 1 && (
+        <User
+          generalContent={generalContent}
+          handleGeneralContentSubmit={handleGeneralContentSubmit}
+          handleGeneralContentChange={handleGeneralContentChange}
+        />
+      )}
+      {step === 2 && (
         <MediaUpload
           imageFilePath={imageFilePath}
           videoFilePath={videoFilePath}
