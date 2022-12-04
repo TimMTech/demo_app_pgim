@@ -33,9 +33,7 @@ const MobileEditor: React.FC<MobileEditorProps> = ({
             "undo redo | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | outdent indent | media",
 
           plugins: ["lists", "emoticons", "media"],
-          external_plugins: {
-            N1ED: "http://localhost:3001/public/tinymce/N1ED/plugin.min.js",
-          },
+          
 
           content_style: `.mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before {
     padding-left: 5px;
@@ -64,9 +62,7 @@ const MobileEditor: React.FC<MobileEditorProps> = ({
               "undo redo | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | outdent indent | media",
               
           plugins: ["lists", "emoticons", "media"],
-          external_plugins: {
-            N1ED: "http://localhost:3001/public/tinymce/N1ED/plugin.min.js",
-          },
+         
           content_style: `.mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before {
     
     padding-left: 5px;

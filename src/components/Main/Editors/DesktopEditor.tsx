@@ -20,7 +20,6 @@ const DesktopEditor: React.FC<DesktopEditorProps> = ({
         apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
         onEditorChange={handleEditorChange}
         id="desktopContent"
-      
         init={{
           placeholder: "Design Here...",
           height: "100%",
@@ -33,9 +32,6 @@ const DesktopEditor: React.FC<DesktopEditorProps> = ({
             "undo redo | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | outdent indent | media",
 
           plugins: ["lists", "emoticons", "media"],
-          external_plugins: {
-            N1ED: "http://localhost:3001/public/tinymce/N1ED/plugin.min.js",
-          },
 
           content_style: `.mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before {
     padding-left: 5px;
@@ -50,7 +46,6 @@ const DesktopEditor: React.FC<DesktopEditorProps> = ({
         value={translatedContent}
         apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
         id="desktopContentTranslated"
-      
         init={{
           placeholder: "Translated Content Will Be Here...",
           height: "100%",
@@ -62,9 +57,7 @@ const DesktopEditor: React.FC<DesktopEditorProps> = ({
           toolbar:
             "undo redo | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | outdent indent | media",
           plugins: ["lists", "emoticons", "media"],
-          external_plugins: {
-            N1ED: "http://localhost:3001/public/tinymce/N1ED/plugin.min.js",
-          },
+
           content_style: `.mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before {
     
     padding-left: 5px;

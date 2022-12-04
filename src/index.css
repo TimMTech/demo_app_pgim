@@ -11,28 +11,24 @@
 html,
 body {
   background-color: #181c22;
-
   
 }
+
 
 .tox-tinymce {
   height: 100% !important;
   border-radius: 0 !important;
   box-shadow: none !important;
   border: none !important;
- 
 }
 
-.rmsc .dropdown-container  {
+.rmsc .dropdown-container {
   background-color: #22262e !important;
-  
 }
 
 .dropdown-heading-value {
   color: white !important;
 }
-
-
 
 @layer utilities {
   .square {

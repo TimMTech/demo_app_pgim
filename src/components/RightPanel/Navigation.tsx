@@ -15,7 +15,7 @@ const Navigation: React.FC<NavigationProps> = ({
   handlePreviousStep,
 }) => {
   return (
-    <nav className="flex-2 w-full flex items-center justify-center gap-2">
+    <nav className="text-white text-sm font-prompt w-full flex items-center justify-center gap-2 py-3">
       <BsArrowLeftCircleFill
         onClick={handlePreviousStep}
         className={classNames({
@@ -25,8 +25,8 @@ const Navigation: React.FC<NavigationProps> = ({
       />
       <p>
         {step === 1 && "General"}
-        {step === 2 && "Create Content"}
-        {step === 3 && "Choose Translation Language"}
+        {step === 2 && "Media"}
+        {step === 3 && "Translations"}
         {step === 4 && "Final Preview"}
       </p>
       <BsArrowRightCircleFill
