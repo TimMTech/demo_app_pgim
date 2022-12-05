@@ -27,12 +27,11 @@ const Navigation: React.FC<NavigationProps> = ({
         {step === 1 && "General"}
         {step === 2 && "Media"}
         {step === 3 && "Translations"}
-        {step === 4 && "Final Preview"}
       </p>
       <BsArrowRightCircleFill
         onClick={handleNextStep}
         className={classNames({
-          hidden: step === 4,
+          hidden: step === 3,
         })}
         size={25}
       />

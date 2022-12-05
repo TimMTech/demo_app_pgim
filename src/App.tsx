@@ -2,7 +2,7 @@ import Main from "./components/Main/Main";
 import RightPanel from "./components/RightPanel/RightPanel";
 import Navbar from "./components/Navbar";
 import LeftPanel from "./components/LeftPanel";
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent } from "react";
 
 import { Predictions } from "@aws-amplify/predictions";
 
@@ -28,6 +28,7 @@ const App: React.FC = () => {
 
   const [selectedLanguages, setSelectedLanguages] = useState<[]>([]);
   const [activeLanguage, setActiveLanguage] = useState<string>("");
+  const [recentTranslations, setRecentTranslations] = useState<{}[]>([]);
 
   const [imageFilePath, setImageFilePath] = useState<object[]>([]);
   const [videoFilePath, setVideoFilePath] = useState<object[]>([]);
@@ -41,7 +42,6 @@ const App: React.FC = () => {
   const handlePreviewMode = () => {
     setPreview(!preview);
   };
-  
 
   const handleGeneralContentChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
@@ -98,9 +98,15 @@ const App: React.FC = () => {
         targetLanguage: language,
       },
     })
-
       .then((response) => {
         setTranslatedContent(response.text);
+        setRecentTranslations((prevState) =>
+          prevState.some(
+            (languages: any) => languages.language === response.language
+          )
+            ? prevState
+            : [...prevState, response]
+        );
         setStrapiPOST((prevState) => ({
           ...prevState,
           data: {
@@ -111,7 +117,7 @@ const App: React.FC = () => {
       })
       .catch((error) => console.log(error));
   };
-
+  console.log(recentTranslations);
   const handleMultiSelect = (value: any) => {
     setSelectedLanguages(value);
   };
@@ -127,6 +133,7 @@ const App: React.FC = () => {
   const handleImageOnSuccess = async (response: any) => {
     await fetch(response.thumbnailUrl)
       .then((response) => {
+        console.log(response);
         return response.blob();
       })
       .then((blob) => {
@@ -141,7 +148,7 @@ const App: React.FC = () => {
   const handleVideoOnSuccess = (response: any) => {
     setVideoFilePath((prevState) => [...prevState, response]);
   };
-
+  console.log(selectedLanguages);
   const handleVideoOnError = (response: any) => {
     console.log("error", response);
   };
@@ -149,6 +156,7 @@ const App: React.FC = () => {
   return (
     <div className="absolute z-[1] top-0 bottom-0 left-0 right-0 ">
       <Navbar
+        preview={preview}
         handlePreviewMode={handlePreviewMode}
         handleStrapiSubmit={handleStrapiSubmit}
       />
@@ -156,7 +164,6 @@ const App: React.FC = () => {
       <div className="flex w-full h-full ">
         <LeftPanel preview={preview} />
         <Main
-          step={step}
           editorContent={editorContent}
           translatedContent={translatedContent}
           deviceView={deviceView}
@@ -170,8 +177,8 @@ const App: React.FC = () => {
           videoFilePath={videoFilePath}
           selectedLanguages={selectedLanguages}
           activeLanguage={activeLanguage}
+          recentTranslations={recentTranslations}
           handleGeneralContentChange={handleGeneralContentChange}
-          handleStrapiSubmit={handleStrapiSubmit}
           handleEditorTranslate={handleEditorTranslate}
           handleMultiSelect={handleMultiSelect}
           handleImageOnSuccess={handleImageOnSuccess}

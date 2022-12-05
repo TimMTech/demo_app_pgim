@@ -1,7 +1,7 @@
 import Navigation from "./Navigation";
 import MediaUpload from "./Media/MediaUpload";
 import Languages from "./Translation/Languages";
-import User from "./UserForm/User";
+import User from "./General/User";
 import { ChangeEvent, FormEvent } from "react";
 
 interface RightPanelProps {
@@ -12,8 +12,8 @@ interface RightPanelProps {
   videoFilePath: object[];
   selectedLanguages: any;
   activeLanguage: string;
+  recentTranslations: {}[]
 
-  handleStrapiSubmit: (e: FormEvent<HTMLFormElement>) => void;
   handleGeneralContentChange: (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => void;
@@ -36,8 +36,8 @@ const RightPanel: React.FC<RightPanelProps> = ({
   videoFilePath,
   selectedLanguages,
   activeLanguage,
+  recentTranslations,
 
-  handleStrapiSubmit,
   handleGeneralContentChange,
   handleEditorTranslate,
   handleMultiSelect,
@@ -45,7 +45,6 @@ const RightPanel: React.FC<RightPanelProps> = ({
   handleImageOnError,
   handleVideoOnSuccess,
   handleVideoOnError,
-
   handleNextStep,
   handlePreviousStep,
 }) => {
@@ -62,7 +61,6 @@ const RightPanel: React.FC<RightPanelProps> = ({
       {step === 1 && (
         <User
           strapiPOST={strapiPOST}
-          handleStrapiSubmit={handleStrapiSubmit}
           handleGeneralContentChange={handleGeneralContentChange}
         />
       )}
@@ -80,6 +78,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
         <Languages
           selectedLanguages={selectedLanguages}
           activeLanguage={activeLanguage}
+          recentTranslations={recentTranslations}
           handleEditorTranslate={handleEditorTranslate}
           handleMultiSelect={handleMultiSelect}
         />

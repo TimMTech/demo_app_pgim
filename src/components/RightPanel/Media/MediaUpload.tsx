@@ -42,19 +42,7 @@ const MediaUpload: React.FC<MediaUploadProps> = ({
             >
               Upload Images
             </label>
-            <IKUpload
-              hidden
-              id="video-upload"
-              multiple
-              onSuccess={handleVideoOnSuccess}
-              onError={handleVideoOnError}
-            />
-            <label
-              htmlFor="video-upload"
-              className="text-center w-full border px-6 py-3 rounded-lg bg-[rgba(44,49,57,0.6);]"
-            >
-              Upload Videos
-            </label>
+           
           </div>
           <IKMedia
             imageFilePath={imageFilePath}

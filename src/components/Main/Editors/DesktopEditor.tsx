@@ -1,18 +1,23 @@
 import { Editor } from "@tinymce/tinymce-react";
+import e from "express";
 
 interface DesktopEditorProps {
-  step: number;
   editorContent: string;
+
   translatedContent: string;
+
   handleEditorChange: (content: string, editor: any) => void;
 }
 
 const DesktopEditor: React.FC<DesktopEditorProps> = ({
-  step,
   editorContent,
+
   translatedContent,
+
   handleEditorChange,
 }) => {
+
+
   return (
     <div className=" w-full h-[1200px] flex flex-col items-center w-[1200px] ">
       <Editor
@@ -21,6 +26,7 @@ const DesktopEditor: React.FC<DesktopEditorProps> = ({
         onEditorChange={handleEditorChange}
         id="desktopContent"
         init={{
+          
           placeholder: "Design Here...",
           height: "100%",
           width: "100%",
@@ -38,10 +44,13 @@ const DesktopEditor: React.FC<DesktopEditorProps> = ({
     font-family: prompt;
     font-weight:700;
     }
+    
+    
     `,
         }}
       />
       <div className="w-full border" />
+
       <Editor
         value={translatedContent}
         apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
