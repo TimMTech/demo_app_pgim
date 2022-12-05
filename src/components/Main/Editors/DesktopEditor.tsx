@@ -1,5 +1,5 @@
 import { Editor } from "@tinymce/tinymce-react";
-import e from "express";
+import { example } from "../../../utils/exampleContent";
 
 interface DesktopEditorProps {
   editorContent: string;
@@ -16,17 +16,15 @@ const DesktopEditor: React.FC<DesktopEditorProps> = ({
 
   handleEditorChange,
 }) => {
-
-
   return (
     <div className=" w-full h-[1200px] flex flex-col items-center w-[1200px] ">
       <Editor
+       
         value={editorContent}
         apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
         onEditorChange={handleEditorChange}
         id="desktopContent"
         init={{
-          
           placeholder: "Design Here...",
           height: "100%",
           width: "100%",
@@ -40,13 +38,16 @@ const DesktopEditor: React.FC<DesktopEditorProps> = ({
           plugins: ["lists", "emoticons", "media"],
 
           content_style: `.mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before {
-    padding-left: 5px;
-    font-family: prompt;
-    font-weight:700;
-    }
     
-    
-    `,
+            padding-left: 5px;
+            font-family: prompt;
+            font-weight:700;
+            }
+            .tox.tox-tinymce {
+              background: transparent !important;
+            }
+            
+            `,
         }}
       />
       <div className="w-full border" />
@@ -69,11 +70,10 @@ const DesktopEditor: React.FC<DesktopEditorProps> = ({
 
           content_style: `.mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before {
     
-    padding-left: 5px;
-    font-family: prompt;
-    font-weight:700;
-    }
-    `,
+            padding-left: 5px;
+            font-family: prompt;
+            font-weight:700;
+            }`,
         }}
       />
     </div>

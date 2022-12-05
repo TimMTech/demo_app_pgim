@@ -18,7 +18,7 @@ const Navigation: React.FC<NavigationProps> = ({
     <nav className="text-white text-sm font-prompt w-full flex items-center justify-center gap-2 py-3">
       <BsArrowLeftCircleFill
         onClick={handlePreviousStep}
-        className={classNames({
+        className={classNames("cursor-pointer", {
           hidden: step === 1,
         })}
         size={25}
@@ -30,7 +30,7 @@ const Navigation: React.FC<NavigationProps> = ({
       </p>
       <BsArrowRightCircleFill
         onClick={handleNextStep}
-        className={classNames({
+        className={classNames("cursor-pointer", {
           hidden: step === 3,
         })}
         size={25}

@@ -38,7 +38,7 @@ const MediaUpload: React.FC<MediaUploadProps> = ({
             />
             <label
               htmlFor="image-upload"
-              className="text-center w-full border px-6 py-3 rounded-lg bg-[rgba(44,49,57,0.6);]"
+              className="cursor-pointer text-center w-full border px-6 py-3 rounded-lg bg-[rgba(44,49,57,0.6);]"
             >
               Upload Images
             </label>

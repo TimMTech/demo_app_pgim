@@ -23,13 +23,17 @@ const IKMedia: React.FC<IKMediaProps> = ({ imageFilePath, videoFilePath }) => {
               <div className="flex flex-col">
                 <span>{`${width} x ${height}`}</span>
                 <span>{formatBytes(size)} KB (Original)</span>
-                <IKImage src={url} draggable className="border" />
+                <IKImage
+                  src={url}
+                  draggable
+                  className=" border cursor-grabbing"
+                />
               </div>
               <div className="flex flex-col">
                 <span>{`${width} x ${height}`}</span>
                 <span>{formatBytes(size)} KB (Optimized 100% Quality)</span>
                 <IKImage
-                  className="border"
+                  className="border cursor-grabbing"
                   src={url}
                   lqip={{ active: true, quality: 100 }}
                   draggable
@@ -42,7 +46,7 @@ const IKMedia: React.FC<IKMediaProps> = ({ imageFilePath, videoFilePath }) => {
                     <span>{formatBytes(blob.size)} KB (Thumbnail)</span>
                   </div>
                   <IKImage
-                    className="border"
+                    className="border cursor-grabbing"
                     src={url}
                     draggable
                     transformation={[

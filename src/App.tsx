@@ -5,7 +5,8 @@ import LeftPanel from "./components/LeftPanel";
 import { useState, ChangeEvent } from "react";
 
 import { Predictions } from "@aws-amplify/predictions";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import DeviceBar from "./components/Main/DeviceBar";
 
 const App: React.FC = () => {
@@ -66,14 +67,16 @@ const App: React.FC = () => {
       body: JSON.stringify(strapiPOST),
     })
       .then((response) => {
-        if (!response.ok) console.log("error");
+        if (!response.ok) {
+          toast.error("We Need Content :(");
+        } else {
+          toast.success("Published!");
+        }
         return response.json();
-      })
-      .then((data) => {
-        console.log(data);
       })
       .catch((error) => {
         console.log(error);
+        toast.error("We Need Content :(");
       });
   };
 
@@ -114,10 +117,14 @@ const App: React.FC = () => {
             translated_content: response.text,
           },
         }));
+        toast.success(`Translated in ${language}`);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        toast.error("Editor Cannot Be Empty.");
+        console.log("error", error);
+      });
   };
-  console.log(recentTranslations);
+
   const handleMultiSelect = (value: any) => {
     setSelectedLanguages(value);
   };
@@ -133,28 +140,39 @@ const App: React.FC = () => {
   const handleImageOnSuccess = async (response: any) => {
     await fetch(response.thumbnailUrl)
       .then((response) => {
-        console.log(response);
+        toast.success("Image Uploaded!");
         return response.blob();
       })
       .then((blob) => {
         setImageFilePath((prevState) => [...prevState, { ...response, blob }]);
+      })
+      .catch((error) => {
+        toast.error("Image Upload Failed :(");
+        console.log("error", error);
       });
   };
 
   const handleImageOnError = (response: any) => {
+    toast.error("Image Upload Failed :(");
     console.log("error", response);
   };
 
   const handleVideoOnSuccess = (response: any) => {
     setVideoFilePath((prevState) => [...prevState, response]);
   };
-  console.log(selectedLanguages);
+
   const handleVideoOnError = (response: any) => {
     console.log("error", response);
   };
 
   return (
     <div className="absolute z-[1] top-0 bottom-0 left-0 right-0 ">
+      <ToastContainer
+        theme="dark"
+        toastStyle={{
+          backgroundColor: "#22262e",
+        }}
+      />
       <Navbar
         preview={preview}
         handlePreviewMode={handlePreviewMode}

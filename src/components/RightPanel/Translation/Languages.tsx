@@ -45,7 +45,7 @@ const Languages: React.FC<LanguagesProps> = ({
                 key={index}
                 className={`${
                   activeLanguage === label ? "bg-orange-400" : "bg-gray-400"
-                } w-[50px] h-[50px]  border rounded-lg flex items-center justify-center`}
+                } cursor-pointer w-[50px] h-[50px]  border rounded-lg flex items-center justify-center`}
                 onClick={() => handleEditorTranslate(label)}
               >
                 {label}
@@ -56,11 +56,15 @@ const Languages: React.FC<LanguagesProps> = ({
         <h2 className="p-2 text-center text-white font-prompt">
           Recent Translations
         </h2>
-        <div className="p-2 text-white font-prompt text-lg">
+        <div className="flex flex-col gap-2 p-2 text-white font-prompt text-lg">
           {recentTranslations?.map((languages: any, index: number) => {
             const { language } = languages;
             return (
-              <div key={index} onClick={() => handleEditorTranslate(language)}>
+              <div
+                className={`${activeLanguage === language && "bg-white text-black"} cursor-pointer w-full text-center p-2 rounded-md bg-[rgba(44,49,57,0.6);]`}
+                key={index}
+                onClick={() => handleEditorTranslate(language)}
+              >
                 {language}
               </div>
             );

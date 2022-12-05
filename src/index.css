@@ -6,12 +6,14 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  ;
 }
 
 html,
 body {
   background-color: #181c22;
-  
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 
@@ -20,10 +22,18 @@ body {
   border-radius: 0 !important;
   box-shadow: none !important;
   border: none !important;
+
+}
+.tox-editor-header {
+  padding: 0px !important;
 }
 
+
+
+
+
 .rmsc .dropdown-container {
-  background-color: #22262e !important;
+  color: #22262e !important;
 }
 
 .dropdown-heading-value {
