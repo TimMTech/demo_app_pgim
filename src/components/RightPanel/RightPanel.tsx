@@ -3,6 +3,7 @@ import MediaUpload from "./Media/MediaUpload";
 import Languages from "./Translation/Languages";
 import User from "./General/User";
 import { ChangeEvent, FormEvent } from "react";
+import classNames from "classnames";
 
 interface RightPanelProps {
   step: number;
@@ -12,7 +13,7 @@ interface RightPanelProps {
   videoFilePath: object[];
   selectedLanguages: any;
   activeLanguage: string;
-  recentTranslations: {}[]
+  recentTranslations: {}[];
 
   handleGeneralContentChange: (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
@@ -50,8 +51,13 @@ const RightPanel: React.FC<RightPanelProps> = ({
 }) => {
   return (
     <div
-      hidden={preview}
-      className=" w-[300px] absolute z-[10] py-14 right-0 h-full bg-[#22262e] border-l-2 border-black/10"
+      className={classNames(
+        "transition duration-200 ease w-[300px] absolute z-[10] py-14 right-0 h-full bg-[#22262e] border-l-2 border-black/10",
+        {
+          "opacity-100 pointer-events-auto": preview === false,
+          "opacity-0 pointer-events-none": preview === true,
+        }
+      )}
     >
       <Navigation
         step={step}

@@ -3,19 +3,17 @@ import MobileEditor from "../Main/Editors/MobileEditor";
 
 interface MainProps {
   editorContent: string;
-
   translatedContent: string;
   deviceView: boolean;
-
+  translationView: boolean;
   handleEditorChange: (content: string, editor: any) => void;
 }
 
 const Main: React.FC<MainProps> = ({
   editorContent,
-
   translatedContent,
   deviceView,
-
+  translationView,
   handleEditorChange,
 }) => {
   return (
@@ -26,12 +24,14 @@ const Main: React.FC<MainProps> = ({
             <MobileEditor
               editorContent={editorContent}
               translatedContent={translatedContent}
+              translationView={translationView}
               handleEditorChange={handleEditorChange}
             />
           ) : (
             <DesktopEditor
               editorContent={editorContent}
               translatedContent={translatedContent}
+              translationView={translationView}
               handleEditorChange={handleEditorChange}
             />
           )}

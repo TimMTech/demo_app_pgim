@@ -3,7 +3,7 @@ import RightPanel from "./components/RightPanel/RightPanel";
 import Navbar from "./components/Navbar";
 import LeftPanel from "./components/LeftPanel";
 import { useState, ChangeEvent } from "react";
-
+import { example } from "./utils/exampleContent";
 import { Predictions } from "@aws-amplify/predictions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,8 +13,9 @@ const App: React.FC = () => {
   const [step, setStep] = useState(1);
 
   const [deviceView, setDeviceView] = useState<boolean>(false);
+  const [translationView, setTranslationView] = useState<boolean>(false);
 
-  const [editorContent, setEditorContent] = useState<string>("");
+  const [editorContent, setEditorContent] = useState<string>(example);
   const [translatedContent, setTranslatedContent] = useState<string>("");
 
   const [strapiPOST, setStrapiPOST] = useState<{ [key: string]: any }>({
@@ -40,10 +41,15 @@ const App: React.FC = () => {
     setDeviceView(!deviceView);
   };
 
+  const handleTranslationView = () => {
+    if (!translatedContent) return;
+    setTranslationView(!translationView);
+  };
+
   const handlePreviewMode = () => {
     setPreview(!preview);
   };
-
+  console.log(strapiPOST);
   const handleGeneralContentChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
@@ -59,6 +65,14 @@ const App: React.FC = () => {
   };
 
   const handleStrapiSubmit = async () => {
+    if (
+      Object.values(strapiPOST.data).some(
+        (value) => value === "" || value === null
+      )
+    ) {
+      toast.error("We Need Content :(");
+      return;
+    }
     await fetch("http://localhost:1337/api/blogs", {
       method: "POST",
       headers: {
@@ -102,6 +116,7 @@ const App: React.FC = () => {
       },
     })
       .then((response) => {
+        setTranslationView(true);
         setTranslatedContent(response.text);
         setRecentTranslations((prevState) =>
           prevState.some(
@@ -178,13 +193,18 @@ const App: React.FC = () => {
         handlePreviewMode={handlePreviewMode}
         handleStrapiSubmit={handleStrapiSubmit}
       />
-      <DeviceBar deviceView={deviceView} handleDeviceView={handleDeviceView} />
+      <DeviceBar
+        translatedContent={translatedContent}
+        handleDeviceView={handleDeviceView}
+        handleTranslationView={handleTranslationView}
+      />
       <div className="flex w-full h-full ">
         <LeftPanel preview={preview} />
         <Main
           editorContent={editorContent}
           translatedContent={translatedContent}
           deviceView={deviceView}
+          translationView={translationView}
           handleEditorChange={handleEditorChange}
         />
         <RightPanel
