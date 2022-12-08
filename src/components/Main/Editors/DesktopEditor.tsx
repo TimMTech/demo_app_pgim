@@ -30,13 +30,6 @@ const DesktopEditor: React.FC<DesktopEditorProps> = ({
             toolbar:
               "undo redo | link | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | outdent indent | media",
             plugins: ["lists", "emoticons", "media", "table", "link"],
-
-            content_style: `.mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before {
-  
-          padding-left: 5px;
-          font-family: prompt;
-          font-weight:700;
-          }`,
           }}
         />
       ) : (
@@ -46,13 +39,14 @@ const DesktopEditor: React.FC<DesktopEditorProps> = ({
           onEditorChange={handleEditorChange}
           id="desktopContent"
           init={{
+            
             height: "100%",
             width: "100%",
             resize: false,
             branding: false,
             statusbar: false,
             toolbar:
-              "undo redo |  link | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | outdent indent | media",
+              "undo redo | OptimizedVideo |  link | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | outdent indent | media",
 
             plugins: ["lists", "emoticons", "media", "table", "link"],
           }}

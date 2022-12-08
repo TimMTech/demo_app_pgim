@@ -2,7 +2,7 @@ import Main from "./components/Main/Main";
 import RightPanel from "./components/RightPanel/RightPanel";
 import Navbar from "./components/Navbar";
 import LeftPanel from "./components/LeftPanel";
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { example } from "./utils/exampleContent";
 import { Predictions } from "@aws-amplify/predictions";
 import { ToastContainer, toast } from "react-toastify";
@@ -34,6 +34,7 @@ const App: React.FC = () => {
 
   const [imageFilePath, setImageFilePath] = useState<object[]>([]);
   const [videoFilePath, setVideoFilePath] = useState<object[]>([]);
+  const [mediaTypeDisplay, setMediaTypeDisplay] = useState<boolean>(true);
 
   const [preview, setPreview] = useState<boolean>(false);
 
@@ -49,12 +50,11 @@ const App: React.FC = () => {
   const handlePreviewMode = () => {
     setPreview(!preview);
   };
-  console.log(strapiPOST);
+
   const handleGeneralContentChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { id, value } = e.target;
-
     setStrapiPOST((prevState) => ({
       ...prevState,
       data: {
@@ -152,14 +152,19 @@ const App: React.FC = () => {
     setStep((prevState) => prevState - 1);
   };
 
+  const handleMediaTypeDisplay = () => {
+    setMediaTypeDisplay(!mediaTypeDisplay);
+  };
+
   const handleImageOnSuccess = async (response: any) => {
     await fetch(response.thumbnailUrl)
       .then((response) => {
-        toast.success("Image Uploaded!");
         return response.blob();
       })
       .then((blob) => {
+        setMediaTypeDisplay(true);
         setImageFilePath((prevState) => [...prevState, { ...response, blob }]);
+        toast.success("Images Uploaded!");
       })
       .catch((error) => {
         toast.error("Image Upload Failed :(");
@@ -172,11 +177,24 @@ const App: React.FC = () => {
     console.log("error", response);
   };
 
-  const handleVideoOnSuccess = (response: any) => {
-    setVideoFilePath((prevState) => [...prevState, response]);
+  const handleVideoOnSuccess = async (response: any) => {
+    await fetch(response)
+      .then((response) => {
+        return response.blob();
+      })
+      .then((blob) => {
+        setMediaTypeDisplay(false);
+        setVideoFilePath((prevState) => [...prevState, { ...response, blob }]);
+        toast.success("Videos Uploaded!");
+      })
+      .catch((error) => {
+        toast.error("Video Upload Failed :(");
+        console.log("error", error);
+      });
   };
 
   const handleVideoOnError = (response: any) => {
+    toast.error("Video Upload Failed :(");
     console.log("error", response);
   };
 
@@ -213,6 +231,7 @@ const App: React.FC = () => {
           strapiPOST={strapiPOST}
           imageFilePath={imageFilePath}
           videoFilePath={videoFilePath}
+          mediaTypeDisplay={mediaTypeDisplay}
           selectedLanguages={selectedLanguages}
           activeLanguage={activeLanguage}
           recentTranslations={recentTranslations}
@@ -223,6 +242,7 @@ const App: React.FC = () => {
           handleImageOnError={handleImageOnError}
           handleVideoOnSuccess={handleVideoOnSuccess}
           handleVideoOnError={handleVideoOnError}
+          handleMediaTypeDisplay={handleMediaTypeDisplay}
           handleNextStep={handleNextStep}
           handlePreviousStep={handlePreviousStep}
         />

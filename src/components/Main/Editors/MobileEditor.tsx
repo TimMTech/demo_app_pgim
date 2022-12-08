@@ -21,7 +21,6 @@ const MobileEditor: React.FC<MobileEditorProps> = ({
           apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
           id="mobileContentTranslated"
           init={{
-            placeholder: "Translated Content Will Be Here...",
             height: "100%",
             width: "100%",
             menubar: false,
@@ -31,22 +30,7 @@ const MobileEditor: React.FC<MobileEditorProps> = ({
             toolbar:
               "undo redo | link | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | outdent indent | media",
 
-            plugins: [
-              "lists",
-              "emoticons",
-              "media",
-              "table",
-              "tabledelete",
-              "link",
-            ],
-
-            content_style: `.mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before {
-   
-   padding-left: 5px;
-   font-family: prompt;
-   font-weight:700;
-   }
-   `,
+            plugins: ["lists", "emoticons", "media", "table", "link"],
           }}
         />
       ) : (
@@ -65,14 +49,7 @@ const MobileEditor: React.FC<MobileEditorProps> = ({
             toolbar:
               "undo redo | link | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | outdent indent | media",
 
-            plugins: [
-              "lists",
-              "emoticons",
-              "media",
-              "table",
-              "tabledelete",
-              "link",
-            ],
+            plugins: ["lists", "emoticons", "media", "table", "link"],
           }}
         />
       )}

@@ -2,7 +2,7 @@ import Navigation from "./Navigation";
 import MediaUpload from "./Media/MediaUpload";
 import Languages from "./Translation/Languages";
 import User from "./General/User";
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent } from "react";
 import classNames from "classnames";
 
 interface RightPanelProps {
@@ -11,6 +11,7 @@ interface RightPanelProps {
   strapiPOST: { [key: string]: any };
   imageFilePath: object[];
   videoFilePath: object[];
+  mediaTypeDisplay: boolean;
   selectedLanguages: any;
   activeLanguage: string;
   recentTranslations: {}[];
@@ -21,10 +22,11 @@ interface RightPanelProps {
   handleEditorTranslate: (languages: string) => void;
   handleMultiSelect: (value: any) => void;
   handleImageOnSuccess: (response: any) => void;
+
   handleImageOnError: (response: any) => void;
   handleVideoOnSuccess: (response: any) => void;
   handleVideoOnError: (response: any) => void;
-
+  handleMediaTypeDisplay: () => void;
   handleNextStep: () => void;
   handlePreviousStep: () => void;
 }
@@ -35,6 +37,8 @@ const RightPanel: React.FC<RightPanelProps> = ({
   strapiPOST,
   imageFilePath,
   videoFilePath,
+  mediaTypeDisplay,
+
   selectedLanguages,
   activeLanguage,
   recentTranslations,
@@ -43,9 +47,11 @@ const RightPanel: React.FC<RightPanelProps> = ({
   handleEditorTranslate,
   handleMultiSelect,
   handleImageOnSuccess,
+
   handleImageOnError,
   handleVideoOnSuccess,
   handleVideoOnError,
+  handleMediaTypeDisplay,
   handleNextStep,
   handlePreviousStep,
 }) => {
@@ -74,10 +80,12 @@ const RightPanel: React.FC<RightPanelProps> = ({
         <MediaUpload
           imageFilePath={imageFilePath}
           videoFilePath={videoFilePath}
+          mediaTypeDisplay={mediaTypeDisplay}
           handleImageOnSuccess={handleImageOnSuccess}
           handleImageOnError={handleImageOnError}
           handleVideoOnSuccess={handleVideoOnSuccess}
           handleVideoOnError={handleVideoOnError}
+          handleMediaTypeDisplay={handleMediaTypeDisplay}
         />
       )}
       {step === 3 && (

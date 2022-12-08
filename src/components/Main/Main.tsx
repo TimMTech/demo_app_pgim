@@ -1,6 +1,7 @@
 import DesktopEditor from "../Main/Editors/DesktopEditor";
 import MobileEditor from "../Main/Editors/MobileEditor";
 
+
 interface MainProps {
   editorContent: string;
   translatedContent: string;
