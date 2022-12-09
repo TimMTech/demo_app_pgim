@@ -3,7 +3,7 @@ const app = express();
 const ImageKit = require("imagekit");
 const path = require("path");
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 5000
 
 const imagekit = new ImageKit({
   urlEndpoint: "https://ik.imagekit.io/rydw9khhk",
@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 app.use(express.static(path.resolve(__dirname, "../build", "index.html")))
 
 
-app.get("/auth", (req, res) => {
+app.get("/api/auth", (req, res) => {
   var result = imagekit.getAuthenticationParameters();
   res.send(result);
   console.log(result)

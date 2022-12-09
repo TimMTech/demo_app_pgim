@@ -5,6 +5,7 @@
     "node": "16.15.1",
     "npm": "8.11.0"
   },
+  
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -26,6 +27,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "postinstall": "node ./postinstall.js"
+  },
+  "proxy": {
+    "/auth": {
+      "target": "http://localhost:5000"
+    }
   },
   "eslintConfig": {
     "extends": [
