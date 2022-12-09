@@ -2,7 +2,8 @@
   "name": "demo_app_pgim",
   "version": "0.1.0",
   "engines": {
-    "node": "16.15.1"
+    "node": "16.15.1",
+    "npm": "8.11.0"
   },
   "private": true,
   "dependencies": {
