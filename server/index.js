@@ -26,6 +26,7 @@ app.use(express.static(path.resolve(__dirname, "../build", "index.html")))
 app.get("/auth", (req, res) => {
   var result = imagekit.getAuthenticationParameters();
   res.send(result);
+  console.log(result)
 });
 
 app.listen(PORT, () => {
