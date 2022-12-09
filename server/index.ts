@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 app.get("/auth", (req, res) => {
   var result = imagekit.getAuthenticationParameters();
   res.send(result);
-  
+  console.log(result)
 });
 
 app.listen(3001, () => {
