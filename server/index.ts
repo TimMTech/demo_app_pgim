@@ -18,13 +18,11 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/public/tinymce/N1ED/plugin.min.js", (req, res) => {
-  res.sendFile(__dirname + "/tinymce/plugins/N1ED/plugin.js");
-});
 
 app.get("/auth", (req, res) => {
   var result = imagekit.getAuthenticationParameters();
   res.send(result);
+  
 });
 
 app.listen(3001, () => {
