@@ -25,6 +25,6 @@ app.get("/auth", (req, res) => {
   console.log(result)
 });
 
-app.listen(3001, () => {
+app.listen(process.env.PORT || 3001, () => {
   console.log("Live at Port 3001");
 });
