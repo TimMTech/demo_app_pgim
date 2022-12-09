@@ -1,6 +1,9 @@
 {
   "name": "demo_app_pgim",
   "version": "0.1.0",
+  "engines": {
+    "node": "16.15.1"
+  },
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
