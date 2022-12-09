@@ -1,5 +1,6 @@
 import { BiDevices } from "react-icons/bi";
 import { BsGlobe } from "react-icons/bs";
+import "@tinymce/tinymce-react"
 
 interface DeviceBarProps {
   translatedContent: string;
