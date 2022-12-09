@@ -29,8 +29,8 @@
     "postinstall": "node ./postinstall.js"
   },
   "proxy": "http://localhost:5000"
-    }
-  },
+    
+  ,
   "eslintConfig": {
     "extends": [
       "react-app",
