@@ -3,6 +3,8 @@ const app = express();
 const ImageKit = require("imagekit");
 const path = require("path");
 
+const PORT = process.env.PORT || 3001
+
 const imagekit = new ImageKit({
   urlEndpoint: "https://ik.imagekit.io/rydw9khhk",
   publicKey: "public_Bl2csh0JUzkZxMKVxVrooPN9iOU=",
@@ -18,14 +20,14 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static(path.join(__dirname + "/public")));
+app.use(express.static(path.resolve(__dirname, "../build", "index.html")))
+
 
 app.get("/auth", (req, res) => {
   var result = imagekit.getAuthenticationParameters();
   res.send(result);
- 
 });
 
-app.listen(process.env.PORT || 5000, () => {
-  console.log("Heroku Deployed..");
+app.listen(PORT, () => {
+  console.log("Live..");
 });
