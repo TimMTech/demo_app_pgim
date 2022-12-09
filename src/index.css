@@ -41,7 +41,7 @@ textarea {
 }
 
 .dropdown-heading-value {
-  color: white !important;
+  color: #aaa !important;
 }
 
 @layer utilities {

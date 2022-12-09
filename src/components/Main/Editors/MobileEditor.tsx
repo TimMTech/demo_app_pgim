@@ -23,8 +23,8 @@ const MobileEditor: React.FC<MobileEditorProps> = ({
           init={{
             height: "100%",
             width: "100%",
-            menubar: false,
             resize: false,
+            menubar: false,
             branding: false,
             statusbar: false,
             toolbar:
@@ -42,8 +42,8 @@ const MobileEditor: React.FC<MobileEditorProps> = ({
           init={{
             height: "100%",
             width: "100%",
-
             resize: false,
+            menubar: false,
             branding: false,
             statusbar: false,
             toolbar:

@@ -16,7 +16,7 @@ const App: React.FC = () => {
   const [translationView, setTranslationView] = useState<boolean>(false);
 
   const [editorContent, setEditorContent] = useState<string>(example);
-  const [translatedContent, setTranslatedContent] = useState<string>("");
+  const [translatedContent, setTranslatedContent] = useState<string>(example);
 
   const [strapiPOST, setStrapiPOST] = useState<{ [key: string]: any }>({
     data: {
