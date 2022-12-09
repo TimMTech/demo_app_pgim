@@ -44,6 +44,5 @@ amplifytools.xcconfig
 #amplify-do-not-edit-end
 
 
-/public/tinymce/
 
 src/FirstVersionHold
