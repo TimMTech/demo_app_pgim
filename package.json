@@ -28,9 +28,7 @@
     "eject": "react-scripts eject",
     "postinstall": "node ./postinstall.js"
   },
-  "proxy": {
-    "/auth": {
-      "target": "http://localhost:5000"
+  "proxy": "http://localhost:5000"
     }
   },
   "eslintConfig": {
