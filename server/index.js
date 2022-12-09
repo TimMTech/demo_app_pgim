@@ -23,6 +23,7 @@ app.use(express.static(path.join(__dirname + "/public")));
 app.get("/auth", (req, res) => {
   var result = imagekit.getAuthenticationParameters();
   res.send(result);
+  console.log('hello')
 });
 
 app.listen(process.env.PORT || 5000, () => {
