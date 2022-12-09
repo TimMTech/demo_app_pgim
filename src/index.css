@@ -16,6 +16,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+textarea {
+  display: none;
+}
+
 
 .tox-tinymce {
   height: 100% !important;

@@ -1,5 +1,4 @@
 import { ChangeEvent } from "react";
-import Styles from "./Styles";
 
 interface UserProps {
   strapiPOST: { [key: string]: any };
@@ -43,7 +42,7 @@ const User: React.FC<UserProps> = ({
             <label htmlFor="description">Description</label>
             <textarea
               value={strapiPOST.data.description}
-              className="bg-[#2c3139] outline-none h-[200px] min-h-[200px] max-h-[200px] resize-none  p-1"
+              className="flex bg-[#2c3139] outline-none h-[200px] min-h-[200px] max-h-[200px] resize-none  p-1"
               typeof="text"
               id="description"
               onChange={handleGeneralContentChange}

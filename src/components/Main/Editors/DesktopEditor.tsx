@@ -1,4 +1,5 @@
 import { Editor } from "@tinymce/tinymce-react";
+import { useState } from "react";
 
 interface DesktopEditorProps {
   editorContent: string;
@@ -13,6 +14,8 @@ const DesktopEditor: React.FC<DesktopEditorProps> = ({
   translationView,
   handleEditorChange,
 }) => {
+ 
+
   return (
     <div className=" w-full h-[1200px] flex flex-col items-center w-[1200px] ">
       {translationView ? (
@@ -39,7 +42,6 @@ const DesktopEditor: React.FC<DesktopEditorProps> = ({
           onEditorChange={handleEditorChange}
           id="desktopContent"
           init={{
-            
             height: "100%",
             width: "100%",
             resize: false,
@@ -49,6 +51,7 @@ const DesktopEditor: React.FC<DesktopEditorProps> = ({
               "undo redo | OptimizedVideo |  link | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | outdent indent | media",
 
             plugins: ["lists", "emoticons", "media", "table", "link"],
+            
           }}
         />
       )}
