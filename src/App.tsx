@@ -2,7 +2,7 @@ import Main from "./components/Main/Main";
 import RightPanel from "./components/RightPanel/RightPanel";
 import Navbar from "./components/Navbar";
 import LeftPanel from "./components/LeftPanel";
-import { useState, ChangeEvent, useEffect } from "react";
+import { useState, ChangeEvent } from "react";
 import { example } from "./utils/exampleContent";
 import { Predictions } from "@aws-amplify/predictions";
 import { ToastContainer, toast } from "react-toastify";
