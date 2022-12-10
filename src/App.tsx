@@ -16,7 +16,7 @@ const App: React.FC = () => {
   const [translationView, setTranslationView] = useState<boolean>(false);
 
   const [editorContent, setEditorContent] = useState<string>(example);
-  const [translatedContent, setTranslatedContent] = useState<string>(example);
+  const [translatedContent, setTranslatedContent] = useState<string>("");
 
   const [strapiPOST, setStrapiPOST] = useState<{ [key: string]: any }>({
     data: {
@@ -27,6 +27,7 @@ const App: React.FC = () => {
       translated_content: "",
     },
   });
+  console.log(strapiPOST)
 
   const [selectedLanguages, setSelectedLanguages] = useState<[]>([]);
   const [activeLanguage, setActiveLanguage] = useState<string>("");
@@ -212,6 +213,7 @@ const App: React.FC = () => {
         handleStrapiSubmit={handleStrapiSubmit}
       />
       <DeviceBar
+      translationView={translationView}
         translatedContent={translatedContent}
         handleDeviceView={handleDeviceView}
         handleTranslationView={handleTranslationView}

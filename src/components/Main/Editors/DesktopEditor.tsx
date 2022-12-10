@@ -17,6 +17,7 @@ const DesktopEditor: React.FC<DesktopEditorProps> = ({
     <div className=" w-full h-[1200px] flex flex-col items-center w-[1200px] ">
       {translationView ? (
         <Editor
+          disabled
           value={translatedContent}
           apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
           id="desktopContentTranslated"
@@ -27,9 +28,7 @@ const DesktopEditor: React.FC<DesktopEditorProps> = ({
             menubar: false,
             branding: false,
             statusbar: false,
-            toolbar:
-              "undo redo | link | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | outdent indent | media",
-            plugins: ["lists", "emoticons", "media", "table", "link"],
+            toolbar: false,
           }}
         />
       ) : (
