@@ -21,14 +21,12 @@ app.use((req, res, next) => {
 
 app.use(express.static(path.resolve(__dirname, "../build")));
 
-app.get("/auth", (req, res) => {
+
+app.get("/api/auth", (req, res) => {
   var result = imagekit.getAuthenticationParameters();
-  res.sendFile(result);
+  res.send(result);
 });
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../build", "index.html"));
-});
 
 app.listen(PORT, () => {
   console.log("Live..");
