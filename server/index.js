@@ -21,14 +21,11 @@ app.use((req, res, next) => {
 
 app.use(express.static(path.join(__dirname, "../build")));
 
-
 app.get("/api/auth", (req, res) => {
   var result = imagekit.getAuthenticationParameters();
-  res.send(result);
+  res.json(result);
 });
-
 
 app.listen(PORT, () => {
   console.log("Live..");
 });
-
