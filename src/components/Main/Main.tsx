@@ -1,6 +1,4 @@
-import DesktopEditor from "../Main/Editors/DesktopEditor";
-import MobileEditor from "../Main/Editors/MobileEditor";
-
+import TinyEditor from "./TinyEditor";
 
 interface MainProps {
   editorContent: string;
@@ -20,23 +18,13 @@ const Main: React.FC<MainProps> = ({
   return (
     <div className="h-full w-full relative z-[1] overflow-auto ">
       <div className="flex justify-center items-center w-full h-full absolute top-[40px] ">
-        <>
-          {deviceView ? (
-            <MobileEditor
-              editorContent={editorContent}
-              translatedContent={translatedContent}
-              translationView={translationView}
-              handleEditorChange={handleEditorChange}
-            />
-          ) : (
-            <DesktopEditor
-              editorContent={editorContent}
-              translatedContent={translatedContent}
-              translationView={translationView}
-              handleEditorChange={handleEditorChange}
-            />
-          )}
-        </>
+        <TinyEditor
+          deviceView={deviceView}
+          editorContent={editorContent}
+          translatedContent={translatedContent}
+          translationView={translationView}
+          handleEditorChange={handleEditorChange}
+        />
       </div>
     </div>
   );

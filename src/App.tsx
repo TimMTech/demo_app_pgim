@@ -27,7 +27,6 @@ const App: React.FC = () => {
       translated_content: "",
     },
   });
-  console.log(strapiPOST)
 
   const [selectedLanguages, setSelectedLanguages] = useState<[]>([]);
   const [activeLanguage, setActiveLanguage] = useState<string>("");
@@ -213,7 +212,7 @@ const App: React.FC = () => {
         handleStrapiSubmit={handleStrapiSubmit}
       />
       <DeviceBar
-      translationView={translationView}
+        translationView={translationView}
         translatedContent={translatedContent}
         handleDeviceView={handleDeviceView}
         handleTranslationView={handleTranslationView}
@@ -221,9 +220,10 @@ const App: React.FC = () => {
       <div className="flex w-full h-full ">
         <LeftPanel preview={preview} />
         <Main
+          deviceView={deviceView}
           editorContent={editorContent}
           translatedContent={translatedContent}
-          deviceView={deviceView}
+       
           translationView={translationView}
           handleEditorChange={handleEditorChange}
         />

@@ -1,26 +1,32 @@
 import { Editor } from "@tinymce/tinymce-react";
 
-interface MobileEditorProps {
+interface TinyEditorProps {
+  deviceView: boolean;
   editorContent: string;
   translatedContent: string;
   translationView: boolean;
   handleEditorChange: (content: string, editor: any) => void;
 }
 
-const MobileEditor: React.FC<MobileEditorProps> = ({
+const TinyEditor: React.FC<TinyEditorProps> = ({
+  deviceView,
   editorContent,
   translatedContent,
   translationView,
   handleEditorChange,
 }) => {
   return (
-    <div className="w-full h-[1200px] flex flex-col items-center max-w-[576px]">
+    <div
+      className={`${
+        deviceView ? "w-[576px]" : "w-[1200px]"
+      } w-full h-[1200px] flex flex-col items-center`}
+    >
       {translationView ? (
         <Editor
           disabled
           value={translatedContent}
           apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
-          id="mobileContentTranslated"
+          id="desktopContentTranslated"
           init={{
             height: "100%",
             width: "100%",
@@ -36,7 +42,7 @@ const MobileEditor: React.FC<MobileEditorProps> = ({
           value={editorContent}
           apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
           onEditorChange={handleEditorChange}
-          id="mobileContent"
+          id="desktopContent"
           init={{
             height: "100%",
             width: "100%",
@@ -55,4 +61,4 @@ const MobileEditor: React.FC<MobileEditorProps> = ({
   );
 };
 
-export default MobileEditor;
+export default TinyEditor;
