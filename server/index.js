@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const ImageKit = require("imagekit");
 const path = require("path");
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5000;
 
 const imagekit = new ImageKit({
   urlEndpoint: "https://ik.imagekit.io/rydw9khhk",
@@ -19,8 +19,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static(path.join(__dirname, "/build")))
-
+app.use(express.static(path.join(__dirname, "../build")));
 
 app.get("/auth", (req, res) => {
   var result = imagekit.getAuthenticationParameters();
@@ -28,8 +27,8 @@ app.get("/auth", (req, res) => {
 });
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/build/index.html"))
-})
+  res.sendFile(path.join(__dirname, "../build/index.html"));
+});
 
 app.listen(PORT, () => {
   console.log("Live..");
