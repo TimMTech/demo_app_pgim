@@ -63,7 +63,7 @@ const IKMedia: React.FC<IKMediaProps> = ({
                   <IKImage
                     src={url}
                     draggable
-                    className=" border cursor-grabbing"
+                    className="border cursor-grabbing"
                   />
                 </div>
                 <div className="flex flex-col">

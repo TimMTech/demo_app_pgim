@@ -151,7 +151,7 @@ const App: React.FC = () => {
   const handleSourceSelect = (value: any) => {
     setSourceLanguages(value);
   };
-  
+
   const handleTranslationSelect = (value: any) => {
     const selectAll = {
       label: "Select All",
