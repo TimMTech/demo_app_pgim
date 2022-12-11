@@ -35,7 +35,7 @@ const TinyEditor: React.FC<TinyEditorProps> = ({
             branding: false,
             statusbar: false,
             toolbar: false,
-            forced_root_block: "",
+            forced_root_block: "p",
             remove_trailing_brs: true,
           }}
         />
@@ -53,7 +53,7 @@ const TinyEditor: React.FC<TinyEditorProps> = ({
             branding: false,
             statusbar: false,
             contextmenu: "copy paste",
-            forced_root_block: "",
+            forced_root_block: "p",
             remove_trailing_brs: true,
             toolbar:
               "undo redo | image | link | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | lineheight | outdent indent | media",
@@ -64,6 +64,7 @@ const TinyEditor: React.FC<TinyEditorProps> = ({
               { title: "Left", value: "w-full float-left" },
               { title: "Right", value: "w-full float-right" },
             ],
+            content_style: `img {max-width: 100% !important; height: auto !important;}`,
           }}
         />
       )}

@@ -57,7 +57,7 @@ const IKMedia: React.FC<IKMediaProps> = ({
                 key={index}
                 className="flex flex-col gap-4 font-prompt text-sm "
               >
-                <div className="flex flex-col">
+                <div className="flex flex-col ">
                   <span>{`${width} x ${height}`}</span>
                   <span>{formatBytes(size)} KB (Original)</span>
                   <IKImage
