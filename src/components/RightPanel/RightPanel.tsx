@@ -14,13 +14,14 @@ interface RightPanelProps {
   mediaTypeDisplay: boolean;
   selectedLanguages: any;
   activeLanguage: string;
+  sourceLanguages: { [key: string]: string };
   recentTranslations: {}[];
 
   handleGeneralContentChange: (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => void;
   handleEditorTranslate: (languages: string) => void;
-  handleMultiSelect: (value: any) => void;
+  handleTranslationSelect: (value: any) => void;
   handleImageOnSuccess: (response: any) => void;
 
   handleImageOnError: (response: any) => void;
@@ -38,14 +39,14 @@ const RightPanel: React.FC<RightPanelProps> = ({
   imageFilePath,
   videoFilePath,
   mediaTypeDisplay,
-
   selectedLanguages,
+  sourceLanguages,
   activeLanguage,
   recentTranslations,
 
   handleGeneralContentChange,
   handleEditorTranslate,
-  handleMultiSelect,
+  handleTranslationSelect,
   handleImageOnSuccess,
 
   handleImageOnError,
@@ -92,9 +93,10 @@ const RightPanel: React.FC<RightPanelProps> = ({
         <Languages
           selectedLanguages={selectedLanguages}
           activeLanguage={activeLanguage}
+          sourceLanguages={sourceLanguages}
           recentTranslations={recentTranslations}
           handleEditorTranslate={handleEditorTranslate}
-          handleMultiSelect={handleMultiSelect}
+          handleTranslationSelect={handleTranslationSelect}
         />
       )}
     </div>

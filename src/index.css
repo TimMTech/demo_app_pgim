@@ -36,18 +36,3 @@ textarea {
 
 
 
-.rmsc .dropdown-container {
-  color: #22262e !important;
-}
-
-.dropdown-heading-value {
-  color: #aaa !important;
-}
-
-@layer utilities {
-  .square {
-    width: 50%;
-    padding-bottom: 50%;
-    background-color: teal;
-  }
-}

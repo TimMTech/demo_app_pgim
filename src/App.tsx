@@ -8,6 +8,7 @@ import { Predictions } from "@aws-amplify/predictions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DeviceBar from "./components/Main/DeviceBar";
+import { languages } from "./utils/languages";
 
 const App: React.FC = () => {
   const [step, setStep] = useState(1);
@@ -28,14 +29,20 @@ const App: React.FC = () => {
     },
   });
 
-  const [selectedLanguages, setSelectedLanguages] = useState<[]>([]);
+  const [selectedLanguages, setSelectedLanguages] = useState<[] | any>([]);
+  const [sourceLanguages, setSourceLanguages] = useState<{
+    [key: string]: string;
+  }>({
+    label: "en",
+    value: "en",
+  });
+
   const [activeLanguage, setActiveLanguage] = useState<string>("");
   const [recentTranslations, setRecentTranslations] = useState<{}[]>([]);
 
   const [imageFilePath, setImageFilePath] = useState<object[]>([]);
   const [videoFilePath, setVideoFilePath] = useState<object[]>([]);
   const [mediaTypeDisplay, setMediaTypeDisplay] = useState<boolean>(true);
-
   const [preview, setPreview] = useState<boolean>(false);
 
   const handleDeviceView = () => {
@@ -111,6 +118,7 @@ const App: React.FC = () => {
       translateText: {
         source: {
           text: editorContent,
+          language: sourceLanguages.label,
         },
         targetLanguage: language,
       },
@@ -140,8 +148,24 @@ const App: React.FC = () => {
       });
   };
 
-  const handleMultiSelect = (value: any) => {
-    setSelectedLanguages(value);
+  const handleSourceSelect = (value: any) => {
+    setSourceLanguages(value);
+  };
+  
+  const handleTranslationSelect = (value: any) => {
+    const selectAll = {
+      label: "Select All",
+      value: "*",
+    };
+    if (
+      value !== null &&
+      value.length > 0 &&
+      value[value.length - 1].label === selectAll.label
+    ) {
+      setSelectedLanguages(languages);
+    } else {
+      setSelectedLanguages(value);
+    }
   };
 
   const handleNextStep = () => {
@@ -216,6 +240,7 @@ const App: React.FC = () => {
         translatedContent={translatedContent}
         handleDeviceView={handleDeviceView}
         handleTranslationView={handleTranslationView}
+        handleSourceSelect={handleSourceSelect}
       />
       <div className="flex w-full h-full ">
         <LeftPanel preview={preview} />
@@ -223,7 +248,6 @@ const App: React.FC = () => {
           deviceView={deviceView}
           editorContent={editorContent}
           translatedContent={translatedContent}
-       
           translationView={translationView}
           handleEditorChange={handleEditorChange}
         />
@@ -236,10 +260,11 @@ const App: React.FC = () => {
           mediaTypeDisplay={mediaTypeDisplay}
           selectedLanguages={selectedLanguages}
           activeLanguage={activeLanguage}
+          sourceLanguages={sourceLanguages}
           recentTranslations={recentTranslations}
           handleGeneralContentChange={handleGeneralContentChange}
           handleEditorTranslate={handleEditorTranslate}
-          handleMultiSelect={handleMultiSelect}
+          handleTranslationSelect={handleTranslationSelect}
           handleImageOnSuccess={handleImageOnSuccess}
           handleImageOnError={handleImageOnError}
           handleVideoOnSuccess={handleVideoOnSuccess}
