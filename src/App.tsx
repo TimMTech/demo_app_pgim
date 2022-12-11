@@ -96,7 +96,7 @@ const App: React.FC = () => {
       toast.error("We Need Content :(");
       return;
     }
-    await fetch("http://localhost:1337/api/blogs", {
+    await fetch("https://demo-translation-strapi-app.herokuapp.com/api/blogs", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
