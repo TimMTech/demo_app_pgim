@@ -2,7 +2,7 @@ import Main from "./components/Main/Main";
 import RightPanel from "./components/RightPanel/RightPanel";
 import Navbar from "./components/Navbar";
 import LeftPanel from "./components/LeftPanel";
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { example } from "./utils/exampleContent";
 import { Predictions } from "@aws-amplify/predictions";
 import { ToastContainer, toast } from "react-toastify";
@@ -11,6 +11,22 @@ import DeviceBar from "./components/Main/DeviceBar";
 import { languages } from "./utils/languages";
 
 const App: React.FC = () => {
+  //Loading State For when App Building DOM
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const loadingRequest = () => {
+    return new Promise<void>((resolve) => setTimeout(() => resolve(), 2000));
+  };
+  useEffect(() => {
+    loadingRequest().then(() => {
+      const loaderElement = document.querySelector(".loader");
+      if (loaderElement) {
+        loaderElement.remove();
+        setIsLoading(!isLoading);
+      }
+    });
+  });
+  //
+
   const [step, setStep] = useState(1);
 
   const [deviceView, setDeviceView] = useState<boolean>(false);
@@ -222,8 +238,12 @@ const App: React.FC = () => {
     console.log("error", response);
   };
 
+  if (isLoading) {
+    return null;
+  }
+
   return (
-    <div className="absolute z-[1] top-0 bottom-0 left-0 right-0 ">
+    <div className={" ease absolute z-[1] top-0 bottom-0 left-0 right-0"}>
       <ToastContainer
         theme="dark"
         toastStyle={{
@@ -235,6 +255,7 @@ const App: React.FC = () => {
         handlePreviewMode={handlePreviewMode}
         handleStrapiSubmit={handleStrapiSubmit}
       />
+
       <DeviceBar
         translationView={translationView}
         translatedContent={translatedContent}

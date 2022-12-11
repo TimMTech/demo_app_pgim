@@ -6,7 +6,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  ;
 }
 
 html,
@@ -20,19 +19,14 @@ textarea {
   display: none;
 }
 
-
 .tox-tinymce {
   height: 100% !important;
   border-radius: 0 !important;
   box-shadow: none !important;
   border: none !important;
-
 }
 .tox-editor-header {
   padding: 0px !important;
 }
-
-
-
 
 
