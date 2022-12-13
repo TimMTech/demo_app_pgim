@@ -17,7 +17,7 @@ const Main: React.FC<MainProps> = ({
 }) => {
   return (
     <div className="h-full w-full relative z-[1] overflow-auto ">
-      <div className="flex justify-center items-center w-full h-full absolute top-[40px] ">
+      <div className="flex justify-center items-center w-full h-full absolute top-[40px] h-[200vh] ">
         <TinyEditor
           deviceView={deviceView}
           editorContent={editorContent}

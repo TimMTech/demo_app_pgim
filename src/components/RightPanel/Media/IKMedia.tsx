@@ -18,7 +18,7 @@ const IKMedia: React.FC<IKMediaProps> = ({
   handleMediaTypeDisplay,
 }) => {
   return (
-    <div className="text-white  flex flex-col gap-4">
+    <div className="text-white flex flex-col gap-4">
       <div className="w-full flex items-center justify-center p-2 font-prompt">
         <button
           disabled={imageFilePath.length === 0}
@@ -44,7 +44,7 @@ const IKMedia: React.FC<IKMediaProps> = ({
         </button>
       </div>
       {mediaTypeDisplay ? (
-        <div className="flex-1 flex flex-col gap-10 p-2 max-h-[1000px] overflow-y-auto">
+        <div className="flex-1 flex flex-col gap-10 p-2 max-h-[50vh]  overflow-y-auto">
           {imageFilePath.length !== 0 && (
             <p className="text-center">
               Drag And Drop Image Into Rich Text Editor To Add Image.
@@ -100,7 +100,7 @@ const IKMedia: React.FC<IKMediaProps> = ({
           })}
         </div>
       ) : (
-        <div className="flex-1 flex flex-col gap-10 p-2 max-h-[1000px]  overflow-y-auto">
+        <div className="flex-1 flex flex-col gap-10 p-2 max-h-[50vh]   overflow-y-auto">
           {videoFilePath.length !== 0 && (
             <p className="text-center">
               Click Video To Copy URL And Paste Into Rich Text Editor's Media
