@@ -7,15 +7,13 @@ const ImageKit = require("imagekit");
 const path = require("path");
 const PORT = process.env.PORT || 5000;
 
-__dirname = path.resolve();
 
-dotenv.config({ path: path.resolve(__dirname, ".env") });
+
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 mongoose.connect(process.env.REACT_APP_DATABASE_ACCESS, () => {
   console.log("DB CONNECTED");
 });
-
-
 
 const imagekit = new ImageKit({
   urlEndpoint: "https://ik.imagekit.io/rydw9khhk",
