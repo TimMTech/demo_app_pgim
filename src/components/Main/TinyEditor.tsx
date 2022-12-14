@@ -4,7 +4,7 @@ interface TinyEditorProps {
   deviceView: boolean;
   editorContent: string;
   translatedContent: string;
-  translationView: boolean;
+  originalContentView: boolean;
   handleEditorChange: (content: string, editor: any) => void;
 }
 
@@ -12,7 +12,7 @@ const TinyEditor: React.FC<TinyEditorProps> = ({
   deviceView,
   editorContent,
   translatedContent,
-  translationView,
+  originalContentView,
   handleEditorChange,
 }) => {
   return (
@@ -21,7 +21,7 @@ const TinyEditor: React.FC<TinyEditorProps> = ({
         deviceView ? "w-[576px]" : "w-[1200px]"
       } w-full h-[1200px] flex flex-col items-center`}
     >
-      {translationView ? (
+      {!originalContentView ? (
         <Editor
           disabled
           value={translatedContent}
@@ -46,7 +46,6 @@ const TinyEditor: React.FC<TinyEditorProps> = ({
           onEditorChange={handleEditorChange}
           id="desktopContent"
           init={{
-            
             height: "100%",
             width: "100%",
             resize: false,
@@ -56,7 +55,7 @@ const TinyEditor: React.FC<TinyEditorProps> = ({
             contextmenu: "copy paste",
             forced_root_block: "p",
             remove_trailing_brs: true,
-            
+
             toolbar:
               "undo redo | image | link | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | lineheight | outdent indent | media",
 

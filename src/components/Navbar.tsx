@@ -4,13 +4,13 @@ import { AiOutlineShareAlt } from "react-icons/ai";
 interface NavbarProps {
   preview: boolean;
   handlePreviewMode: () => void;
-  handleStrapiSubmit: () => void;
+ 
 }
 
 const Navbar: React.FC<NavbarProps> = ({
   preview,
   handlePreviewMode,
-  handleStrapiSubmit,
+
 }) => {
   return (
     <nav className="fixed z-[11] w-full bg-[#2c3139] text-white font-prompt flex items-center justify-between px-20  border-b-2 border-black/10">
@@ -26,7 +26,7 @@ const Navbar: React.FC<NavbarProps> = ({
           Preview
         </button>
         <button
-          onClick={handleStrapiSubmit}
+
           className="bg-blue-500 text-white py-1 px-3 rounded-md"
         >
           Publish

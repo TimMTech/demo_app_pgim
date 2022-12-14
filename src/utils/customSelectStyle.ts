@@ -57,4 +57,9 @@ export const customTranslationStyles = {
     color: "white",
     fontFamily: "Prompt",
   }),
+  singleValue: (styles: any) => ({
+    ...styles,
+    color: "white",
+    fontFamily: "Prompt"
+  })
 };

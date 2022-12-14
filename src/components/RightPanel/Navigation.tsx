@@ -3,14 +3,12 @@ import classNames from "classnames";
 
 interface NavigationProps {
   step: number;
-
   handleNextStep: () => void;
   handlePreviousStep: () => void;
 }
 
 const Navigation: React.FC<NavigationProps> = ({
   step,
-
   handleNextStep,
   handlePreviousStep,
 }) => {

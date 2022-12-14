@@ -18,7 +18,7 @@ const MediaUpload: React.FC<MediaUploadProps> = ({
   imageFilePath,
   videoFilePath,
   mediaTypeDisplay,
-  
+
   handleImageOnSuccess,
   handleImageOnError,
   handleVideoOnSuccess,

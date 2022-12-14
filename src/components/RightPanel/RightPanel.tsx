@@ -1,27 +1,28 @@
 import Navigation from "./Navigation";
 import MediaUpload from "./Media/MediaUpload";
 import Languages from "./Translation/Languages";
-import User from "./General/User";
-import { ChangeEvent } from "react";
+import Options from "./General/Options";
+
 import classNames from "classnames";
 
 interface RightPanelProps {
   step: number;
   preview: boolean;
-  strapiPOST: { [key: string]: any };
+
   imageFilePath: object[];
   videoFilePath: object[];
   mediaTypeDisplay: boolean;
   selectedLanguages: any;
   activeLanguage: string;
   sourceLanguages: { [key: string]: string };
-  recentTranslations: {}[];
 
-  handleGeneralContentChange: (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
-  ) => void;
-  handleEditorTranslate: (languages: string) => void;
+  handleViewOriginalContent: () => void;
+
+  handleOriginalContentSave: () => void;
+  handleOrginalContentClear: () => void;
+
   handleTranslationSelect: (value: any) => void;
+  handleSwitchTranslation: (label: string) => void;
   handleImageOnSuccess: (response: any) => void;
 
   handleImageOnError: (response: any) => void;
@@ -35,18 +36,19 @@ interface RightPanelProps {
 const RightPanel: React.FC<RightPanelProps> = ({
   step,
   preview,
-  strapiPOST,
+
   imageFilePath,
   videoFilePath,
   mediaTypeDisplay,
   selectedLanguages,
   sourceLanguages,
   activeLanguage,
-  recentTranslations,
 
-  handleGeneralContentChange,
-  handleEditorTranslate,
+  handleViewOriginalContent,
+  handleOriginalContentSave,
+  handleOrginalContentClear,
   handleTranslationSelect,
+  handleSwitchTranslation,
   handleImageOnSuccess,
 
   handleImageOnError,
@@ -72,9 +74,9 @@ const RightPanel: React.FC<RightPanelProps> = ({
         handlePreviousStep={handlePreviousStep}
       />
       {step === 1 && (
-        <User
-          strapiPOST={strapiPOST}
-          handleGeneralContentChange={handleGeneralContentChange}
+        <Options
+          handleOriginalContentSave={handleOriginalContentSave}
+          handleOrginalContentClear={handleOrginalContentClear}
         />
       )}
       {step === 2 && (
@@ -94,9 +96,9 @@ const RightPanel: React.FC<RightPanelProps> = ({
           selectedLanguages={selectedLanguages}
           activeLanguage={activeLanguage}
           sourceLanguages={sourceLanguages}
-          recentTranslations={recentTranslations}
-          handleEditorTranslate={handleEditorTranslate}
+          handleViewOriginalContent={handleViewOriginalContent}
           handleTranslationSelect={handleTranslationSelect}
+          handleSwitchTranslation={handleSwitchTranslation}
         />
       )}
     </div>

@@ -2,13 +2,11 @@ import Main from "./components/Main/Main";
 import RightPanel from "./components/RightPanel/RightPanel";
 import Navbar from "./components/Navbar";
 import LeftPanel from "./components/LeftPanel";
-import { useState, ChangeEvent, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { example } from "./utils/exampleContent";
 import { Predictions } from "@aws-amplify/predictions";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 import DeviceBar from "./components/Main/DeviceBar";
-import { languages } from "./utils/languages";
 
 const App: React.FC = () => {
   //Loading State For when App Building DOM
@@ -30,22 +28,13 @@ const App: React.FC = () => {
   const [step, setStep] = useState(1);
 
   const [deviceView, setDeviceView] = useState<boolean>(false);
-  const [translationView, setTranslationView] = useState<boolean>(false);
+  const [originalContentView, setOriginalContentView] = useState<boolean>(true);
 
   const [editorContent, setEditorContent] = useState<string>(example);
-  const [translatedContent, setTranslatedContent] = useState<string>("");
 
-  const [strapiPOST, setStrapiPOST] = useState<{ [key: string]: any }>({
-    data: {
-      title: "",
-      author: "",
-      description: "",
-      editor_content: "",
-      translated_content: "",
-    },
-  });
+  const [translatedContent, setTranslatedContent] = useState<string | any>("");
 
-  const [selectedLanguages, setSelectedLanguages] = useState<[] | any>([]);
+  const [selectedLanguages, setSelectedLanguages] = useState<{}[]>([]);
   const [sourceLanguages, setSourceLanguages] = useState<{
     [key: string]: string;
   }>({
@@ -54,7 +43,7 @@ const App: React.FC = () => {
   });
 
   const [activeLanguage, setActiveLanguage] = useState<string>("");
-  const [recentTranslations, setRecentTranslations] = useState<{}[]>([]);
+  const [languageSwitcher, setLanguageSwitcher] = useState<{}[]>([]);
 
   const [imageFilePath, setImageFilePath] = useState<object[]>([]);
   const [videoFilePath, setVideoFilePath] = useState<object[]>([]);
@@ -65,123 +54,106 @@ const App: React.FC = () => {
     setDeviceView(!deviceView);
   };
 
-  const handleTranslationView = () => {
-    if (!translatedContent) return;
-    setTranslationView(!translationView);
+  const handleViewOriginalContent = () => {
+    setOriginalContentView(true);
   };
 
   const handlePreviewMode = () => {
     setPreview(!preview);
   };
 
-  const handleGeneralContentChange = (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    const { id, value } = e.target;
-    setStrapiPOST((prevState) => ({
-      ...prevState,
-      data: {
-        ...prevState.data,
-        [id]: value,
-      },
-    }));
-  };
-
-  const handleStrapiSubmit = async () => {
-    if (
-      Object.values(strapiPOST.data).some(
-        (value) => value === "" || value === null
-      )
-    ) {
-      toast.error("We Need Content :(");
-      return;
-    }
-    await fetch("https://demo-translation-strapi-app.herokuapp.com/api/blogs", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(strapiPOST),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          toast.error("We Need Content :(");
-        } else {
-          toast.success("Published!");
-        }
-        return response.json();
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error("We Need Content :(");
-      });
-  };
-
   const handleEditorChange = (content: string) => {
     setEditorContent(content);
-    setStrapiPOST((prevState) => ({
-      ...prevState,
-      data: {
-        ...prevState.data,
-        editor_content: content,
-      },
-    }));
-  };
-
-  const handleEditorTranslate = async (language: string) => {
-    setActiveLanguage(language);
-    Predictions.convert({
-      translateText: {
-        source: {
-          text: editorContent,
-          language: sourceLanguages.label,
-        },
-        targetLanguage: language,
-      },
-    })
-      .then((response) => {
-        setTranslationView(true);
-        setTranslatedContent(response.text);
-        setRecentTranslations((prevState) =>
-          prevState.some(
-            (languages: any) => languages.language === response.language
-          )
-            ? prevState
-            : [...prevState, response]
-        );
-        setStrapiPOST((prevState) => ({
-          ...prevState,
-          data: {
-            ...prevState.data,
-            translated_content: response.text,
-          },
-        }));
-        toast.success(`Translated in ${language}`);
-      })
-      .catch((error) => {
-        toast.error("Editor Cannot Be Empty.");
-        console.log("error", error);
-      });
   };
 
   const handleSourceSelect = (value: any) => {
     setSourceLanguages(value);
   };
 
-  const handleTranslationSelect = (value: any) => {
-    const selectAll = {
-      label: "Select All",
-      value: "*",
-    };
-    if (
-      value !== null &&
-      value.length > 0 &&
-      value[value.length - 1].label === selectAll.label
-    ) {
-      setSelectedLanguages(languages);
-    } else {
-      setSelectedLanguages(value);
+  const handleOriginalContentSave = async () => {
+    await fetch("http://localhost:5000/api/article", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        key: "00001",
+        value: editorContent,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) console.log("error");
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
+  const handleOrginalContentClear = () => {
+    setEditorContent("");
+  };
+
+  const handleSwitchTranslation = (label: string) => {
+    const filterLangCode = languageSwitcher.filter(
+      (code: any) => code.label === label
+    );
+    if (filterLangCode) {
+      filterLangCode.map(({ value }: any) => setTranslatedContent(value));
+      setActiveLanguage(label);
+      setOriginalContentView(false);
     }
+  };
+
+  const handleTranslationSelect = (value: any) => {
+    if (selectedLanguages.includes(value)) {
+      setActiveLanguage(value.label);
+      return;
+    }
+    setSelectedLanguages((prevState) => [...prevState, value]);
+    setActiveLanguage(value.label);
+    Predictions.convert({
+      translateText: {
+        source: {
+          text: editorContent,
+          language: sourceLanguages.label,
+        },
+        targetLanguage: value.label,
+      },
+    })
+      .then(async (response) => {
+        setOriginalContentView(false);
+        setTranslatedContent(response.text);
+        await fetch("http://localhost:5000/api/article", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            key: "00002",
+            value: response.text,
+          }),
+        })
+          .then((response) => {
+            if (!response.ok) console.log("error");
+            return response.json();
+          })
+          .then((data) => {
+            setLanguageSwitcher((prevState) => [
+              ...prevState,
+              { ...data, label: value.label },
+            ]);
+          })
+          .catch((error) => {
+            console.log("error", error);
+          });
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
   };
 
   const handleNextStep = () => {
@@ -204,16 +176,13 @@ const App: React.FC = () => {
       .then((blob) => {
         setMediaTypeDisplay(true);
         setImageFilePath((prevState) => [...prevState, { ...response, blob }]);
-        toast.success("Images Uploaded!");
       })
       .catch((error) => {
-        toast.error("Image Upload Failed :(");
         console.log("error", error);
       });
   };
 
   const handleImageOnError = (response: any) => {
-    toast.error("Image Upload Failed :(");
     console.log("error", response);
   };
 
@@ -225,16 +194,13 @@ const App: React.FC = () => {
       .then((blob) => {
         setMediaTypeDisplay(false);
         setVideoFilePath((prevState) => [...prevState, { ...response, blob }]);
-        toast.success("Videos Uploaded!");
       })
       .catch((error) => {
-        toast.error("Video Upload Failed :(");
         console.log("error", error);
       });
   };
 
   const handleVideoOnError = (response: any) => {
-    toast.error("Video Upload Failed :(");
     console.log("error", response);
   };
 
@@ -243,24 +209,11 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className={" ease absolute z-[1] top-0 bottom-0 left-0 right-0"}>
-      <ToastContainer
-        theme="dark"
-        toastStyle={{
-          backgroundColor: "#22262e",
-        }}
-      />
-      <Navbar
-        preview={preview}
-        handlePreviewMode={handlePreviewMode}
-        handleStrapiSubmit={handleStrapiSubmit}
-      />
+    <div className={"absolute z-[1] top-0 bottom-0 left-0 right-0"}>
+      <Navbar preview={preview} handlePreviewMode={handlePreviewMode} />
 
       <DeviceBar
-        translationView={translationView}
-        translatedContent={translatedContent}
         handleDeviceView={handleDeviceView}
-        handleTranslationView={handleTranslationView}
         handleSourceSelect={handleSourceSelect}
       />
       <div className="flex w-full h-full ">
@@ -269,22 +222,22 @@ const App: React.FC = () => {
           deviceView={deviceView}
           editorContent={editorContent}
           translatedContent={translatedContent}
-          translationView={translationView}
+          originalContentView={originalContentView}
           handleEditorChange={handleEditorChange}
         />
         <RightPanel
           step={step}
           preview={preview}
-          strapiPOST={strapiPOST}
           imageFilePath={imageFilePath}
           videoFilePath={videoFilePath}
           mediaTypeDisplay={mediaTypeDisplay}
           selectedLanguages={selectedLanguages}
           activeLanguage={activeLanguage}
           sourceLanguages={sourceLanguages}
-          recentTranslations={recentTranslations}
-          handleGeneralContentChange={handleGeneralContentChange}
-          handleEditorTranslate={handleEditorTranslate}
+          handleViewOriginalContent={handleViewOriginalContent}
+          handleOriginalContentSave={handleOriginalContentSave}
+          handleOrginalContentClear={handleOrginalContentClear}
+          handleSwitchTranslation={handleSwitchTranslation}
           handleTranslationSelect={handleTranslationSelect}
           handleImageOnSuccess={handleImageOnSuccess}
           handleImageOnError={handleImageOnError}

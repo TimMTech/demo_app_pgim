@@ -1,0 +1,7 @@
+POST http://localhost:5000/api/article
+Content-Type: application/json
+
+{
+    "key": "00001",
+    "value" : "testing"
+}
