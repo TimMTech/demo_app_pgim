@@ -4,6 +4,7 @@ import Languages from "./Translation/Languages";
 import Options from "./General/Options";
 
 import classNames from "classnames";
+import Preview from "./Previews/Preview";
 
 interface RightPanelProps {
   step: number;
@@ -12,8 +13,9 @@ interface RightPanelProps {
   imageFilePath: object[];
   videoFilePath: object[];
   mediaTypeDisplay: boolean;
-  selectedLanguages: any;
+  selectedLanguages: { [key: string]: string }[];
   activeLanguage: string;
+  originalLanguageActive: boolean;
   sourceLanguages: { [key: string]: string };
 
   handleViewOriginalContent: () => void;
@@ -43,6 +45,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
   selectedLanguages,
   sourceLanguages,
   activeLanguage,
+  originalLanguageActive,
 
   handleViewOriginalContent,
   handleOriginalContentSave,
@@ -95,10 +98,21 @@ const RightPanel: React.FC<RightPanelProps> = ({
         <Languages
           selectedLanguages={selectedLanguages}
           activeLanguage={activeLanguage}
+          originalLanguageActive={originalLanguageActive}
           sourceLanguages={sourceLanguages}
           handleViewOriginalContent={handleViewOriginalContent}
           handleTranslationSelect={handleTranslationSelect}
           handleSwitchTranslation={handleSwitchTranslation}
+        />
+      )}
+      {step === 4 && (
+        <Preview
+          sourceLanguages={sourceLanguages}
+          selectedLanguages={selectedLanguages}
+          activeLanguage={activeLanguage}
+          originalLanguageActive={originalLanguageActive}
+          handleSwitchTranslation={handleSwitchTranslation}
+          handleViewOriginalContent={handleViewOriginalContent}
         />
       )}
     </div>

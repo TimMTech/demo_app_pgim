@@ -5,7 +5,6 @@ import LeftPanel from "./components/LeftPanel";
 import { useState, useEffect } from "react";
 import { example } from "./utils/exampleContent";
 import { Predictions } from "@aws-amplify/predictions";
-
 import DeviceBar from "./components/Main/DeviceBar";
 
 const App: React.FC = () => {
@@ -34,7 +33,9 @@ const App: React.FC = () => {
 
   const [translatedContent, setTranslatedContent] = useState<string | any>("");
 
-  const [selectedLanguages, setSelectedLanguages] = useState<{}[]>([]);
+  const [selectedLanguages, setSelectedLanguages] = useState<
+    { [key: string]: string }[]
+  >([]);
   const [sourceLanguages, setSourceLanguages] = useState<{
     [key: string]: string;
   }>({
@@ -42,7 +43,10 @@ const App: React.FC = () => {
     value: "en",
   });
 
+  const [originalLanguageActive, setOriginalLanguageActive] =
+    useState<boolean>(false);
   const [activeLanguage, setActiveLanguage] = useState<string>("");
+
   const [languageSwitcher, setLanguageSwitcher] = useState<{}[]>([]);
 
   const [imageFilePath, setImageFilePath] = useState<object[]>([]);
@@ -56,6 +60,8 @@ const App: React.FC = () => {
 
   const handleViewOriginalContent = () => {
     setOriginalContentView(true);
+    setOriginalLanguageActive(true)
+    setActiveLanguage("")
   };
 
   const handlePreviewMode = () => {
@@ -169,17 +175,9 @@ const App: React.FC = () => {
   };
 
   const handleImageOnSuccess = async (response: any) => {
-    await fetch(response.thumbnailUrl)
-      .then((response) => {
-        return response.blob();
-      })
-      .then((blob) => {
-        setMediaTypeDisplay(true);
-        setImageFilePath((prevState) => [...prevState, { ...response, blob }]);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
+    console.log(response);
+    setMediaTypeDisplay(true);
+    setImageFilePath((prevState) => [...prevState, response]);
   };
 
   const handleImageOnError = (response: any) => {
@@ -212,17 +210,17 @@ const App: React.FC = () => {
     <div className={"absolute z-[1] top-0 bottom-0 left-0 right-0"}>
       <Navbar preview={preview} handlePreviewMode={handlePreviewMode} />
 
-      <DeviceBar
-        handleDeviceView={handleDeviceView}
-        handleSourceSelect={handleSourceSelect}
-      />
+      <DeviceBar handleSourceSelect={handleSourceSelect} />
       <div className="flex w-full h-full ">
         <LeftPanel preview={preview} />
         <Main
+          step={step}
           deviceView={deviceView}
           editorContent={editorContent}
           translatedContent={translatedContent}
           originalContentView={originalContentView}
+          languageSwitcher={languageSwitcher}
+          activeLanguage={activeLanguage}
           handleEditorChange={handleEditorChange}
         />
         <RightPanel
@@ -232,6 +230,7 @@ const App: React.FC = () => {
           videoFilePath={videoFilePath}
           mediaTypeDisplay={mediaTypeDisplay}
           selectedLanguages={selectedLanguages}
+          originalLanguageActive={originalLanguageActive}
           activeLanguage={activeLanguage}
           sourceLanguages={sourceLanguages}
           handleViewOriginalContent={handleViewOriginalContent}

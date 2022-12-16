@@ -1,43 +1,38 @@
-import { languages } from "../../../utils/languages";
-import { customTranslationStyles } from "../../../utils/customSelectStyle";
-import Select from "react-select";
 import classNames from "classnames";
+import {
+  AiOutlineDesktop,
+  AiOutlineMobile,
+  AiOutlineTablet,
+} from "react-icons/ai";
+import Map from "./Map";
 
-interface LanguagesProps {
-  selectedLanguages: any;
+interface PreviewProps {
+  sourceLanguages: { [key: string]: string };
+  selectedLanguages: { [key: string]: string }[];
   activeLanguage: string;
   originalLanguageActive: boolean;
-  sourceLanguages: { [key: string]: string };
-
   handleViewOriginalContent: () => void;
-  handleTranslationSelect: (value: any) => void;
   handleSwitchTranslation: (label: string) => void;
 }
 
-const Languages: React.FC<LanguagesProps> = ({
+const Preview: React.FC<PreviewProps> = ({
+  sourceLanguages,
   selectedLanguages,
   activeLanguage,
   originalLanguageActive,
-  sourceLanguages,
-  handleViewOriginalContent,
-  handleTranslationSelect,
   handleSwitchTranslation,
+  handleViewOriginalContent,
 }) => {
   return (
     <div className="h-full w-full flex flex-col">
-      <div className="w-full h-full ">
-        <Select
-          components={{
-            DropdownIndicator: () => null,
-            IndicatorSeparator: () => null,
-          }}
-          placeholder="Select Languages"
-          options={languages}
-          className="relative z-[98] m-2"
-          onChange={handleTranslationSelect}
-          styles={customTranslationStyles}
-        />
-        <div className="lg:grid lg:grid-cols-4 lg:gap-x-0 text-sm flex flex-wrap gap-3 p-2 max-h-[500px] overflow-y-auto font-prompt text-white border-b border-white/20 mx-2">
+      <div className="h-full w-full">
+        <div className="text-white flex  justify-center gap-8 mt-4">
+          <AiOutlineDesktop size={60} />
+          <AiOutlineMobile size={60} />
+          <AiOutlineTablet size={60} />
+        </div>
+        <Map />
+        <div className="lg:grid lg:grid-cols-4 lg:gap-x-0 text-sm flex flex-wrap gap-3 p-2 max-h-[500px] overflow-y-auto font-prompt text-white border-t border-white/20 mx-2">
           <div
             className="cursor-pointer w-[50px] h-[50px] bg-green-600 border rounded-lg flex items-center justify-center"
             onClick={handleViewOriginalContent}
@@ -70,4 +65,4 @@ const Languages: React.FC<LanguagesProps> = ({
   );
 };
 
-export default Languages;
+export default Preview;

@@ -1,30 +1,46 @@
 import TinyEditor from "./TinyEditor";
+import ContentPreview from "./ContentPreview";
 
 interface MainProps {
+  step: number;
   editorContent: string;
   translatedContent: string;
   deviceView: boolean;
   originalContentView: boolean;
+  languageSwitcher: { [key: string]: string }[];
+  activeLanguage: string;
   handleEditorChange: (content: string, editor: any) => void;
 }
 
 const Main: React.FC<MainProps> = ({
+  step,
   editorContent,
   translatedContent,
   deviceView,
   originalContentView,
+  languageSwitcher,
+  activeLanguage,
   handleEditorChange,
 }) => {
   return (
     <div className="h-full w-full relative z-[1] overflow-auto ">
       <div className="flex justify-center items-center w-full h-full absolute top-[40px] h-[125vh] ">
-        <TinyEditor
-          deviceView={deviceView}
+        {step === 4 ? (
+          <ContentPreview
           editorContent={editorContent}
-          translatedContent={translatedContent}
-          originalContentView={originalContentView}
-          handleEditorChange={handleEditorChange}
-        />
+            languageSwitcher={languageSwitcher}
+            activeLanguage={activeLanguage}
+            originalContentView={originalContentView}
+          />
+        ) : (
+          <TinyEditor
+            deviceView={deviceView}
+            editorContent={editorContent}
+            translatedContent={translatedContent}
+            originalContentView={originalContentView}
+            handleEditorChange={handleEditorChange}
+          />
+        )}
       </div>
     </div>
   );

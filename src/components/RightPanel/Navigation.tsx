@@ -25,11 +25,12 @@ const Navigation: React.FC<NavigationProps> = ({
         {step === 1 && "General"}
         {step === 2 && "Media"}
         {step === 3 && "Translations"}
+        {step === 4 && "Preview"}
       </p>
       <BsArrowRightCircleFill
         onClick={handleNextStep}
         className={classNames("cursor-pointer", {
-          hidden: step === 3,
+          hidden: step === 4,
         })}
         size={25}
       />

@@ -1,5 +1,4 @@
 import { IKContext, IKUpload } from "imagekitio-react";
-import { toast } from "react-toastify";
 import IKMedia from "./IKMedia";
 
 interface MediaUploadProps {
@@ -39,13 +38,7 @@ const MediaUpload: React.FC<MediaUploadProps> = ({
             <IKUpload
               hidden
               id="image-upload"
-              multiple
               onSuccess={handleImageOnSuccess}
-              onUploadStart={() =>
-                toast.info("Uploading Images...", {
-                  autoClose: 500,
-                })
-              }
               onError={handleImageOnError}
             />
             <label
@@ -58,11 +51,6 @@ const MediaUpload: React.FC<MediaUploadProps> = ({
               hidden
               id="video-upload"
               multiple
-              onUploadStart={() =>
-                toast.info("Uploading Videos...", {
-                  autoClose: 3000,
-                })
-              }
               onSuccess={handleVideoOnSuccess}
               onError={handleVideoOnError}
             />

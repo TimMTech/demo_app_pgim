@@ -1,6 +1,8 @@
 import { IKImage, IKVideo } from "imagekitio-react";
 import { formatBytes } from "../../../utils/conversions";
+
 import classNames from "classnames";
+
 
 interface IKMediaProps {
   imageFilePath: object[];
@@ -51,45 +53,48 @@ const IKMedia: React.FC<IKMediaProps> = ({
             </p>
           )}
           {imageFilePath?.map((image: any, index: number) => {
-            const { size, url, blob, height, width } = image;
+            const { url } = image;
+
             return (
               <div
                 key={index}
                 className="flex flex-col gap-4 font-prompt text-sm "
               >
                 <div className="flex flex-col ">
-                  <span>{`${width} x ${height}`}</span>
-                  <span>{formatBytes(size)} KB (Original)</span>
                   <IKImage
-                    src={url}
-                    draggable
                     className="border cursor-grabbing"
+                    src={url}
+                    lqip={{ quality: 80 }}
+                    draggable
+                    loading="lazy"
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span>{`${width} x ${height}`}</span>
-                  <span>{formatBytes(size)} KB (Optimized 100% Quality)</span>
                   <IKImage
                     className="border cursor-grabbing"
                     src={url}
-                    lqip={{ active: true, quality: 100 }}
                     draggable
+                    loading="lazy"
+                    transformation={[
+                      {
+                        orig: "true",
+                      },
+                    ]}
                   />
                 </div>
                 <div className="flex flex-col">
                   <div>
-                    <div className="flex flex-col">
-                      <span>200 x 200</span>
-                      <span>{formatBytes(blob.size)} KB (Thumbnail)</span>
-                    </div>
+                    <div className="flex flex-col"></div>
                     <IKImage
                       className="border cursor-grabbing"
                       src={url}
+                      lqip={{ quality: 80 }}
                       draggable
+                      loading="lazy"
                       transformation={[
                         {
-                          width: "200",
-                          height: "200",
+                          width: "100",
+                          height: "100",
                         },
                       ]}
                     />
@@ -109,16 +114,13 @@ const IKMedia: React.FC<IKMediaProps> = ({
           )}
 
           {videoFilePath?.map((video: any, index: number) => {
-            const { size, url } = video;
+            const { url } = video;
             return (
               <div
                 key={index}
                 className="flex flex-col gap-4 font-prompt text-sm "
               >
                 <div className="flex flex-col">
-                  <span>500 x 300</span>
-                  <span>{formatBytes(size)} KB (Optimized 100% Quality)</span>
-
                   <IKVideo
                     onClick={() => navigator.clipboard.writeText(url)}
                     className="border cursor-copy"
@@ -134,10 +136,7 @@ const IKMedia: React.FC<IKMediaProps> = ({
                 </div>
                 <div className="flex flex-col">
                   <div>
-                    <div className="flex flex-col">
-                      <span>200 x 200</span>
-                      <span>{formatBytes(size)} KB (Thumbnail)</span>
-                    </div>
+                    <div className="flex flex-col"></div>
                     <IKVideo
                       onClick={() => navigator.clipboard.writeText(url)}
                       className="border cursor-copy"
