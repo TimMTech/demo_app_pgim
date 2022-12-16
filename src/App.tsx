@@ -60,8 +60,8 @@ const App: React.FC = () => {
 
   const handleViewOriginalContent = () => {
     setOriginalContentView(true);
-    setOriginalLanguageActive(true)
-    setActiveLanguage("")
+    setOriginalLanguageActive(true);
+    setActiveLanguage("");
   };
 
   const handlePreviewMode = () => {
@@ -111,6 +111,7 @@ const App: React.FC = () => {
       filterLangCode.map(({ value }: any) => setTranslatedContent(value));
       setActiveLanguage(label);
       setOriginalContentView(false);
+      setOriginalLanguageActive(false);
     }
   };
 

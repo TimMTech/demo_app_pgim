@@ -34,7 +34,13 @@ const Preview: React.FC<PreviewProps> = ({
         <Map />
         <div className="lg:grid lg:grid-cols-4 lg:gap-x-0 text-sm flex flex-wrap gap-3 p-2 max-h-[500px] overflow-y-auto font-prompt text-white border-t border-white/20 mx-2">
           <div
-            className="cursor-pointer w-[50px] h-[50px] bg-green-600 border rounded-lg flex items-center justify-center"
+            className={classNames(
+              "cursor-pointer w-[50px] h-[50px] bg-green-600 border rounded-lg flex items-center justify-center",
+              {
+                "bg-orange-400": originalLanguageActive,
+                "bg-green-600": !originalLanguageActive,
+              }
+            )}
             onClick={handleViewOriginalContent}
           >
             {sourceLanguages.label}
@@ -49,8 +55,7 @@ const Preview: React.FC<PreviewProps> = ({
                   "cursor-pointer w-[50px] h-[50px]  border rounded-lg flex items-center justify-center",
                   {
                     "bg-orange-400": activeLanguage === label,
-                    "bg-gray-400":
-                      activeLanguage !== label && originalLanguageActive,
+                    "bg-gray-500": activeLanguage !== label,
                   }
                 )}
                 onClick={() => handleSwitchTranslation(label)}
