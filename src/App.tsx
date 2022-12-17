@@ -2,7 +2,7 @@ import Main from "./components/Main/Main";
 import RightPanel from "./components/RightPanel/RightPanel";
 import Navbar from "./components/Navbar";
 import LeftPanel from "./components/LeftPanel";
-import { useState, useEffect } from "react";
+import { useState, useEffect, MouseEvent } from "react";
 import { example } from "./utils/exampleContent";
 import { Predictions } from "@aws-amplify/predictions";
 import DeviceBar from "./components/Main/DeviceBar";
@@ -26,7 +26,10 @@ const App: React.FC = () => {
 
   const [step, setStep] = useState(1);
 
-  const [deviceView, setDeviceView] = useState<boolean>(false);
+  const [mediaView, setMediaView] = useState<{ [key: string]: string }>({
+    width: "w-[1200px]",
+  });
+
   const [originalContentView, setOriginalContentView] = useState<boolean>(true);
 
   const [editorContent, setEditorContent] = useState<string>(example);
@@ -54,8 +57,11 @@ const App: React.FC = () => {
   const [mediaTypeDisplay, setMediaTypeDisplay] = useState<boolean>(true);
   const [preview, setPreview] = useState<boolean>(false);
 
-  const handleDeviceView = () => {
-    setDeviceView(!deviceView);
+  const handleMediaViews = (e: MouseEvent<SVGElement>) => {
+    const { id } = e.currentTarget;
+    id === "mobile" && setMediaView({ width: "w-[576px]" });
+    id === "desktop" && setMediaView({ width: "w-[1200px]" });
+    id === "tablet" && setMediaView({ width: "w-[961px]" });
   };
 
   const handleViewOriginalContent = () => {
@@ -176,7 +182,6 @@ const App: React.FC = () => {
   };
 
   const handleImageOnSuccess = async (response: any) => {
-    console.log(response);
     setMediaTypeDisplay(true);
     setImageFilePath((prevState) => [...prevState, response]);
   };
@@ -216,12 +221,12 @@ const App: React.FC = () => {
         <LeftPanel preview={preview} />
         <Main
           step={step}
-          deviceView={deviceView}
           editorContent={editorContent}
           translatedContent={translatedContent}
           originalContentView={originalContentView}
           languageSwitcher={languageSwitcher}
           activeLanguage={activeLanguage}
+          mediaView={mediaView}
           handleEditorChange={handleEditorChange}
         />
         <RightPanel
@@ -234,6 +239,8 @@ const App: React.FC = () => {
           originalLanguageActive={originalLanguageActive}
           activeLanguage={activeLanguage}
           sourceLanguages={sourceLanguages}
+          mediaView={mediaView}
+          handleMediaViews={handleMediaViews}
           handleViewOriginalContent={handleViewOriginalContent}
           handleOriginalContentSave={handleOriginalContentSave}
           handleOrginalContentClear={handleOrginalContentClear}

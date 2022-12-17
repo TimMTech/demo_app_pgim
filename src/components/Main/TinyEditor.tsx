@@ -1,7 +1,6 @@
 import { Editor } from "@tinymce/tinymce-react";
 
 interface TinyEditorProps {
-  deviceView: boolean;
   editorContent: string;
   translatedContent: string;
   originalContentView: boolean;
@@ -9,18 +8,13 @@ interface TinyEditorProps {
 }
 
 const TinyEditor: React.FC<TinyEditorProps> = ({
-  deviceView,
   editorContent,
   translatedContent,
   originalContentView,
   handleEditorChange,
 }) => {
   return (
-    <div
-      className={`${
-        deviceView ? "w-[576px]" : "w-[1200px]"
-      } w-full h-[1200px] flex flex-col items-center`}
-    >
+    <div className="h-[1200px] w-[1200px] flex flex-col items-center">
       {!originalContentView ? (
         <Editor
           disabled
@@ -55,7 +49,6 @@ const TinyEditor: React.FC<TinyEditorProps> = ({
             contextmenu: "copy paste",
             forced_root_block: "p",
             remove_trailing_brs: true,
-
             toolbar:
               "undo redo | image | link | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | lineheight | outdent indent | media",
 
@@ -65,7 +58,7 @@ const TinyEditor: React.FC<TinyEditorProps> = ({
               { title: "Left", value: "w-full float-left" },
               { title: "Right", value: "w-full float-right" },
             ],
-            content_style: `img {max-width: 100% !important; height: auto !important;} iframe {max-width: 100% !important; }`,
+            content_style: ` img {max-width: 100% !important; height: auto !important;} iframe {max-width: 100% !important; }`,
           }}
         />
       )}

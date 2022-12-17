@@ -2,9 +2,9 @@ import Navigation from "./Navigation";
 import MediaUpload from "./Media/MediaUpload";
 import Languages from "./Translation/Languages";
 import Options from "./General/Options";
-
 import classNames from "classnames";
 import Preview from "./Previews/Preview";
+import { MouseEvent } from "react";
 
 interface RightPanelProps {
   step: number;
@@ -17,7 +17,8 @@ interface RightPanelProps {
   activeLanguage: string;
   originalLanguageActive: boolean;
   sourceLanguages: { [key: string]: string };
-
+  mediaView: { [key: string]: string };
+  handleMediaViews: (e: MouseEvent<SVGElement>) => void;
   handleViewOriginalContent: () => void;
 
   handleOriginalContentSave: () => void;
@@ -38,7 +39,6 @@ interface RightPanelProps {
 const RightPanel: React.FC<RightPanelProps> = ({
   step,
   preview,
-
   imageFilePath,
   videoFilePath,
   mediaTypeDisplay,
@@ -46,7 +46,9 @@ const RightPanel: React.FC<RightPanelProps> = ({
   sourceLanguages,
   activeLanguage,
   originalLanguageActive,
+  mediaView,
 
+  handleMediaViews,
   handleViewOriginalContent,
   handleOriginalContentSave,
   handleOrginalContentClear,
@@ -111,8 +113,10 @@ const RightPanel: React.FC<RightPanelProps> = ({
           selectedLanguages={selectedLanguages}
           activeLanguage={activeLanguage}
           originalLanguageActive={originalLanguageActive}
+          mediaView={mediaView}
           handleSwitchTranslation={handleSwitchTranslation}
           handleViewOriginalContent={handleViewOriginalContent}
+          handleMediaViews={handleMediaViews}
         />
       )}
     </div>

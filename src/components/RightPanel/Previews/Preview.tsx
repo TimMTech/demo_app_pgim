@@ -5,14 +5,17 @@ import {
   AiOutlineTablet,
 } from "react-icons/ai";
 import Map from "./Map";
+import { MouseEvent } from "react";
 
 interface PreviewProps {
   sourceLanguages: { [key: string]: string };
   selectedLanguages: { [key: string]: string }[];
   activeLanguage: string;
   originalLanguageActive: boolean;
+  mediaView: { [key: string]: string };
   handleViewOriginalContent: () => void;
   handleSwitchTranslation: (label: string) => void;
+  handleMediaViews: (e: MouseEvent<SVGElement>) => void;
 }
 
 const Preview: React.FC<PreviewProps> = ({
@@ -20,16 +23,39 @@ const Preview: React.FC<PreviewProps> = ({
   selectedLanguages,
   activeLanguage,
   originalLanguageActive,
+  mediaView,
   handleSwitchTranslation,
   handleViewOriginalContent,
+  handleMediaViews,
 }) => {
   return (
     <div className="h-full w-full flex flex-col">
       <div className="h-full w-full">
         <div className="text-white flex  justify-center gap-8 mt-4">
-          <AiOutlineDesktop size={60} />
-          <AiOutlineMobile size={60} />
-          <AiOutlineTablet size={60} />
+          <AiOutlineDesktop
+            className={`${
+              mediaView.width === "w-[1200px]" && "text-blue-500"
+            } cursor-pointer`}
+            id="desktop"
+            size={60}
+            onClick={handleMediaViews}
+          />
+          <AiOutlineMobile
+            className={`${
+              mediaView.width === "w-[576px]" && "text-blue-500"
+            } cursor-pointer`}
+            id="mobile"
+            size={60}
+            onClick={handleMediaViews}
+          />
+          <AiOutlineTablet
+            className={`${
+              mediaView.width === "w-[961px]" && "text-blue-500"
+            } cursor-pointer`}
+            id="tablet"
+            size={60}
+            onClick={handleMediaViews}
+          />
         </div>
         <Map />
         <div className="lg:grid lg:grid-cols-4 lg:gap-x-0 text-sm flex flex-wrap gap-3 p-2 max-h-[500px] overflow-y-auto font-prompt text-white border-t border-white/20 mx-2">
