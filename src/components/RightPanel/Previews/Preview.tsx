@@ -34,7 +34,7 @@ const Preview: React.FC<PreviewProps> = ({
         <div className="text-white flex  justify-center gap-8 mt-4">
           <AiOutlineDesktop
             className={`${
-              mediaView.width === "w-[1200px]" && "text-blue-500"
+              mediaView.width === "desktop" && "text-blue-500"
             } cursor-pointer`}
             id="desktop"
             size={60}
@@ -42,7 +42,7 @@ const Preview: React.FC<PreviewProps> = ({
           />
           <AiOutlineMobile
             className={`${
-              mediaView.width === "w-[576px]" && "text-blue-500"
+              mediaView.width === "smartphone" && "text-blue-500"
             } cursor-pointer`}
             id="mobile"
             size={60}
@@ -50,7 +50,7 @@ const Preview: React.FC<PreviewProps> = ({
           />
           <AiOutlineTablet
             className={`${
-              mediaView.width === "w-[961px]" && "text-blue-500"
+              mediaView.width === "tablet" && "text-blue-500"
             } cursor-pointer`}
             id="tablet"
             size={60}

@@ -32,8 +32,8 @@ textarea {
 .desktop {
   -webkit-transform-origin: 0 0;
   transform-origin: 0 0;
-  -webkit-transform: scale(1) translate(-50%); /* Scaled down for a better Try-it experience (change to 1 for full scale) */
-  transform: scale(1) translate(-50%); /* Scaled down for a better Try-it experience (change to 1 for full scale) */
+  -webkit-transform: scale(1.1) translate(-50%); /* Scaled down for a better Try-it experience (change to 1 for full scale) */
+  transform: scale(1.1) translate(-50%); /* Scaled down for a better Try-it experience (change to 1 for full scale) */
   left: 50%;
   position: absolute;
   width: 1366px;
@@ -41,7 +41,7 @@ textarea {
   border-radius: 6px;
   border-style: solid;
   border-color: black;
-  border-width: 24px 24px 80px;
+  border-width: 24px 24px 40px;
   background-color: black;
 }
 
@@ -50,9 +50,9 @@ textarea {
   content: "";
   display: block;
   position: absolute;
-  width: 1530px;
+  width: 1540px;
   height: 60px;
-  margin: 80px 0 0 -110px;
+  margin: 40px 0 0 -110px;
   background: black;
   border-radius: 6px;
 }
@@ -64,7 +64,7 @@ textarea {
   position: absolute;
   width: 250px;
   height: 30px;
-  bottom: -110px;
+  bottom: -80px;
   left: 50%;
   -webkit-transform: translate(-50%);
   transform: translate(-50%);
@@ -74,13 +74,18 @@ textarea {
   z-index: 1;
 }
 
+.desktop .content {
+  overflow-y: auto;
+  padding: 16px 20rem;
+}
+
 .smartphone {
   position: relative;
   width: 430px;
   height: 844px;
   margin: auto;
   border: 16px black solid;
-  border-top-width: 60px;
+  border-top-width: 40px;
   border-bottom-width: 60px;
   border-radius: 36px;
 }
@@ -92,7 +97,7 @@ textarea {
   width: 60px;
   height: 5px;
   position: absolute;
-  top: -30px;
+  top: -20px;
   left: 50%;
   transform: translate(-50%, -50%);
   background: #333;
@@ -111,6 +116,11 @@ textarea {
   transform: translate(-50%, -50%);
   background: #333;
   border-radius: 50%;
+}
+
+.smartphone .content {
+  padding: 16px;
+  overflow-y: auto;
 }
 
 .tablet {
@@ -150,6 +160,11 @@ textarea {
   transform: translate(-50%, -50%);
   background: #333;
   border-radius: 50%;
+}
+
+.tablet .content {
+  padding: 16px;
+  overflow-y: auto;
 }
 
 @layer utilities {
