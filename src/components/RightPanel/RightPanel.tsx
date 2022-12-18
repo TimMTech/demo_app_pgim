@@ -66,7 +66,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
   return (
     <div
       className={classNames(
-        "transition duration-200 ease w-[300px] absolute z-[10] py-14 right-0 h-full bg-[#22262e] border-l-2 border-black/10",
+        "transition duration-200 ease w-[300px] absolute z-[10] py-14 right-0 h-full bg-[#22262e] border-l-2 border-white/10",
         {
           "opacity-100 pointer-events-auto": preview === false,
           "opacity-0 pointer-events-none": preview === true,

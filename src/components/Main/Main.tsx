@@ -1,7 +1,6 @@
 import TinyEditor from "./TinyEditor";
 import ContentPreview from "./ContentPreview";
 
-
 interface MainProps {
   step: number;
   editorContent: string;
@@ -28,7 +27,7 @@ const Main: React.FC<MainProps> = ({
   return (
     <div className="h-full w-full relative z-[1] overflow-auto ">
       {step === 4 ? (
-        <div className="flex justify-center items-center w-full h-full absolute top-[40px] h-[125vh] ">
+        <div className="flex justify-center items-center w-full h-full absolute  ">
           <ContentPreview
             editorContent={editorContent}
             languageSwitcher={languageSwitcher}

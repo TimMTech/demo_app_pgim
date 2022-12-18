@@ -27,7 +27,7 @@ const App: React.FC = () => {
   const [step, setStep] = useState(1);
 
   const [mediaView, setMediaView] = useState<{ [key: string]: string }>({
-    width: "w-[1200px]",
+    width: "desktop",
   });
 
   const [originalContentView, setOriginalContentView] = useState<boolean>(true);
@@ -59,9 +59,9 @@ const App: React.FC = () => {
 
   const handleMediaViews = (e: MouseEvent<SVGElement>) => {
     const { id } = e.currentTarget;
-    id === "mobile" && setMediaView({ width: "w-[576px]" });
-    id === "desktop" && setMediaView({ width: "w-[1200px]" });
-    id === "tablet" && setMediaView({ width: "w-[961px]" });
+    id === "mobile" && setMediaView({ width: "smartphone" });
+    id === "desktop" && setMediaView({ width: "desktop" });
+    id === "tablet" && setMediaView({ width: "tablet" });
   };
 
   const handleViewOriginalContent = () => {

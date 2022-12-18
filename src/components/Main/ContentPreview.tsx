@@ -18,27 +18,33 @@ const ContentPreview: React.FC<ContentPreviewProps> = ({
   return (
     <>
       {!originalContentView ? (
-        <div
-          className={`${mediaView.width} bg-white p-4 h-[1200px] my-body my-header my-table my-thead my-tr my-tbody my-td my-th my-links my-ul`}
-          dangerouslySetInnerHTML={{
-            __html: languageSwitcher
-              .filter((languages: any) => languages.label === activeLanguage)
-              .map(({ value }: any) =>
-                DOMPurify.sanitize(value, {
-                  FORCE_BODY: true,
-                })
-              ),
-          }}
-        />
+        <div className={`${mediaView.width}`}>
+          <div
+            className={`bg-white p-4 w-full h-full overflow-y-auto my-body my-header my-table my-thead my-tr my-tbody my-td my-th my-links my-ul`}
+            dangerouslySetInnerHTML={{
+              __html: languageSwitcher
+                .filter((languages: any) => languages.label === activeLanguage)
+                .map(({ value }: any) =>
+                  DOMPurify.sanitize(value, {
+                    FORCE_BODY: true,
+                    ADD_TAGS: ["iframe"],
+                  })
+                ),
+            }}
+          />
+        </div>
       ) : (
-        <body
-          className={`${mediaView.width} bg-white p-4 h-[1200px] my-body my-header my-table my-thead my-tr my-tbody my-td my-th my-links my-ul`}
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(editorContent, {
-              FORCE_BODY: true,
-            }),
-          }}
-        />
+        <div className={`${mediaView.width}`}>
+          <div
+            className={`bg-white p-4 w-full h-full overflow-y-auto  my-body my-header my-table my-thead my-tr my-tbody my-td my-th my-links my-ul`}
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(editorContent, {
+                FORCE_BODY: true,
+                ADD_TAGS: ["iframe"]
+              }),
+            }}
+          />
+        </div>
       )}
     </>
   );

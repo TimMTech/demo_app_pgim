@@ -11,21 +11,22 @@ export const customSourceStyles = {
     width: "50px",
     padding: 0,
     margin: 0,
-    height: 10,
+
     border: 0,
     textAlign: "center",
     cursor: "pointer",
     backgroundColor: "#2c3139",
     color: "white",
-    
+    fontSize: "15px"
   }),
-  menu: (styles: any) => ({ ...styles, width: "90px"}),
+  menu: (styles: any) => ({ ...styles, width: "90px" }),
   input: (styles: any) => ({ ...styles, color: "white", fontFamily: "Prompt" }),
   singleValue: (styles: any) => ({
     ...styles,
     color: "white",
     fontFamily: "Prompt",
   }),
+
 };
 
 export const customTranslationStyles = {
@@ -60,6 +61,6 @@ export const customTranslationStyles = {
   singleValue: (styles: any) => ({
     ...styles,
     color: "white",
-    fontFamily: "Prompt"
-  })
+    fontFamily: "Prompt",
+  }),
 };

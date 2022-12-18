@@ -24,13 +24,24 @@ const TinyEditor: React.FC<TinyEditorProps> = ({
           init={{
             height: "100%",
             width: "100%",
+
             resize: false,
-            menubar: false,
+            menubar: true,
             branding: false,
             statusbar: false,
-            toolbar: false,
+            contextmenu: "copy paste",
             forced_root_block: "p",
             remove_trailing_brs: true,
+            toolbar:
+              "undo redo | image | link | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | lineheight | outdent indent | media",
+
+            plugins: ["lists", "emoticons", "media", "table", "link", "image"],
+
+            image_class_list: [
+              { title: "Left", value: "w-full float-left" },
+              { title: "Right", value: "w-full float-right" },
+            ],
+            content_style: ` img {max-width: 100% !important; height: auto !important;} iframe {max-width: 100% !important; }`,
           }}
         />
       ) : (
@@ -42,6 +53,7 @@ const TinyEditor: React.FC<TinyEditorProps> = ({
           init={{
             height: "100%",
             width: "100%",
+
             resize: false,
             menubar: true,
             branding: false,
