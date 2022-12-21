@@ -21,7 +21,7 @@ interface RightPanelProps {
   handleMediaViews: (e: MouseEvent<SVGElement>) => void;
   handleViewOriginalContent: () => void;
 
-  handleOriginalContentSave: () => void;
+ 
   handleOrginalContentClear: () => void;
 
   handleTranslationSelect: (value: any) => void;
@@ -50,7 +50,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
 
   handleMediaViews,
   handleViewOriginalContent,
-  handleOriginalContentSave,
+  
   handleOrginalContentClear,
   handleTranslationSelect,
   handleSwitchTranslation,
@@ -80,7 +80,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
       />
       {step === 1 && (
         <Options
-          handleOriginalContentSave={handleOriginalContentSave}
+        
           handleOrginalContentClear={handleOrginalContentClear}
         />
       )}

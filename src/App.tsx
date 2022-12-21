@@ -3,7 +3,6 @@ import RightPanel from "./components/RightPanel/RightPanel";
 import Navbar from "./components/Navbar";
 import LeftPanel from "./components/LeftPanel";
 import { useState, useEffect, MouseEvent } from "react";
-import { example } from "./utils/exampleContent";
 import { Predictions } from "@aws-amplify/predictions";
 import DeviceBar from "./components/Main/DeviceBar";
 
@@ -32,7 +31,7 @@ const App: React.FC = () => {
 
   const [originalContentView, setOriginalContentView] = useState<boolean>(true);
 
-  const [editorContent, setEditorContent] = useState<string>(example);
+  const [editorContent, setEditorContent] = useState<string>("");
 
   const [translatedContent, setTranslatedContent] = useState<string | any>("");
 
@@ -74,23 +73,17 @@ const App: React.FC = () => {
     setPreview(!preview);
   };
 
+
   const handleEditorChange = (content: string) => {
-    setEditorContent(content);
-  };
-
-  const handleSourceSelect = (value: any) => {
-    setSourceLanguages(value);
-  };
-
-  const handleOriginalContentSave = async () => {
-    await fetch("http://localhost:5000/api/article", {
+    if (content === "") return;
+    fetch(`http://localhost:5000/api/article/0/${sourceLanguages.value}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        key: "00001",
-        value: editorContent,
+        key: `00001/0/${sourceLanguages.value}`,
+        value: content,
       }),
     })
       .then((response) => {
@@ -101,8 +94,17 @@ const App: React.FC = () => {
         console.log(data);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log(error);
       });
+    setEditorContent(content);
+  };
+
+  const handleTranslationChange = (content: string) => {
+    setTranslatedContent(content);
+  };
+
+  const handleSourceSelect = (value: any) => {
+    setSourceLanguages(value);
   };
 
   const handleOrginalContentClear = () => {
@@ -132,7 +134,7 @@ const App: React.FC = () => {
       translateText: {
         source: {
           text: editorContent,
-          language: sourceLanguages.label,
+          language: sourceLanguages.value,
         },
         targetLanguage: value.label,
       },
@@ -140,16 +142,20 @@ const App: React.FC = () => {
       .then(async (response) => {
         setOriginalContentView(false);
         setTranslatedContent(response.text);
-        await fetch("http://localhost:5000/api/article", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            key: "00002",
-            value: response.text,
-          }),
-        })
+
+        await fetch(
+          `http://localhost:5000/api/article/1/${response.language}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              key: `00001/1/${response.language}`,
+              value: response.text,
+            }),
+          }
+        )
           .then((response) => {
             if (!response.ok) console.log("error");
             return response.json();
@@ -208,6 +214,8 @@ const App: React.FC = () => {
     console.log("error", response);
   };
 
+  
+
   if (isLoading) {
     return null;
   }
@@ -228,6 +236,7 @@ const App: React.FC = () => {
           activeLanguage={activeLanguage}
           mediaView={mediaView}
           handleEditorChange={handleEditorChange}
+          handleTranslationChange={handleTranslationChange}
         />
         <RightPanel
           step={step}
@@ -242,7 +251,6 @@ const App: React.FC = () => {
           mediaView={mediaView}
           handleMediaViews={handleMediaViews}
           handleViewOriginalContent={handleViewOriginalContent}
-          handleOriginalContentSave={handleOriginalContentSave}
           handleOrginalContentClear={handleOrginalContentClear}
           handleSwitchTranslation={handleSwitchTranslation}
           handleTranslationSelect={handleTranslationSelect}

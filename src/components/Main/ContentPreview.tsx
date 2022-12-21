@@ -36,7 +36,7 @@ const ContentPreview: React.FC<ContentPreviewProps> = ({
       ) : (
         <div className={`${mediaView.width}`}>
           <div
-            className={`content bg-white  h-full w-full my-body my-header my-table my-thead my-tr my-tbody my-td my-th my-links my-ul`}
+            className={`content bg-white h-full w-full my-body my-header my-table my-thead my-tr my-tbody my-td my-th my-links my-ul`}
             dangerouslySetInnerHTML={{
               __html: DOMPurify.sanitize(editorContent, {
                 FORCE_BODY: true,

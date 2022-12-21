@@ -8,9 +8,11 @@ interface MainProps {
 
   originalContentView: boolean;
   languageSwitcher: { [key: string]: string }[];
+  
   activeLanguage: string;
   mediaView: { [key: string]: string };
   handleEditorChange: (content: string, editor: any) => void;
+  handleTranslationChange: (content: string, editor: any) => void;
 }
 
 const Main: React.FC<MainProps> = ({
@@ -20,9 +22,12 @@ const Main: React.FC<MainProps> = ({
 
   originalContentView,
   languageSwitcher,
+ 
   activeLanguage,
   mediaView,
   handleEditorChange,
+  handleTranslationChange
+
 }) => {
   return (
     <div className="h-full w-full relative z-[1] overflow-auto ">
@@ -42,7 +47,9 @@ const Main: React.FC<MainProps> = ({
             editorContent={editorContent}
             translatedContent={translatedContent}
             originalContentView={originalContentView}
+     
             handleEditorChange={handleEditorChange}
+            handleTranslationChange={handleTranslationChange}
           />
         </div>
       )}

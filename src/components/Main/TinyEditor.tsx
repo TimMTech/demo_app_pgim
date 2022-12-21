@@ -4,23 +4,27 @@ interface TinyEditorProps {
   editorContent: string;
   translatedContent: string;
   originalContentView: boolean;
+
   handleEditorChange: (content: string, editor: any) => void;
+  handleTranslationChange: (content: string, editor: any) => void;
 }
 
 const TinyEditor: React.FC<TinyEditorProps> = ({
   editorContent,
   translatedContent,
   originalContentView,
+
   handleEditorChange,
+  handleTranslationChange,
 }) => {
   return (
     <div className="h-[1200px] w-[1200px] flex flex-col items-center">
       {!originalContentView ? (
         <Editor
-          disabled
           value={translatedContent}
           apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
-          id="desktopContentTranslated"
+          onEditorChange={handleTranslationChange}
+          id="translated"
           init={{
             height: "100%",
             width: "100%",
@@ -49,7 +53,7 @@ const TinyEditor: React.FC<TinyEditorProps> = ({
           value={editorContent}
           apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
           onEditorChange={handleEditorChange}
-          id="desktopContent"
+          id="orginial"
           init={{
             height: "100%",
             width: "100%",

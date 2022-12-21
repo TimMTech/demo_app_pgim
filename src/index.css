@@ -32,8 +32,8 @@ textarea {
 .desktop {
   -webkit-transform-origin: 0 0;
   transform-origin: 0 0;
-  -webkit-transform: scale(1.1) translate(-50%); /* Scaled down for a better Try-it experience (change to 1 for full scale) */
-  transform: scale(1.1) translate(-50%); /* Scaled down for a better Try-it experience (change to 1 for full scale) */
+  -webkit-transform: scale(1) translate(-50%); /* Scaled down for a better Try-it experience (change to 1 for full scale) */
+  transform: scale(1) translate(-50%); /* Scaled down for a better Try-it experience (change to 1 for full scale) */
   left: 50%;
   position: absolute;
   width: 1366px;

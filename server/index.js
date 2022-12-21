@@ -29,23 +29,63 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 app.use(cors());
-app.use(express.static(path.join(__dirname, "../build")));
 
 app.get("/api/auth", (req, res) => {
   var result = imagekit.getAuthenticationParameters();
   res.json(result);
 });
 
-app.post("/api/article", async (req, res) => {
-  const article = new ArticleModel({
-    key: req.body.key,
-    value: req.body.value,
-  });
+app.get("/api/article", async (req, res) => {
+  const articles = await ArticleModel.find();
+  if (articles) {
+    return res.status(200).json(articles);
+  } else {
+    return res.status(500);
+  }
+});
+
+app.post(`/api/article/0/:sourceLang`, async (req, res) => {
+  const article = await ArticleModel.findOneAndUpdate(
+    { key: req.body.key },
+    {
+      key: req.body.key,
+      value: req.body.value,
+    },
+    { new: true }
+  );
+  if (!article) {
+    const newArticle = new ArticleModel({
+      key: req.body.key,
+      value: req.body.value,
+    });
+    newArticle
+      .save()
+      .then((data) => res.status(200).json(data))
+      .catch((error) => res.status(500).json(error));
+  } else {
+    article
+      .save()
+      .then((data) => res.status(200).json(data))
+      .catch((error) => res.status(500).json(error));
+  }
+});
+
+app.post(`/api/article/1/:transLang`, async (req, res) => {
+  const article = await ArticleModel.findOne(
+    { key: req.body.key },
+    {
+      key: req.body.key,
+      value: req.body.value,
+    },
+    { new: true }
+  );
   article
     .save()
     .then((data) => res.status(200).json(data))
     .catch((error) => res.status(500).json(error));
 });
+
+app.use(express.static(path.join(__dirname, "../build")));
 
 app.listen(PORT, () => {
   console.log("Live...");
