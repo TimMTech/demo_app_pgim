@@ -2,9 +2,10 @@ import Main from "./components/Main/Main";
 import RightPanel from "./components/RightPanel/RightPanel";
 import Navbar from "./components/Navbar";
 import LeftPanel from "./components/LeftPanel";
-import { useState, useEffect, MouseEvent } from "react";
+import { useState, useEffect, MouseEvent, useCallback } from "react";
 import { Predictions } from "@aws-amplify/predictions";
 import DeviceBar from "./components/Main/DeviceBar";
+import debounce from "lodash/debounce";
 
 const App: React.FC = () => {
   //Loading State For when App Building DOM
@@ -80,6 +81,7 @@ const App: React.FC = () => {
 
   const handleEditorChange = (content: string) => {
     if (content === "") return;
+
     fetch(`http://localhost:5000/api/article/0/${sourceLanguages.value}`, {
       method: "POST",
       headers: {
@@ -100,6 +102,7 @@ const App: React.FC = () => {
       .catch((error) => {
         console.log(error);
       });
+
     setEditorContent(content);
   };
 
@@ -143,6 +146,7 @@ const App: React.FC = () => {
         targetLanguage: value.label,
       },
     }).then(async (response) => {
+      setOriginalLanguageActive(false);
       setOriginalContentView(false);
       setTranslatedContent((prevState) => ({
         ...prevState,
