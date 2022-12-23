@@ -7,7 +7,7 @@ import {
   AiOutlineCalendar,
 } from "react-icons/ai";
 
-import classNames from "classnames";
+
 
 import {
   MdOutlineContactSupport,
@@ -17,21 +17,11 @@ import {
 
 import { FaTasks } from "react-icons/fa";
 
-interface LeftPanelProps {
-  preview: boolean;
-}
+interface LeftPanelProps {}
 
-const LeftPanel: React.FC<LeftPanelProps> = ({ preview }) => {
+const LeftPanel: React.FC<LeftPanelProps> = ({}) => {
   return (
-    <div
-      className={classNames(
-        "transition duration-200 ease w-[165px] absolute z-[10] py-14 left-0 h-full text-xs bg-[#22262e] border-r-2 border-white/10",
-        {
-          "opacity-100 pointer-events-auto": preview === false,
-          "opacity-0 pointer-events-none": preview === true,
-        }
-      )}
-    >
+    <div className="transition duration-200 ease w-[165px] absolute z-[10] py-14 left-0 h-full text-xs bg-[#22262e] border-r-2 border-white/10">
       <div className="flex flex-col items-start text-white justify-center gap-1 p-4 font-prompt border-b border-white/20">
         <button className="flex items-center gap-2 w-full rounded-md py-2 pl-2 bg-[rgba(44,49,57,0.6);]">
           <AiOutlineHome className="text-[#0d7ed9]" size={20} />

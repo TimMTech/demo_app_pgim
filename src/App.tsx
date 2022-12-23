@@ -33,7 +33,9 @@ const App: React.FC = () => {
 
   const [editorContent, setEditorContent] = useState<string>("");
 
-  const [translatedContent, setTranslatedContent] = useState<string | any>("");
+  const [translatedContent, setTranslatedContent] = useState<{
+    [key: string]: string;
+  }>({});
 
   const [selectedLanguages, setSelectedLanguages] = useState<
     { [key: string]: string }[]
@@ -49,12 +51,9 @@ const App: React.FC = () => {
     useState<boolean>(false);
   const [activeLanguage, setActiveLanguage] = useState<string>("");
 
-  const [languageSwitcher, setLanguageSwitcher] = useState<{}[]>([]);
-
   const [imageFilePath, setImageFilePath] = useState<object[]>([]);
   const [videoFilePath, setVideoFilePath] = useState<object[]>([]);
   const [mediaTypeDisplay, setMediaTypeDisplay] = useState<boolean>(true);
-  const [preview, setPreview] = useState<boolean>(false);
 
   const handleMediaViews = (e: MouseEvent<SVGElement>) => {
     const { id } = e.currentTarget;
@@ -63,16 +62,21 @@ const App: React.FC = () => {
     id === "tablet" && setMediaView({ width: "tablet" });
   };
 
+  const handleSourceSelect = (value: any) => {
+    setSourceLanguages(value);
+  };
+
   const handleViewOriginalContent = () => {
     setOriginalContentView(true);
     setOriginalLanguageActive(true);
     setActiveLanguage("");
   };
 
-  const handlePreviewMode = () => {
-    setPreview(!preview);
+  const handleSwitchTranslation = (label: string) => {
+    setActiveLanguage(label);
+    setOriginalContentView(false);
+    setOriginalLanguageActive(false);
   };
-
 
   const handleEditorChange = (content: string) => {
     if (content === "") return;
@@ -100,27 +104,27 @@ const App: React.FC = () => {
   };
 
   const handleTranslationChange = (content: string) => {
-    setTranslatedContent(content);
-  };
-
-  const handleSourceSelect = (value: any) => {
-    setSourceLanguages(value);
-  };
-
-  const handleOrginalContentClear = () => {
-    setEditorContent("");
-  };
-
-  const handleSwitchTranslation = (label: string) => {
-    const filterLangCode = languageSwitcher.filter(
-      (code: any) => code.label === label
-    );
-    if (filterLangCode) {
-      filterLangCode.map(({ value }: any) => setTranslatedContent(value));
-      setActiveLanguage(label);
-      setOriginalContentView(false);
-      setOriginalLanguageActive(false);
-    }
+    setTranslatedContent((prevState) => ({
+      ...prevState,
+      [activeLanguage]: content,
+    }));
+    fetch(`http://localhost:5000/api/article/1/${activeLanguage}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        key: `00001/1/${activeLanguage}`,
+        value: content,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) console.log("error");
+        return response.json();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleTranslationSelect = (value: any) => {
@@ -138,41 +142,13 @@ const App: React.FC = () => {
         },
         targetLanguage: value.label,
       },
-    })
-      .then(async (response) => {
-        setOriginalContentView(false);
-        setTranslatedContent(response.text);
-
-        await fetch(
-          `http://localhost:5000/api/article/1/${response.language}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              key: `00001/1/${response.language}`,
-              value: response.text,
-            }),
-          }
-        )
-          .then((response) => {
-            if (!response.ok) console.log("error");
-            return response.json();
-          })
-          .then((data) => {
-            setLanguageSwitcher((prevState) => [
-              ...prevState,
-              { ...data, label: value.label },
-            ]);
-          })
-          .catch((error) => {
-            console.log("error", error);
-          });
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
+    }).then(async (response) => {
+      setOriginalContentView(false);
+      setTranslatedContent((prevState) => ({
+        ...prevState,
+        [value.label]: response.text,
+      }));
+    });
   };
 
   const handleNextStep = () => {
@@ -214,25 +190,22 @@ const App: React.FC = () => {
     console.log("error", response);
   };
 
-  
-
   if (isLoading) {
     return null;
   }
 
   return (
     <div className={"absolute z-[1] top-0 bottom-0 left-0 right-0"}>
-      <Navbar preview={preview} handlePreviewMode={handlePreviewMode} />
+      <Navbar />
 
       <DeviceBar handleSourceSelect={handleSourceSelect} />
       <div className="flex w-full h-full ">
-        <LeftPanel preview={preview} />
+        <LeftPanel />
         <Main
           step={step}
           editorContent={editorContent}
           translatedContent={translatedContent}
           originalContentView={originalContentView}
-          languageSwitcher={languageSwitcher}
           activeLanguage={activeLanguage}
           mediaView={mediaView}
           handleEditorChange={handleEditorChange}
@@ -240,7 +213,6 @@ const App: React.FC = () => {
         />
         <RightPanel
           step={step}
-          preview={preview}
           imageFilePath={imageFilePath}
           videoFilePath={videoFilePath}
           mediaTypeDisplay={mediaTypeDisplay}
@@ -251,7 +223,6 @@ const App: React.FC = () => {
           mediaView={mediaView}
           handleMediaViews={handleMediaViews}
           handleViewOriginalContent={handleViewOriginalContent}
-          handleOrginalContentClear={handleOrginalContentClear}
           handleSwitchTranslation={handleSwitchTranslation}
           handleTranslationSelect={handleTranslationSelect}
           handleImageOnSuccess={handleImageOnSuccess}

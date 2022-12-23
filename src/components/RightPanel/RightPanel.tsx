@@ -1,15 +1,12 @@
 import Navigation from "./Navigation";
 import MediaUpload from "./Media/MediaUpload";
 import Languages from "./Translation/Languages";
-import Options from "./General/Options";
 import classNames from "classnames";
 import Preview from "./Previews/Preview";
 import { MouseEvent } from "react";
 
 interface RightPanelProps {
   step: number;
-  preview: boolean;
-
   imageFilePath: object[];
   videoFilePath: object[];
   mediaTypeDisplay: boolean;
@@ -18,16 +15,12 @@ interface RightPanelProps {
   originalLanguageActive: boolean;
   sourceLanguages: { [key: string]: string };
   mediaView: { [key: string]: string };
+
   handleMediaViews: (e: MouseEvent<SVGElement>) => void;
   handleViewOriginalContent: () => void;
-
- 
-  handleOrginalContentClear: () => void;
-
   handleTranslationSelect: (value: any) => void;
   handleSwitchTranslation: (label: string) => void;
   handleImageOnSuccess: (response: any) => void;
-
   handleImageOnError: (response: any) => void;
   handleVideoOnSuccess: (response: any) => void;
   handleVideoOnError: (response: any) => void;
@@ -38,7 +31,6 @@ interface RightPanelProps {
 
 const RightPanel: React.FC<RightPanelProps> = ({
   step,
-  preview,
   imageFilePath,
   videoFilePath,
   mediaTypeDisplay,
@@ -50,12 +42,9 @@ const RightPanel: React.FC<RightPanelProps> = ({
 
   handleMediaViews,
   handleViewOriginalContent,
-  
-  handleOrginalContentClear,
   handleTranslationSelect,
   handleSwitchTranslation,
   handleImageOnSuccess,
-
   handleImageOnError,
   handleVideoOnSuccess,
   handleVideoOnError,
@@ -64,27 +53,14 @@ const RightPanel: React.FC<RightPanelProps> = ({
   handlePreviousStep,
 }) => {
   return (
-    <div
-      className={classNames(
-        "transition duration-200 ease w-[300px] absolute z-[10] py-14 right-0 h-full bg-[#22262e] border-l-2 border-white/10",
-        {
-          "opacity-100 pointer-events-auto": preview === false,
-          "opacity-0 pointer-events-none": preview === true,
-        }
-      )}
-    >
+    <div className="transition duration-200 ease w-[300px] absolute z-[10] py-14 right-0 h-full bg-[#22262e] border-l-2 border-white/10">
       <Navigation
         step={step}
         handleNextStep={handleNextStep}
         handlePreviousStep={handlePreviousStep}
       />
+
       {step === 1 && (
-        <Options
-        
-          handleOrginalContentClear={handleOrginalContentClear}
-        />
-      )}
-      {step === 2 && (
         <MediaUpload
           imageFilePath={imageFilePath}
           videoFilePath={videoFilePath}
@@ -96,7 +72,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
           handleMediaTypeDisplay={handleMediaTypeDisplay}
         />
       )}
-      {step === 3 && (
+      {step === 2 && (
         <Languages
           selectedLanguages={selectedLanguages}
           activeLanguage={activeLanguage}
@@ -107,7 +83,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
           handleSwitchTranslation={handleSwitchTranslation}
         />
       )}
-      {step === 4 && (
+      {step === 3 && (
         <Preview
           sourceLanguages={sourceLanguages}
           selectedLanguages={selectedLanguages}

@@ -71,7 +71,7 @@ app.post(`/api/article/0/:sourceLang`, async (req, res) => {
 });
 
 app.post(`/api/article/1/:transLang`, async (req, res) => {
-  const article = await ArticleModel.findOne(
+  const article = await ArticleModel.findOneAndUpdate(
     { key: req.body.key },
     {
       key: req.body.key,
@@ -79,10 +79,21 @@ app.post(`/api/article/1/:transLang`, async (req, res) => {
     },
     { new: true }
   );
-  article
-    .save()
-    .then((data) => res.status(200).json(data))
-    .catch((error) => res.status(500).json(error));
+  if (!article) {
+    const newTranslatedArticle = new ArticleModel({
+      key: req.body.key,
+      value: req.body.value,
+    });
+    newTranslatedArticle
+      .save()
+      .then((data) => res.status(200).json(data))
+      .catch((error) => res.status(500).json(error));
+  } else {
+    article
+      .save()
+      .then((data) => res.status(200).json(data))
+      .catch((error) => res.status(500).json(error));
+  }
 });
 
 app.use(express.static(path.join(__dirname, "../build")));
