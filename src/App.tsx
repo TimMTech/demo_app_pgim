@@ -168,6 +168,7 @@ const App: React.FC = () => {
   };
 
   const handleImageOnSuccess = async (response: any) => {
+    
     setMediaTypeDisplay(true);
     setImageFilePath((prevState) => [...prevState, response]);
   };
