@@ -26,6 +26,8 @@ const App: React.FC = () => {
 
   const [step, setStep] = useState(1);
 
+  const [closeLeftPanel, setCloseLeftPanel] = useState<boolean>(false)
+
   const [mediaView, setMediaView] = useState<{ [key: string]: string }>({
     width: "desktop",
   });
@@ -56,6 +58,11 @@ const App: React.FC = () => {
   const [videoFilePath, setVideoFilePath] = useState<object[]>([]);
   const [mediaTypeDisplay, setMediaTypeDisplay] = useState<boolean>(true);
 
+  const handleCloseLeftPanel = () => {
+    setCloseLeftPanel(!closeLeftPanel)
+  }
+
+ 
   const handleMediaViews = (e: MouseEvent<SVGElement>) => {
     const { id } = e.currentTarget;
     id === "mobile" && setMediaView({ width: "smartphone" });
@@ -80,8 +87,6 @@ const App: React.FC = () => {
   };
 
   const handleEditorChange = (content: string) => {
-    if (content === "") return;
-
     fetch(`http://localhost:5000/api/article/0/${sourceLanguages.value}`, {
       method: "POST",
       headers: {
@@ -96,9 +101,7 @@ const App: React.FC = () => {
         if (!response.ok) console.log("error");
         return response.json();
       })
-      .then((data) => {
-        console.log(data);
-      })
+
       .catch((error) => {
         console.log(error);
       });
@@ -168,7 +171,6 @@ const App: React.FC = () => {
   };
 
   const handleImageOnSuccess = async (response: any) => {
-    
     setMediaTypeDisplay(true);
     setImageFilePath((prevState) => [...prevState, response]);
   };
@@ -200,12 +202,12 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className={"absolute z-[1] top-0 bottom-0 left-0 right-0"}>
+    <div className={"absolute z-[1] top-0 bottom-0 left-0 right-0 "}>
       <Navbar />
 
       <DeviceBar handleSourceSelect={handleSourceSelect} />
       <div className="flex w-full h-full ">
-        <LeftPanel />
+        <LeftPanel handleCloseLeftPanel={handleCloseLeftPanel} closeLeftPanel={closeLeftPanel} />
         <Main
           step={step}
           editorContent={editorContent}
@@ -226,6 +228,7 @@ const App: React.FC = () => {
           activeLanguage={activeLanguage}
           sourceLanguages={sourceLanguages}
           mediaView={mediaView}
+
           handleMediaViews={handleMediaViews}
           handleViewOriginalContent={handleViewOriginalContent}
           handleSwitchTranslation={handleSwitchTranslation}

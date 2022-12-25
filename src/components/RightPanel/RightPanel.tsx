@@ -1,12 +1,14 @@
 import Navigation from "./Navigation";
 import MediaUpload from "./Media/MediaUpload";
 import Languages from "./Translation/Languages";
-import classNames from "classnames";
+
 import Preview from "./Previews/Preview";
 import { MouseEvent } from "react";
+import { CgChevronDoubleLeft, CgChevronDoubleRight } from "react-icons/cg";
 
 interface RightPanelProps {
   step: number;
+
   imageFilePath: object[];
   videoFilePath: object[];
   mediaTypeDisplay: boolean;
@@ -31,6 +33,7 @@ interface RightPanelProps {
 
 const RightPanel: React.FC<RightPanelProps> = ({
   step,
+
   imageFilePath,
   videoFilePath,
   mediaTypeDisplay,

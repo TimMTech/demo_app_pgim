@@ -9,10 +9,6 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
       <FcDocument size={40} />
       <div className="flex items-center  gap-4">
         <AiOutlineShareAlt size={25} />
-       
-        <button className="bg-blue-500 text-white py-1 px-3 rounded-md">
-          Publish
-        </button>
       </div>
     </nav>
   );

@@ -21,10 +21,17 @@ const IKMedia: React.FC<IKMediaProps> = ({
   handleMediaTypeDisplay,
 }) => {
   const [currentImageSize, setCurrentImageSize] = useState<string>("");
+  const [currentImageDimensions, setCurrentImageDimensions] =
+    useState<string>("");
 
-  const handleSeeImageSpecs = (src: string) => {
+  const handleMediaSpecs = (width: number, height: number, src: string) => {
     fetch(src).then((response) =>
-      response.blob().then((blob) => setCurrentImageSize(blob.size.toString()))
+      response.blob().then((blob) => {
+        setCurrentImageSize(blob.size.toString());
+        setCurrentImageDimensions(
+          `${width.toString()} x ${height.toString()} `
+        );
+      })
     );
   };
 
@@ -61,10 +68,16 @@ const IKMedia: React.FC<IKMediaProps> = ({
               <p className="text-center">
                 Drag And Drop Image Into Rich Text Editor To Add Image.
               </p>
-              <span className="text-center">
-                Image Size :{" "}
-                {currentImageSize !== "" && formatBytes(currentImageSize)} KB
-              </span>
+              <div className="flex flex-col text-center mx-4 py-2 bg-[#181c22] rounded-md">
+                <span>
+                  Image Size :{" "}
+                  {currentImageSize !== "" && formatBytes(currentImageSize)} KB
+                </span>
+                <span>
+                  Image Dimensions :{" "}
+                  {currentImageDimensions !== "" && currentImageDimensions}
+                </span>
+              </div>
             </div>
           )}
           <div className="flex flex-col gap-8 max-h-[50vh] p-2 overflow-y-auto">
@@ -85,7 +98,11 @@ const IKMedia: React.FC<IKMediaProps> = ({
                       draggable
                       loading="lazy"
                       onMouseEnter={(event) => {
-                        handleSeeImageSpecs(event.currentTarget.currentSrc);
+                        handleMediaSpecs(
+                          event.currentTarget.width,
+                          event.currentTarget.height,
+                          event.currentTarget.currentSrc
+                        );
                       }}
                     />
                   </div>
@@ -102,7 +119,11 @@ const IKMedia: React.FC<IKMediaProps> = ({
                         },
                       ]}
                       onMouseEnter={(event) => {
-                        handleSeeImageSpecs(event.currentTarget.currentSrc);
+                        handleMediaSpecs(
+                          event.currentTarget.width,
+                          event.currentTarget.height,
+                          event.currentTarget.currentSrc
+                        );
                       }}
                     />
                   </div>
@@ -123,7 +144,11 @@ const IKMedia: React.FC<IKMediaProps> = ({
                           },
                         ]}
                         onMouseEnter={(event) => {
-                          handleSeeImageSpecs(event.currentTarget.currentSrc);
+                          handleMediaSpecs(
+                            event.currentTarget.width,
+                            event.currentTarget.height,
+                            event.currentTarget.currentSrc
+                          );
                         }}
                       />
                     </div>
@@ -136,36 +161,32 @@ const IKMedia: React.FC<IKMediaProps> = ({
       ) : (
         <div className="flex-1 flex flex-col gap-10 p-2 max-h-[50vh]   overflow-y-auto">
           {videoFilePath.length !== 0 && (
-            <p className="text-center">
-              Click Video To Copy URL And Paste Into Rich Text Editor's Media
-              Upload
-            </p>
+            <div className="flex flex-col gap-2 py-6">
+              <p className="text-center">
+                Click Video To Copy URL And Paste Into Rich Text Editor's Media
+                Upload
+              </p>
+              <div className="flex flex-col text-center mx-4 py-2 bg-[#181c22] rounded-md">
+                <span>
+                  Video Size :{" "}
+                  {currentImageSize !== "" && formatBytes(currentImageSize)} KB
+                </span>
+                <span>
+                  Video Dimensions :{" "}
+                  {currentImageDimensions !== "" && currentImageDimensions}
+                </span>
+              </div>
+            </div>
           )}
-
-          {videoFilePath?.map((video: any, index: number) => {
-            const { url } = video;
-            return (
-              <div
-                key={index}
-                className="flex flex-col gap-4 font-prompt text-sm "
-              >
-                <div className="flex flex-col">
-                  <IKVideo
-                    onClick={() => navigator.clipboard.writeText(url)}
-                    className="border cursor-copy"
-                    src={url}
-                    draggable
-                    transformation={[
-                      {
-                        width: "500",
-                        height: "300",
-                      },
-                    ]}
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <div>
-                    <div className="flex flex-col"></div>
+          <div className="flex flex-col gap-8 max-h-[50vh] p-2 overflow-y-auto">
+            {videoFilePath?.map((video: any, index: number) => {
+              const { url } = video;
+              return (
+                <div
+                  key={index}
+                  className="flex flex-col gap-4 font-prompt text-sm "
+                >
+                  <div className="flex flex-col">
                     <IKVideo
                       onClick={() => navigator.clipboard.writeText(url)}
                       className="border cursor-copy"
@@ -173,16 +194,48 @@ const IKMedia: React.FC<IKMediaProps> = ({
                       draggable
                       transformation={[
                         {
-                          width: "200",
-                          height: "200",
+                          width: "500",
+                          height: "300",
                         },
                       ]}
+                      onMouseEnter={(event) => {
+                        handleMediaSpecs(
+                          event.currentTarget.videoWidth,
+                          event.currentTarget.videoHeight,
+                          event.currentTarget.currentSrc
+                        );
+                      }}
                     />
                   </div>
+                  <div className="flex flex-col">
+                    <div>
+                      <div className="flex flex-col"></div>
+                      <IKVideo
+                        onClick={() => navigator.clipboard.writeText(url)}
+                        className="border cursor-copy"
+                        src={url}
+                        draggable
+                        transformation={[
+                          {
+                            width: "100",
+                            height: "100",
+                          },
+                        ]}
+                        onMouseEnter={(event) => {
+                          
+                          handleMediaSpecs(
+                            event.currentTarget.videoWidth,
+                            event.currentTarget.videoHeight,
+                            event.currentTarget.currentSrc
+                          );
+                        }}
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       )}
     </div>
