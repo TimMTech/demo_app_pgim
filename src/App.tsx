@@ -5,7 +5,6 @@ import LeftPanel from "./components/LeftPanel";
 import { useState, useEffect, MouseEvent, useCallback } from "react";
 import { Predictions } from "@aws-amplify/predictions";
 import DeviceBar from "./components/Main/DeviceBar";
-import debounce from "lodash/debounce";
 
 const App: React.FC = () => {
   //Loading State For when App Building DOM
@@ -24,9 +23,9 @@ const App: React.FC = () => {
   });
   //
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState<number>(1);
 
-  const [closeLeftPanel, setCloseLeftPanel] = useState<boolean>(false)
+  const [closeLeftPanel, setCloseLeftPanel] = useState<boolean>(false);
 
   const [mediaView, setMediaView] = useState<{ [key: string]: string }>({
     width: "desktop",
@@ -34,7 +33,7 @@ const App: React.FC = () => {
 
   const [originalContentView, setOriginalContentView] = useState<boolean>(true);
 
-  const [editorContent, setEditorContent] = useState<string>("");
+  const [editorContent, setEditorContent] = useState<string | any>("");
 
   const [translatedContent, setTranslatedContent] = useState<{
     [key: string]: string;
@@ -52,17 +51,16 @@ const App: React.FC = () => {
 
   const [originalLanguageActive, setOriginalLanguageActive] =
     useState<boolean>(false);
-  const [activeLanguage, setActiveLanguage] = useState<string>("");
+  const [activeLanguage, setActiveLanguage] = useState<string | any>("");
 
   const [imageFilePath, setImageFilePath] = useState<object[]>([]);
   const [videoFilePath, setVideoFilePath] = useState<object[]>([]);
   const [mediaTypeDisplay, setMediaTypeDisplay] = useState<boolean>(true);
 
   const handleCloseLeftPanel = () => {
-    setCloseLeftPanel(!closeLeftPanel)
-  }
+    setCloseLeftPanel(!closeLeftPanel);
+  };
 
- 
   const handleMediaViews = (e: MouseEvent<SVGElement>) => {
     const { id } = e.currentTarget;
     id === "mobile" && setMediaView({ width: "smartphone" });
@@ -72,6 +70,7 @@ const App: React.FC = () => {
 
   const handleSourceSelect = (value: any) => {
     setSourceLanguages(value);
+    localStorage.setItem("SourceLang", JSON.stringify(value));
   };
 
   const handleViewOriginalContent = () => {
@@ -84,6 +83,7 @@ const App: React.FC = () => {
     setActiveLanguage(label);
     setOriginalContentView(false);
     setOriginalLanguageActive(false);
+    localStorage.setItem("ActiveLang", label);
   };
 
   const handleEditorChange = (content: string) => {
@@ -107,6 +107,7 @@ const App: React.FC = () => {
       });
 
     setEditorContent(content);
+    localStorage.setItem("Orig", content);
   };
 
   const handleTranslationChange = (content: string) => {
@@ -114,6 +115,10 @@ const App: React.FC = () => {
       ...prevState,
       [activeLanguage]: content,
     }));
+    localStorage.setItem(
+      "Trans",
+      JSON.stringify({ ...translatedContent, [activeLanguage]: content })
+    );
     fetch(`http://localhost:5000/api/article/1/${activeLanguage}`, {
       method: "POST",
       headers: {
@@ -140,6 +145,11 @@ const App: React.FC = () => {
     }
     setSelectedLanguages((prevState) => [...prevState, value]);
     setActiveLanguage(value.label);
+    localStorage.setItem(
+      "SelectedLangs",
+      JSON.stringify([...selectedLanguages, value])
+    );
+    localStorage.setItem("ActiveLang", value.label);
     Predictions.convert({
       translateText: {
         source: {
@@ -197,6 +207,29 @@ const App: React.FC = () => {
     console.log("error", response);
   };
 
+  useEffect(() => {
+    localStorage.setItem("ActiveLang", "");
+  }, []);
+
+  useEffect(() => {
+    const original = localStorage.getItem("Orig");
+    setEditorContent(original);
+
+    const translated = JSON.parse(localStorage.getItem("Trans") || "{}");
+    setTranslatedContent(translated);
+
+    const selectedLangs = JSON.parse(
+      localStorage.getItem("SelectedLangs") || "[]"
+    );
+    const sourceLang = JSON.parse(
+      localStorage.getItem("SourceLang") || `{"label":"en","value":"en"}`
+    );
+
+    setSelectedLanguages(selectedLangs);
+
+    setSourceLanguages(sourceLang);
+  }, []);
+
   if (isLoading) {
     return null;
   }
@@ -205,9 +238,15 @@ const App: React.FC = () => {
     <div className={"absolute z-[1] top-0 bottom-0 left-0 right-0 "}>
       <Navbar />
 
-      <DeviceBar handleSourceSelect={handleSourceSelect} />
+      <DeviceBar
+        sourceLanguages={sourceLanguages}
+        handleSourceSelect={handleSourceSelect}
+      />
       <div className="flex w-full h-full ">
-        <LeftPanel handleCloseLeftPanel={handleCloseLeftPanel} closeLeftPanel={closeLeftPanel} />
+        <LeftPanel
+          handleCloseLeftPanel={handleCloseLeftPanel}
+          closeLeftPanel={closeLeftPanel}
+        />
         <Main
           step={step}
           editorContent={editorContent}
@@ -228,7 +267,6 @@ const App: React.FC = () => {
           activeLanguage={activeLanguage}
           sourceLanguages={sourceLanguages}
           mediaView={mediaView}
-
           handleMediaViews={handleMediaViews}
           handleViewOriginalContent={handleViewOriginalContent}
           handleSwitchTranslation={handleSwitchTranslation}
