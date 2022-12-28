@@ -19,6 +19,7 @@ const Main: React.FC<MainProps> = ({
   originalContentView,
   activeLanguage,
   mediaView,
+  
   handleEditorChange,
   handleTranslationChange,
 }) => {
@@ -41,6 +42,7 @@ const Main: React.FC<MainProps> = ({
             editorContent={editorContent}
             translatedContent={translatedContent}
             originalContentView={originalContentView}
+       
             handleEditorChange={handleEditorChange}
             handleTranslationChange={handleTranslationChange}
           />

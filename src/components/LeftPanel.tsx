@@ -35,13 +35,13 @@ const LeftPanel: React.FC<LeftPanelProps> = ({
       <div className="flex justify-end">
         {closeLeftPanel ? (
           <CgChevronDoubleRight
-            className="text-white"
+            className="text-white cursor-pointer"
             size={30}
             onClick={handleCloseLeftPanel}
           />
         ) : (
           <CgChevronDoubleLeft
-            className="text-white"
+            className="text-white cursor-pointer"
             size={30}
             onClick={handleCloseLeftPanel}
           />

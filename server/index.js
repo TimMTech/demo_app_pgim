@@ -44,7 +44,6 @@ app.get("/api/article", async (req, res) => {
   }
 });
 
-
 app.post(`/api/article/0/:sourceLang`, async (req, res) => {
   const article = await ArticleModel.findOneAndUpdate(
     { key: req.body.key },
@@ -94,6 +93,30 @@ app.post(`/api/article/1/:transLang`, async (req, res) => {
       .save()
       .then((data) => res.status(200).json(data))
       .catch((error) => res.status(500).json(error));
+  }
+});
+
+app.delete(`/api/article/0/:sourceLang`, async (req, res) => {
+  const deleteArticle = await ArticleModel.findOneAndDelete({
+    key: req.body.key,
+  });
+
+  if (deleteArticle) {
+    return res.status(200);
+  } else {
+    return res.status(500);
+  }
+});
+
+app.delete(`/api/article/1/:transLang`, async (req, res) => {
+  const deleteTransArticle = await ArticleModel.findOneAndDelete({
+    key: req.body.key,
+  });
+
+  if (deleteTransArticle) {
+    return res.status(200);
+  } else {
+    return res.status(500);
   }
 });
 

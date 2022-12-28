@@ -4,11 +4,10 @@ import Languages from "./Translation/Languages";
 
 import Preview from "./Previews/Preview";
 import { MouseEvent } from "react";
-import { CgChevronDoubleLeft, CgChevronDoubleRight } from "react-icons/cg";
 
 interface RightPanelProps {
+  autoSaveText: boolean;
   step: number;
-
   imageFilePath: object[];
   videoFilePath: object[];
   mediaTypeDisplay: boolean;
@@ -27,13 +26,14 @@ interface RightPanelProps {
   handleVideoOnSuccess: (response: any) => void;
   handleVideoOnError: (response: any) => void;
   handleMediaTypeDisplay: () => void;
+  handleRevertChanges: () => void;
   handleNextStep: () => void;
   handlePreviousStep: () => void;
 }
 
 const RightPanel: React.FC<RightPanelProps> = ({
+  autoSaveText,
   step,
-
   imageFilePath,
   videoFilePath,
   mediaTypeDisplay,
@@ -52,6 +52,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
   handleVideoOnSuccess,
   handleVideoOnError,
   handleMediaTypeDisplay,
+  handleRevertChanges,
   handleNextStep,
   handlePreviousStep,
 }) => {
@@ -62,7 +63,6 @@ const RightPanel: React.FC<RightPanelProps> = ({
         handleNextStep={handleNextStep}
         handlePreviousStep={handlePreviousStep}
       />
-
       {step === 1 && (
         <MediaUpload
           imageFilePath={imageFilePath}
@@ -98,6 +98,17 @@ const RightPanel: React.FC<RightPanelProps> = ({
           handleMediaViews={handleMediaViews}
         />
       )}
+      {autoSaveText && (
+        <span className="absolute bottom-0 left-0 p-4 font-prompt font-bold  text-center text-white">
+          Saving...
+        </span>
+      )}
+      <button
+        onClick={handleRevertChanges}
+        className="absolute bottom-0 right-0 text-white p-4 font-prompt font-bold  text-center"
+      >
+        Revert Changes
+      </button>
     </div>
   );
 };

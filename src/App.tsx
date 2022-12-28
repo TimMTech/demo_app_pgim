@@ -5,9 +5,11 @@ import LeftPanel from "./components/LeftPanel";
 import { useState, useEffect, MouseEvent, useCallback } from "react";
 import { Predictions } from "@aws-amplify/predictions";
 import DeviceBar from "./components/Main/DeviceBar";
+import debounce from "lodash/debounce";
 
 const App: React.FC = () => {
   //Loading State For when App Building DOM
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const loadingRequest = () => {
     return new Promise<void>((resolve) => setTimeout(() => resolve(), 2000));
@@ -21,6 +23,24 @@ const App: React.FC = () => {
       }
     });
   });
+
+  //
+
+  //Auto Saving Text Notice Into DB
+
+  const [autoSaveText, setAutoSavetext] = useState<boolean>(false);
+
+  const debouncedAutoSave = useCallback(
+    debounce(() => {
+      setAutoSavetext(true);
+      setTimeout(() => {
+        setAutoSavetext(false);
+      }, 1500);
+    }, 3000),
+
+    []
+  );
+
   //
 
   const [step, setStep] = useState<number>(1);
@@ -87,30 +107,86 @@ const App: React.FC = () => {
   };
 
   const handleEditorChange = (content: string) => {
-    fetch(`http://localhost:5000/api/article/0/${sourceLanguages.value}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        key: `00001/0/${sourceLanguages.value}`,
-        value: content,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) console.log("error");
-        return response.json();
+    if (content === "") {
+      fetch(`http://localhost:5000/api/article/0/${sourceLanguages.value}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          key: `00001/0/${sourceLanguages.value}`,
+        }),
       })
+        .then((response) => {
+          if (!response.ok) console.log("error");
+          return response.json();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      fetch(`http://localhost:5000/api/article/0/${sourceLanguages.value}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          key: `00001/0/${sourceLanguages.value}`,
+          value: content,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) console.log("error");
+          return response.json();
+        })
 
-      .catch((error) => {
-        console.log(error);
-      });
+        .catch((error) => {
+          console.log(error);
+        });
+    }
 
     setEditorContent(content);
     localStorage.setItem("Orig", content);
+    debouncedAutoSave();
   };
 
   const handleTranslationChange = (content: string) => {
+    if (content === "") {
+      fetch(`http://localhost:5000/api/article/1/${activeLanguage}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          key: `00001/1/${activeLanguage}`,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) console.log("error");
+          return response.json();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      fetch(`http://localhost:5000/api/article/1/${activeLanguage}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          key: `00001/1/${activeLanguage}`,
+          value: content,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) console.log("error");
+          return response.json();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
     setTranslatedContent((prevState) => ({
       ...prevState,
       [activeLanguage]: content,
@@ -119,23 +195,7 @@ const App: React.FC = () => {
       "Trans",
       JSON.stringify({ ...translatedContent, [activeLanguage]: content })
     );
-    fetch(`http://localhost:5000/api/article/1/${activeLanguage}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        key: `00001/1/${activeLanguage}`,
-        value: content,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) console.log("error");
-        return response.json();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    debouncedAutoSave();
   };
 
   const handleTranslationSelect = (value: any) => {
@@ -166,6 +226,14 @@ const App: React.FC = () => {
         [value.label]: response.text,
       }));
     });
+  };
+
+  const handleRevertChanges = () => {
+    const revertedEditorContent = editorContent
+      .split(" ")
+      .slice(0, -3)
+      .join(" ");
+    setEditorContent(revertedEditorContent);
   };
 
   const handleNextStep = () => {
@@ -258,6 +326,7 @@ const App: React.FC = () => {
           handleTranslationChange={handleTranslationChange}
         />
         <RightPanel
+          autoSaveText={autoSaveText}
           step={step}
           imageFilePath={imageFilePath}
           videoFilePath={videoFilePath}
@@ -276,6 +345,7 @@ const App: React.FC = () => {
           handleVideoOnSuccess={handleVideoOnSuccess}
           handleVideoOnError={handleVideoOnError}
           handleMediaTypeDisplay={handleMediaTypeDisplay}
+          handleRevertChanges={handleRevertChanges}
           handleNextStep={handleNextStep}
           handlePreviousStep={handlePreviousStep}
         />

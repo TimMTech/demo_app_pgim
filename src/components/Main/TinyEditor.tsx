@@ -59,6 +59,7 @@ const TinyEditor: React.FC<TinyEditorProps> = ({
           value={editorContent}
           apiKey="8cpyej0ctp2gi4r2g9n8gen3vw4xrukg7nd5i64sbthsjwza"
           onEditorChange={handleEditorChange}
+     
           id="orginal"
           init={{
             height: "100%",
