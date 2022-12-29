@@ -36,7 +36,7 @@ const App: React.FC = () => {
       setTimeout(() => {
         setAutoSavetext(false);
       }, 1500);
-    }, 3000),
+    }, 2000),
 
     []
   );
@@ -229,11 +229,22 @@ const App: React.FC = () => {
   };
 
   const handleRevertChanges = () => {
-    const revertedEditorContent = editorContent
-      .split(" ")
-      .slice(0, -3)
-      .join(" ");
-    setEditorContent(revertedEditorContent);
+    if (!originalContentView) {
+      const revertedTranslatedContent = translatedContent[activeLanguage]
+        .split(" ")
+        .slice(0, -3)
+        .join(" ");
+      setTranslatedContent((prevState) => ({
+        ...prevState,
+        [activeLanguage]: revertedTranslatedContent,
+      }));
+    } else {
+      const revertedEditorContent = editorContent
+        .split(" ")
+        .slice(0, -3)
+        .join(" ");
+      setEditorContent(revertedEditorContent);
+    }
   };
 
   const handleNextStep = () => {

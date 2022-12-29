@@ -19,6 +19,10 @@ textarea {
   display: none;
 }
 
+iframe {
+  max-width: 100% !important;
+}
+
 .tox-tinymce {
   height: 100% !important;
   border-radius: 0 !important;
@@ -37,7 +41,7 @@ textarea {
   left: 50%;
   position: absolute;
   width: 1366px;
-  height: 800px;
+  height: 850px;
   border-radius: 6px;
   border-style: solid;
   border-color: black;
