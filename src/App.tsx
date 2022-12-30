@@ -42,7 +42,6 @@ const App: React.FC = () => {
   );
 
   //
-
   const [step, setStep] = useState<number>(1);
 
   const [closeLeftPanel, setCloseLeftPanel] = useState<boolean>(false);
@@ -168,6 +167,15 @@ const App: React.FC = () => {
         .catch((error) => {
           console.log(error);
         });
+      const filteredSelectedLanguages = selectedLanguages.filter(
+        (languages: any) => languages.label !== activeLanguage
+      );
+      setSelectedLanguages(filteredSelectedLanguages);
+      setOriginalContentView(true);
+      localStorage.setItem(
+        "SelectedLangs",
+        JSON.stringify(filteredSelectedLanguages)
+      );
     } else {
       fetch(`http://localhost:5000/api/article/1/${activeLanguage}`, {
         method: "POST",
@@ -187,6 +195,7 @@ const App: React.FC = () => {
           console.log(error);
         });
     }
+    
     setTranslatedContent((prevState) => ({
       ...prevState,
       [activeLanguage]: content,
@@ -218,14 +227,18 @@ const App: React.FC = () => {
         },
         targetLanguage: value.label,
       },
-    }).then(async (response) => {
-      setOriginalLanguageActive(false);
-      setOriginalContentView(false);
-      setTranslatedContent((prevState) => ({
-        ...prevState,
-        [value.label]: response.text,
-      }));
-    });
+    })
+      .then((response) => {
+        setOriginalLanguageActive(false);
+        setOriginalContentView(false);
+        setTranslatedContent((prevState) => ({
+          ...prevState,
+          [value.label]: response.text,
+        }));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleRevertChanges = () => {

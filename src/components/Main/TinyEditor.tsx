@@ -69,7 +69,7 @@ const TinyEditor: React.FC<TinyEditorProps> = ({
             contextmenu: "copy paste",
             forced_root_block: "p",
             remove_trailing_brs: true,
-            
+
             toolbar:
               "image | link | sizeselect | styles  | fontfamily | fontsize  | bullist | numlist | emoticons | alignleft aligncenter alignright alignjustify | lineheight | outdent indent | media",
 

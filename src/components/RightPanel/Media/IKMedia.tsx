@@ -92,6 +92,7 @@ const IKMedia: React.FC<IKMediaProps> = ({
                   <div className="flex flex-col ">
                     <span>Optimized</span>
                     <IKImage
+                      id="optimized"
                       className="border cursor-grabbing"
                       src={url}
                       lqip={{ quality: 80 }}
@@ -104,11 +105,23 @@ const IKMedia: React.FC<IKMediaProps> = ({
                           event.currentTarget.currentSrc
                         );
                       }}
+                      onLoad={(event) => {
+                        const elm = document.getElementById("optimized");
+                        elm?.setAttribute(
+                          "width",
+                          event.currentTarget.width.toString()
+                        );
+                        elm?.setAttribute(
+                          "height",
+                          event.currentTarget.height.toString()
+                        );
+                      }}
                     />
                   </div>
                   <div className="flex flex-col">
                     <span>Original</span>
                     <IKImage
+                      id="original"
                       className="border cursor-grabbing"
                       src={url}
                       draggable
@@ -125,6 +138,17 @@ const IKMedia: React.FC<IKMediaProps> = ({
                           event.currentTarget.currentSrc
                         );
                       }}
+                      onLoad={(event) => {
+                        const elm = document.getElementById("original");
+                        elm?.setAttribute(
+                          "width",
+                          event.currentTarget.width.toString()
+                        );
+                        elm?.setAttribute(
+                          "height",
+                          event.currentTarget.height.toString()
+                        );
+                      }}
                     />
                   </div>
                   <div className="flex flex-col">
@@ -132,6 +156,7 @@ const IKMedia: React.FC<IKMediaProps> = ({
                       <div className="flex flex-col"></div>
                       <span>Thumbnail</span>
                       <IKImage
+                        id="thumbnail"
                         className="border cursor-grabbing"
                         src={url}
                         lqip={{ quality: 80 }}
@@ -148,6 +173,17 @@ const IKMedia: React.FC<IKMediaProps> = ({
                             event.currentTarget.width,
                             event.currentTarget.height,
                             event.currentTarget.currentSrc
+                          );
+                        }}
+                        onLoad={(event) => {
+                          const elm = document.getElementById("thumbnail");
+                          elm?.setAttribute(
+                            "width",
+                            event.currentTarget.width.toString()
+                          );
+                          elm?.setAttribute(
+                            "height",
+                            event.currentTarget.height.toString()
                           );
                         }}
                       />
@@ -188,6 +224,7 @@ const IKMedia: React.FC<IKMediaProps> = ({
                 >
                   <div className="flex flex-col">
                     <IKVideo
+                      id="optimized_video"
                       onClick={() => navigator.clipboard.writeText(url)}
                       className="border cursor-copy"
                       src={url}
@@ -205,12 +242,24 @@ const IKMedia: React.FC<IKMediaProps> = ({
                           event.currentTarget.currentSrc
                         );
                       }}
+                      onLoad={(event) => {
+                        const elm = document.getElementById("optimized_video");
+                        elm?.setAttribute(
+                          "width",
+                          event.currentTarget.videoWidth.toString()
+                        );
+                        elm?.setAttribute(
+                          "height",
+                          event.currentTarget.videoHeight.toString()
+                        );
+                      }}
                     />
                   </div>
                   <div className="flex flex-col">
                     <div>
                       <div className="flex flex-col"></div>
                       <IKVideo
+                        id="thumbnail_video"
                         onClick={() => navigator.clipboard.writeText(url)}
                         className="border cursor-copy"
                         src={url}
@@ -222,11 +271,22 @@ const IKMedia: React.FC<IKMediaProps> = ({
                           },
                         ]}
                         onMouseEnter={(event) => {
-                          
                           handleMediaSpecs(
                             event.currentTarget.videoWidth,
                             event.currentTarget.videoHeight,
                             event.currentTarget.currentSrc
+                          );
+                        }}
+                        onLoad={(event) => {
+                          const elm =
+                            document.getElementById("optimized_video");
+                          elm?.setAttribute(
+                            "width",
+                            event.currentTarget.videoWidth.toString()
+                          );
+                          elm?.setAttribute(
+                            "height",
+                            event.currentTarget.videoHeight.toString()
                           );
                         }}
                       />
