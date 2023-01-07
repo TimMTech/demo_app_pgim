@@ -29,8 +29,8 @@ const LeftPanel: React.FC<LeftPanelProps> = ({
   return (
     <div
       className={`${
-        closeLeftPanel ? "translate-x-[-8.4rem]" : "translate-x-0"
-      } transition duration-200 ease w-[165px] absolute z-[10] py-14 left-0 h-full text-xs bg-[#22262e] border-r-2 border-white/10`}
+        closeLeftPanel ? "w-[30px]" : "w-[180px]"
+      } transition-width duration-200 ease py-14 h-full text-xs bg-[#22262e] border-r-2 border-white/10`}
     >
       <div className="flex justify-end">
         {closeLeftPanel ? (
@@ -47,7 +47,11 @@ const LeftPanel: React.FC<LeftPanelProps> = ({
           />
         )}
       </div>
-      <div className="flex flex-col items-start text-white justify-center gap-1 p-4 font-prompt border-b border-white/20 mr-3">
+      <div
+        className={`${
+          closeLeftPanel ? "opacity-0 cursor-auto pointer-events-none" : "opacity-100"
+        } transition duration-200 ease flex flex-col items-start text-white justify-center gap-1 p-4 font-prompt border-b border-white/20 mr-3`}
+      >
         <button className="flex items-center gap-2 w-full rounded-md py-2 pl-2 bg-[rgba(44,49,57,0.6);]">
           <AiOutlineHome className="text-[#0d7ed9]" size={20} />
           <span>Home</span>
@@ -86,7 +90,11 @@ const LeftPanel: React.FC<LeftPanelProps> = ({
         </button>
       </div>
 
-      <div className="flex flex-col items-start text-white justify-center  gap-1 p-4 font-prompt mr-3">
+      <div
+        className={`${
+          closeLeftPanel ? "opacity-0 cursor-auto pointer-events-none" : "opacity-100"
+        } transition duration-200 ease flex flex-col items-start text-white justify-center  gap-1 p-4 font-prompt mr-3`}
+      >
         <p className="text-xs py-2">COMPONENTS</p>
         <button className=" flex items-center  gap-2 w-full rounded-md py-2 pl-2  bg-[rgba(44,49,57,0.6);]">
           <MdOutlineSettingsInputComponent

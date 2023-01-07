@@ -15,7 +15,7 @@ export const customSourceStyles = {
     border: 0,
     textAlign: "center",
     cursor: "pointer",
-    backgroundColor: "#2c3139",
+    backgroundColor: "#22262e",
     color: "white",
     fontSize: "15px"
   }),

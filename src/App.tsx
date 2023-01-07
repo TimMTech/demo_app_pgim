@@ -4,7 +4,6 @@ import Navbar from "./components/Navbar";
 import LeftPanel from "./components/LeftPanel";
 import { useState, useEffect, MouseEvent, useCallback } from "react";
 import { Predictions } from "@aws-amplify/predictions";
-import DeviceBar from "./components/Main/DeviceBar";
 import debounce from "lodash/debounce";
 
 const App: React.FC = () => {
@@ -45,6 +44,7 @@ const App: React.FC = () => {
   const [step, setStep] = useState<number>(1);
 
   const [closeLeftPanel, setCloseLeftPanel] = useState<boolean>(false);
+  const [closeRightPanel, setCloseRightPanel] = useState<boolean>(false);
 
   const [mediaView, setMediaView] = useState<{ [key: string]: string }>({
     width: "desktop",
@@ -78,6 +78,10 @@ const App: React.FC = () => {
 
   const handleCloseLeftPanel = () => {
     setCloseLeftPanel(!closeLeftPanel);
+  };
+
+  const handleCloseRightPanel = () => {
+    setCloseRightPanel(!closeRightPanel);
   };
 
   const handleMediaViews = (e: MouseEvent<SVGElement>) => {
@@ -195,7 +199,7 @@ const App: React.FC = () => {
           console.log(error);
         });
     }
-    
+
     setTranslatedContent((prevState) => ({
       ...prevState,
       [activeLanguage]: content,
@@ -327,10 +331,8 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className={"absolute z-[1] top-0 bottom-0 left-0 right-0 "}>
-      <Navbar />
-
-      <DeviceBar
+    <div className="absolute z-[1] top-0 bottom-0 left-0 right-0 overflow-hidden">
+      <Navbar
         sourceLanguages={sourceLanguages}
         handleSourceSelect={handleSourceSelect}
       />
@@ -352,6 +354,7 @@ const App: React.FC = () => {
         <RightPanel
           autoSaveText={autoSaveText}
           step={step}
+          closeRightPanel={closeRightPanel}
           imageFilePath={imageFilePath}
           videoFilePath={videoFilePath}
           mediaTypeDisplay={mediaTypeDisplay}
@@ -361,6 +364,7 @@ const App: React.FC = () => {
           sourceLanguages={sourceLanguages}
           mediaView={mediaView}
           handleMediaViews={handleMediaViews}
+          handleCloseRightPanel={handleCloseRightPanel}
           handleViewOriginalContent={handleViewOriginalContent}
           handleSwitchTranslation={handleSwitchTranslation}
           handleTranslationSelect={handleTranslationSelect}

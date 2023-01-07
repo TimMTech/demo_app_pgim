@@ -20,7 +20,7 @@ const TinyEditor: React.FC<TinyEditorProps> = ({
   handleTranslationChange,
 }) => {
   return (
-    <div className="h-[1200px] w-[1200px] flex flex-col items-center">
+    <div className="w-full h-full flex flex-col items-center">
       {!originalContentView ? (
         <Editor
           value={translatedContent[activeLanguage]}

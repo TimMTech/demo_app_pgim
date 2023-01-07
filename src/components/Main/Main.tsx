@@ -19,14 +19,16 @@ const Main: React.FC<MainProps> = ({
   originalContentView,
   activeLanguage,
   mediaView,
-  
+
   handleEditorChange,
   handleTranslationChange,
 }) => {
   return (
-    <div className="h-full w-full relative z-[1] overflow-auto ">
+    <div
+      className="h-full w-full relative overflow-auto"
+    >
       {step === 3 ? (
-        <div className="flex justify-center items-center w-full h-full absolute  ">
+        <div className="flex justify-center items-center w-full h-full absolute">
           <ContentPreview
             translatedContent={translatedContent}
             editorContent={editorContent}
@@ -36,13 +38,12 @@ const Main: React.FC<MainProps> = ({
           />
         </div>
       ) : (
-        <div className="flex justify-center items-center w-full h-full absolute top-[40px] h-[125vh] ">
+        <div className="flex justify-center items-center w-full h-full pt-10 pr-7">
           <TinyEditor
             activeLanguage={activeLanguage}
             editorContent={editorContent}
             translatedContent={translatedContent}
             originalContentView={originalContentView}
-       
             handleEditorChange={handleEditorChange}
             handleTranslationChange={handleTranslationChange}
           />
