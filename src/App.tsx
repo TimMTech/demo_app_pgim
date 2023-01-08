@@ -111,7 +111,7 @@ const App: React.FC = () => {
 
   const handleEditorChange = (content: string) => {
     if (content === "") {
-      fetch(`http://localhost:5000/api/article/0/${sourceLanguages.value}`, {
+      fetch(`https://demo-translation-app.herokuapp.com/api/article/0/${sourceLanguages.value}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -128,7 +128,7 @@ const App: React.FC = () => {
           console.log(error);
         });
     } else {
-      fetch(`http://localhost:5000/api/article/0/${sourceLanguages.value}`, {
+      fetch(`https://demo-translation-app.herokuapp.com/api/article/0/${sourceLanguages.value}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -155,7 +155,7 @@ const App: React.FC = () => {
 
   const handleTranslationChange = (content: string) => {
     if (content === "") {
-      fetch(`http://localhost:5000/api/article/1/${activeLanguage}`, {
+      fetch(`https://demo-translation-app.herokuapp.com/api/article/1/${activeLanguage}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -181,7 +181,7 @@ const App: React.FC = () => {
         JSON.stringify(filteredSelectedLanguages)
       );
     } else {
-      fetch(`http://localhost:5000/api/article/1/${activeLanguage}`, {
+      fetch(`https://demo-translation-app.herokuapp.com/api/article/1/${activeLanguage}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
