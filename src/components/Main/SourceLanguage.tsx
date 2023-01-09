@@ -11,7 +11,6 @@ const SourceLanguage: React.FC<SourceLanguageProps> = ({
   sourceLanguages,
   handleSourceSelect,
 }) => {
-
   return (
     <div>
       <Select
@@ -19,7 +18,7 @@ const SourceLanguage: React.FC<SourceLanguageProps> = ({
           DropdownIndicator: () => null,
           IndicatorSeparator: () => null,
         }}
-        className="relative z-[98] "
+        className="relative z-[98]"
         options={languages}
         defaultValue={{
           label: sourceLanguages.label,

@@ -14,7 +14,7 @@ interface PreviewProps {
   originalLanguageActive: boolean;
   mediaView: { [key: string]: string };
   handleViewOriginalContent: () => void;
-  handleSwitchTranslation: (label: string) => void;
+  handleSwitchTranslation: (value: string) => void;
   handleMediaViews: (e: MouseEvent<SVGElement>) => void;
 }
 
@@ -69,24 +69,24 @@ const Preview: React.FC<PreviewProps> = ({
             )}
             onClick={handleViewOriginalContent}
           >
-            {sourceLanguages.label}
+            {sourceLanguages.value}
           </div>
 
           {selectedLanguages.map((languages: any, index: number) => {
-            const { label } = languages;
+            const { value } = languages;
             return (
               <div
                 key={index}
                 className={classNames(
                   "cursor-pointer w-[50px] h-[50px]  border rounded-lg flex items-center justify-center",
                   {
-                    "bg-orange-400": activeLanguage === label,
-                    "bg-gray-500": activeLanguage !== label,
+                    "bg-orange-400": activeLanguage === value,
+                    "bg-gray-500": activeLanguage !== value,
                   }
                 )}
-                onClick={() => handleSwitchTranslation(label)}
+                onClick={() => handleSwitchTranslation(value)}
               >
-                {label}
+                {value}
               </div>
             );
           })}

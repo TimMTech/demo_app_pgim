@@ -23,8 +23,8 @@ interface RightPanelProps {
   handleMediaViews: (e: MouseEvent<SVGElement>) => void;
   handleCloseRightPanel: () => void;
   handleViewOriginalContent: () => void;
-  handleTranslationSelect: (value: any) => void;
-  handleSwitchTranslation: (label: string) => void;
+  handleTranslationSelect: (language: any) => void;
+  handleSwitchTranslation: (value: string) => void;
   handleImageOnSuccess: (response: any) => void;
   handleImageOnError: (response: any) => void;
   handleVideoOnSuccess: (response: any) => void;

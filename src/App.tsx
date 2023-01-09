@@ -61,10 +61,11 @@ const App: React.FC = () => {
   const [selectedLanguages, setSelectedLanguages] = useState<
     { [key: string]: string }[]
   >([]);
+
   const [sourceLanguages, setSourceLanguages] = useState<{
     [key: string]: string;
   }>({
-    label: "en",
+    label: "English",
     value: "en",
   });
 
@@ -91,9 +92,9 @@ const App: React.FC = () => {
     id === "tablet" && setMediaView({ width: "tablet" });
   };
 
-  const handleSourceSelect = (value: any) => {
-    setSourceLanguages(value);
-    localStorage.setItem("SourceLang", JSON.stringify(value));
+  const handleSourceSelect = (language: any) => {
+    setSourceLanguages(language);
+    localStorage.setItem("SourceLang", JSON.stringify(language));
   };
 
   const handleViewOriginalContent = () => {
@@ -102,24 +103,27 @@ const App: React.FC = () => {
     setActiveLanguage("");
   };
 
-  const handleSwitchTranslation = (label: string) => {
-    setActiveLanguage(label);
+  const handleSwitchTranslation = (value: string) => {
+    setActiveLanguage(value);
     setOriginalContentView(false);
     setOriginalLanguageActive(false);
-    localStorage.setItem("ActiveLang", label);
+    localStorage.setItem("ActiveLang", value);
   };
 
   const handleEditorChange = (content: string) => {
     if (content === "") {
-      fetch(`https://demo-translation-app.herokuapp.com/api/article/0/${sourceLanguages.value}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          key: `00001/0/${sourceLanguages.value}`,
-        }),
-      })
+      fetch(
+        `https://demo-translation-app.herokuapp.com/api/article/0/${sourceLanguages.value}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            key: `00001/0/${sourceLanguages.value}`,
+          }),
+        }
+      )
         .then((response) => {
           if (!response.ok) console.log("error");
           return response.json();
@@ -128,16 +132,19 @@ const App: React.FC = () => {
           console.log(error);
         });
     } else {
-      fetch(`https://demo-translation-app.herokuapp.com/api/article/0/${sourceLanguages.value}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          key: `00001/0/${sourceLanguages.value}`,
-          value: content,
-        }),
-      })
+      fetch(
+        `https://demo-translation-app.herokuapp.com/api/article/0/${sourceLanguages.value}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            key: `00001/0/${sourceLanguages.value}`,
+            value: content,
+          }),
+        }
+      )
         .then((response) => {
           if (!response.ok) console.log("error");
           return response.json();
@@ -155,15 +162,18 @@ const App: React.FC = () => {
 
   const handleTranslationChange = (content: string) => {
     if (content === "") {
-      fetch(`https://demo-translation-app.herokuapp.com/api/article/1/${activeLanguage}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          key: `00001/1/${activeLanguage}`,
-        }),
-      })
+      fetch(
+        `https://demo-translation-app.herokuapp.com/api/article/1/${activeLanguage}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            key: `00001/1/${activeLanguage}`,
+          }),
+        }
+      )
         .then((response) => {
           if (!response.ok) console.log("error");
           return response.json();
@@ -172,7 +182,7 @@ const App: React.FC = () => {
           console.log(error);
         });
       const filteredSelectedLanguages = selectedLanguages.filter(
-        (languages: any) => languages.label !== activeLanguage
+        (languages: any) => languages.value !== activeLanguage
       );
       setSelectedLanguages(filteredSelectedLanguages);
       setOriginalContentView(true);
@@ -181,16 +191,19 @@ const App: React.FC = () => {
         JSON.stringify(filteredSelectedLanguages)
       );
     } else {
-      fetch(`https://demo-translation-app.herokuapp.com/api/article/1/${activeLanguage}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          key: `00001/1/${activeLanguage}`,
-          value: content,
-        }),
-      })
+      fetch(
+        `https://demo-translation-app.herokuapp.com/api/article/1/${activeLanguage}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            key: `00001/1/${activeLanguage}`,
+            value: content,
+          }),
+        }
+      )
         .then((response) => {
           if (!response.ok) console.log("error");
           return response.json();
@@ -211,25 +224,25 @@ const App: React.FC = () => {
     debouncedAutoSave();
   };
 
-  const handleTranslationSelect = (value: any) => {
-    if (selectedLanguages.includes(value)) {
-      setActiveLanguage(value.label);
+  const handleTranslationSelect = (language: any) => {
+    if (selectedLanguages.includes(language)) {
+      setActiveLanguage(language.value);
       return;
     }
-    setSelectedLanguages((prevState) => [...prevState, value]);
-    setActiveLanguage(value.label);
+    setSelectedLanguages((prevState) => [...prevState, language]);
+    setActiveLanguage(language.value);
     localStorage.setItem(
       "SelectedLangs",
-      JSON.stringify([...selectedLanguages, value])
+      JSON.stringify([...selectedLanguages, language])
     );
-    localStorage.setItem("ActiveLang", value.label);
+    localStorage.setItem("ActiveLang", language.value);
     Predictions.convert({
       translateText: {
         source: {
           text: editorContent,
           language: sourceLanguages.value,
         },
-        targetLanguage: value.label,
+        targetLanguage: language.value,
       },
     })
       .then((response) => {
@@ -237,7 +250,7 @@ const App: React.FC = () => {
         setOriginalContentView(false);
         setTranslatedContent((prevState) => ({
           ...prevState,
-          [value.label]: response.text,
+          [language.value]: response.text,
         }));
       })
       .catch((error) => {
@@ -318,7 +331,7 @@ const App: React.FC = () => {
       localStorage.getItem("SelectedLangs") || "[]"
     );
     const sourceLang = JSON.parse(
-      localStorage.getItem("SourceLang") || `{"label":"en","value":"en"}`
+      localStorage.getItem("SourceLang") || `{"label":"English","value":"en"}`
     );
 
     setSelectedLanguages(selectedLangs);

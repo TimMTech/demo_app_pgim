@@ -8,7 +8,7 @@ export const customSourceStyles = {
   control: (baseStyles: any, state: any) => ({
     // none of react-select's styles are passed to <Control />
     ...baseStyles,
-    width: "50px",
+    width: "130px",
     padding: 0,
     margin: 0,
 
@@ -19,7 +19,7 @@ export const customSourceStyles = {
     color: "white",
     fontSize: "15px"
   }),
-  menu: (styles: any) => ({ ...styles, width: "90px" }),
+  menu: (styles: any) => ({ ...styles, width: "130px" }),
   input: (styles: any) => ({ ...styles, color: "white", fontFamily: "Prompt" }),
   singleValue: (styles: any) => ({
     ...styles,
