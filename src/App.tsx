@@ -41,6 +41,7 @@ const App: React.FC = () => {
   );
 
   //
+
   const [step, setStep] = useState<number>(1);
 
   const [closeLeftPanel, setCloseLeftPanel] = useState<boolean>(false);
@@ -110,9 +111,9 @@ const App: React.FC = () => {
     localStorage.setItem("ActiveLang", value);
   };
 
-  const handleEditorChange = (content: string) => {
+  const handleEditorChange =  (content: string) => {
     if (content === "") {
-      fetch(
+       fetch(
         `https://demo-translation-app.herokuapp.com/api/article/0/${sourceLanguages.value}`,
         {
           method: "DELETE",
@@ -132,7 +133,7 @@ const App: React.FC = () => {
           console.log(error);
         });
     } else {
-      fetch(
+       fetch(
         `https://demo-translation-app.herokuapp.com/api/article/0/${sourceLanguages.value}`,
         {
           method: "POST",
@@ -160,9 +161,10 @@ const App: React.FC = () => {
     debouncedAutoSave();
   };
 
-  const handleTranslationChange = (content: string) => {
+  const handleTranslationChange =  (content: string) => {
+    
     if (content === "") {
-      fetch(
+       fetch(
         `https://demo-translation-app.herokuapp.com/api/article/1/${activeLanguage}`,
         {
           method: "DELETE",
@@ -191,7 +193,7 @@ const App: React.FC = () => {
         JSON.stringify(filteredSelectedLanguages)
       );
     } else {
-      fetch(
+       fetch(
         `https://demo-translation-app.herokuapp.com/api/article/1/${activeLanguage}`,
         {
           method: "POST",
@@ -229,8 +231,6 @@ const App: React.FC = () => {
       setActiveLanguage(language.value);
       return;
     }
-    setSelectedLanguages((prevState) => [...prevState, language]);
-    setActiveLanguage(language.value);
     localStorage.setItem(
       "SelectedLangs",
       JSON.stringify([...selectedLanguages, language])
@@ -246,6 +246,8 @@ const App: React.FC = () => {
       },
     })
       .then((response) => {
+        setActiveLanguage(language.value);
+        setSelectedLanguages((prevState) => [...prevState, language]);
         setOriginalLanguageActive(false);
         setOriginalContentView(false);
         setTranslatedContent((prevState) => ({
