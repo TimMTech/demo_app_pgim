@@ -2,6 +2,7 @@ import { languages } from "../../../utils/languages";
 import { customTranslationStyles } from "../../../utils/customSelectStyle";
 import Select from "react-select";
 import classNames from "classnames";
+import { AiFillDelete } from "react-icons/ai";
 
 interface LanguagesProps {
   selectedLanguages: any;
@@ -11,6 +12,7 @@ interface LanguagesProps {
 
   handleViewOriginalContent: () => void;
   handleTranslationSelect: (language: any) => void;
+  handleTranslationDelete: (value: string) => void;
   handleSwitchTranslation: (value: string) => void;
 }
 
@@ -21,6 +23,7 @@ const Languages: React.FC<LanguagesProps> = ({
   sourceLanguages,
   handleViewOriginalContent,
   handleTranslationSelect,
+  handleTranslationDelete,
   handleSwitchTranslation,
 }) => {
   return (
@@ -54,18 +57,24 @@ const Languages: React.FC<LanguagesProps> = ({
           {selectedLanguages.map((languages: any, index: number) => {
             const { value } = languages;
             return (
-              <div
-                key={index}
-                className={classNames(
-                  "cursor-pointer w-[50px] h-[50px]  border rounded-lg flex items-center justify-center",
-                  {
-                    "bg-orange-400": activeLanguage === value,
-                    "bg-gray-500": activeLanguage !== value,
-                  }
-                )}
-                onClick={() => handleSwitchTranslation(value)}
-              >
-                {value}
+              <div key={index} className="relative">
+                <div
+                  className={classNames(
+                    "cursor-pointer w-[50px] h-[50px]  border rounded-lg flex items-center justify-center",
+                    {
+                      "bg-orange-400": activeLanguage === value,
+                      "bg-gray-500": activeLanguage !== value,
+                    }
+                  )}
+                  onClick={() => handleSwitchTranslation(value)}
+                >
+                  {value}
+                </div>
+                <AiFillDelete
+                  onClick={() => handleTranslationDelete(value)}
+                  className="absolute top-[-10px] right-[10px] text-white cursor-auto"
+                  size={20}
+                />
               </div>
             );
           })}

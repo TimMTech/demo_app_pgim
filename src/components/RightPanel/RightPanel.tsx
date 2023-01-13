@@ -24,6 +24,7 @@ interface RightPanelProps {
   handleCloseRightPanel: () => void;
   handleViewOriginalContent: () => void;
   handleTranslationSelect: (language: any) => void;
+  handleTranslationDelete: (value:string) => void;
   handleSwitchTranslation: (value: string) => void;
   handleImageOnSuccess: (response: any) => void;
   handleImageOnError: (response: any) => void;
@@ -53,6 +54,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
   handleCloseRightPanel,
   handleViewOriginalContent,
   handleTranslationSelect,
+  handleTranslationDelete,
   handleSwitchTranslation,
   handleImageOnSuccess,
   handleImageOnError,
@@ -114,6 +116,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
             sourceLanguages={sourceLanguages}
             handleViewOriginalContent={handleViewOriginalContent}
             handleTranslationSelect={handleTranslationSelect}
+            handleTranslationDelete={handleTranslationDelete}
             handleSwitchTranslation={handleSwitchTranslation}
           />
         )}

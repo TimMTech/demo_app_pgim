@@ -103,9 +103,7 @@ app.delete(`/api/article/0/:sourceLang`, async (req, res) => {
 
   if (deleteArticle) {
     return res.status(200);
-  } else {
-    return res.status(500);
-  }
+  } 
 });
 
 app.delete(`/api/article/1/:transLang`, async (req, res) => {
@@ -115,9 +113,7 @@ app.delete(`/api/article/1/:transLang`, async (req, res) => {
 
   if (deleteTransArticle) {
     return res.status(200);
-  } else {
-    return res.status(500);
-  }
+  } 
 });
 
 app.use(express.static(path.join(__dirname, "../build")));

@@ -256,6 +256,10 @@ iframe {
     border-color: grey;
   }
 
+  .colgroup-remove table > :first-child {
+    display: none !important;
+  }
+
   .my-tbody tbody {
     display: table-row-group;
     vertical-align: middle;
@@ -297,4 +301,6 @@ iframe {
     margin-inline-end: 0px;
     padding-inline-start: 40px;
   }
+
+
 }

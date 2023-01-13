@@ -56,7 +56,7 @@ const App: React.FC = () => {
   const [editorContent, setEditorContent] = useState<string | any>("");
 
   const [translatedContent, setTranslatedContent] = useState<{
-    [key: string]: string;
+    [key: string]: any;
   }>({});
 
   const [selectedLanguages, setSelectedLanguages] = useState<
@@ -111,124 +111,147 @@ const App: React.FC = () => {
     localStorage.setItem("ActiveLang", value);
   };
 
-  const handleEditorChange =  (content: string) => {
+  const handleEditorChange = (content: string) => {
     if (content === "") {
-       fetch(
-        `https://demo-translation-app.herokuapp.com/api/article/0/${sourceLanguages.value}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            key: `00001/0/${sourceLanguages.value}`,
-          }),
-        }
-      )
-        .then((response) => {
-          if (!response.ok) console.log("error");
-          return response.json();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      const  debounceOriginalDelete = debounce(() => {
+          fetch(
+          `https://demo-translation-app.herokuapp.com/api/article/0/${sourceLanguages.value}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              key: `00001/0/${sourceLanguages.value}`,
+            }),
+          }
+        )
+          .then((response) => {
+            if (!response.ok) console.log("error");
+            return response.json();
+          })
+          .catch((error) => {
+            
+          });
+      }, 7000);
+       debounceOriginalDelete();
     } else {
-       fetch(
-        `https://demo-translation-app.herokuapp.com/api/article/0/${sourceLanguages.value}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            key: `00001/0/${sourceLanguages.value}`,
-            value: content,
-          }),
-        }
-      )
-        .then((response) => {
-          if (!response.ok) console.log("error");
-          return response.json();
-        })
+      const debounceOriginalSave = debounce(() => {
+        fetch(
+          `https://demo-translation-app.herokuapp.com/api/article/0/${sourceLanguages.value}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              key: `00001/0/${sourceLanguages.value}`,
+              value: content,
+            }),
+          }
+        )
+          .then((response) => {
+            if (!response.ok) console.log("error");
+            return response.json();
+          })
 
-        .catch((error) => {
-          console.log(error);
-        });
+          .catch((error) => {
+            console.log(error);
+          });
+      }, 7000);
+      debounceOriginalSave();
     }
-
     setEditorContent(content);
     localStorage.setItem("Orig", content);
     debouncedAutoSave();
   };
 
-  const handleTranslationChange =  (content: string) => {
-    
+  const handleTranslationChange = (content: string) => {
     if (content === "") {
-       fetch(
-        `https://demo-translation-app.herokuapp.com/api/article/1/${activeLanguage}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            key: `00001/1/${activeLanguage}`,
-          }),
-        }
-      )
-        .then((response) => {
-          if (!response.ok) console.log("error");
-          return response.json();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      const debounceTranslatedDelete = debounce(() => {
+        fetch(
+          `https://demo-translation-app.herokuapp.com/api/article/1/${activeLanguage}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              key: `00001/1/${activeLanguage}`,
+            }),
+          }
+        )
+          .then((response) => {
+            if (!response.ok) console.log("error");
+
+            return response.json();
+          })
+          .catch((error) => {
+            
+          });
+      }, 7000);
+
       const filteredSelectedLanguages = selectedLanguages.filter(
         (languages: any) => languages.value !== activeLanguage
       );
-      setSelectedLanguages(filteredSelectedLanguages);
+      const { [activeLanguage]: tmp, ...rest } = translatedContent;
+
       setOriginalContentView(true);
+      setTranslatedContent(rest);
+      setSelectedLanguages(filteredSelectedLanguages);
+      debounceTranslatedDelete();
+
       localStorage.setItem(
         "SelectedLangs",
         JSON.stringify(filteredSelectedLanguages)
       );
+      localStorage.setItem("Trans", JSON.stringify(rest));
     } else {
-       fetch(
-        `https://demo-translation-app.herokuapp.com/api/article/1/${activeLanguage}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            key: `00001/1/${activeLanguage}`,
-            value: content,
-          }),
-        }
-      )
-        .then((response) => {
-          if (!response.ok) console.log("error");
-          return response.json();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      const debounceTranslatedSave = debounce(() => {
+        fetch(
+          `https://demo-translation-app.herokuapp.com/api/article/1/${activeLanguage}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              key: `00001/1/${activeLanguage}`,
+              value: content,
+            }),
+          }
+        )
+          .then((response) => {
+            if (!response.ok) console.log("error");
+            return response.json();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }, 7000);
+
+      setTranslatedContent((prevState) => ({
+        ...prevState,
+        [activeLanguage]: content,
+      }));
+      debounceTranslatedSave();
+
+      localStorage.setItem(
+        "Trans",
+        JSON.stringify({ ...translatedContent, [activeLanguage]: content })
+      );
     }
 
-    setTranslatedContent((prevState) => ({
-      ...prevState,
-      [activeLanguage]: content,
-    }));
-    localStorage.setItem(
-      "Trans",
-      JSON.stringify({ ...translatedContent, [activeLanguage]: content })
-    );
     debouncedAutoSave();
   };
 
   const handleTranslationSelect = (language: any) => {
     if (selectedLanguages.includes(language)) {
       setActiveLanguage(language.value);
+      return;
+    }
+    if (sourceLanguages.value === language.value) {
+      setOriginalContentView(true);
       return;
     }
     localStorage.setItem(
@@ -258,6 +281,38 @@ const App: React.FC = () => {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const handleTranslationDelete = (value: string) => {
+    fetch(`https://demo-translation-app.herokuapp.com/api/article/1/${value}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        key: `00001/1/${value}`,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) console.log("error");
+        return response.json();
+      })
+      .catch((error) => {
+        
+      });
+    const filteredSelectedLanguages = selectedLanguages.filter(
+      (languages: any) => languages.value !== value
+    );
+    const { [value]: tmp, ...rest } = translatedContent;
+    setOriginalContentView(true);
+    setTranslatedContent(rest);
+    setSelectedLanguages(filteredSelectedLanguages);
+
+    localStorage.setItem(
+      "SelectedLangs",
+      JSON.stringify(filteredSelectedLanguages)
+    );
+    localStorage.setItem("Trans", JSON.stringify(rest));
   };
 
   const handleRevertChanges = () => {
@@ -383,6 +438,7 @@ const App: React.FC = () => {
           handleViewOriginalContent={handleViewOriginalContent}
           handleSwitchTranslation={handleSwitchTranslation}
           handleTranslationSelect={handleTranslationSelect}
+          handleTranslationDelete={handleTranslationDelete}
           handleImageOnSuccess={handleImageOnSuccess}
           handleImageOnError={handleImageOnError}
           handleVideoOnSuccess={handleVideoOnSuccess}
