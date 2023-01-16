@@ -80,7 +80,7 @@ const IKMedia: React.FC<IKMediaProps> = ({
               </div>
             </div>
           )}
-          <div className="flex flex-col gap-8 max-h-[50vh] p-2 overflow-y-auto">
+          <div className="flex flex-col gap-8 max-h-[30vh] p-2 overflow-y-auto">
             {imageFilePath?.map((image: any, index: number) => {
               const { url } = image;
 
@@ -195,7 +195,7 @@ const IKMedia: React.FC<IKMediaProps> = ({
           </div>
         </div>
       ) : (
-        <div className="flex-1 flex flex-col gap-10 p-2 max-h-[50vh]   overflow-y-auto">
+        <div className="flex-1 flex flex-col gap-10 p-2 max-h-[30vh]   overflow-y-auto">
           {videoFilePath.length !== 0 && (
             <div className="flex flex-col gap-2 py-6">
               <p className="text-center">

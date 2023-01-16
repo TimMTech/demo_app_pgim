@@ -5,6 +5,12 @@ import LeftPanel from "./components/LeftPanel";
 import { useState, useEffect, MouseEvent, useCallback } from "react";
 import { Predictions } from "@aws-amplify/predictions";
 import debounce from "lodash/debounce";
+import {
+  originalContentSave,
+  originalContentDelete,
+  translatedContentSave,
+  translatedContentDelete,
+} from "./utils/fetchFunctions";
 
 const App: React.FC = () => {
   //Loading State For when App Building DOM
@@ -78,6 +84,30 @@ const App: React.FC = () => {
   const [videoFilePath, setVideoFilePath] = useState<object[]>([]);
   const [mediaTypeDisplay, setMediaTypeDisplay] = useState<boolean>(true);
 
+  const debouncedDeleteOriginalData = useCallback(
+    debounce((sourceLanguages: any) => {
+      originalContentDelete(sourceLanguages);
+    }),
+    []
+  );
+  const debouncedSaveOriginalData = useCallback(
+    debounce((content: any, sourceLanguages: any) => {
+      originalContentSave(content, sourceLanguages);
+    }, 500),
+    []
+  );
+
+  const debouncedDeleteTranslatedData = debounce((activeLanguage: any) => {
+    translatedContentDelete(activeLanguage);
+  });
+
+  const debouncedSaveTranslatedData = debounce(
+    (content: any, activeLanguage: any) => {
+      translatedContentSave(content, activeLanguage);
+    },
+    500
+  );
+
   const handleCloseLeftPanel = () => {
     setCloseLeftPanel(!closeLeftPanel);
   };
@@ -111,55 +141,13 @@ const App: React.FC = () => {
     localStorage.setItem("ActiveLang", value);
   };
 
+ 
+
   const handleEditorChange = (content: string) => {
     if (content === "") {
-      const  debounceOriginalDelete = debounce(() => {
-          fetch(
-          `https://demo-translation-app.herokuapp.com/api/article/0/${sourceLanguages.value}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              key: `00001/0/${sourceLanguages.value}`,
-            }),
-          }
-        )
-          .then((response) => {
-            if (!response.ok) console.log("error");
-            return response.json();
-          })
-          .catch((error) => {
-            
-          });
-      }, 7000);
-       debounceOriginalDelete();
+      debouncedDeleteOriginalData(sourceLanguages.value);
     } else {
-      const debounceOriginalSave = debounce(() => {
-        fetch(
-          `https://demo-translation-app.herokuapp.com/api/article/0/${sourceLanguages.value}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              key: `00001/0/${sourceLanguages.value}`,
-              value: content,
-            }),
-          }
-        )
-          .then((response) => {
-            if (!response.ok) console.log("error");
-            return response.json();
-          })
-
-          .catch((error) => {
-            console.log(error);
-          });
-      }, 7000);
-      debounceOriginalSave();
+      debouncedSaveOriginalData(content, sourceLanguages.value);
     }
     setEditorContent(content);
     localStorage.setItem("Orig", content);
@@ -168,28 +156,7 @@ const App: React.FC = () => {
 
   const handleTranslationChange = (content: string) => {
     if (content === "") {
-      const debounceTranslatedDelete = debounce(() => {
-        fetch(
-          `https://demo-translation-app.herokuapp.com/api/article/1/${activeLanguage}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              key: `00001/1/${activeLanguage}`,
-            }),
-          }
-        )
-          .then((response) => {
-            if (!response.ok) console.log("error");
-
-            return response.json();
-          })
-          .catch((error) => {
-            
-          });
-      }, 7000);
+      debouncedDeleteTranslatedData(activeLanguage);
 
       const filteredSelectedLanguages = selectedLanguages.filter(
         (languages: any) => languages.value !== activeLanguage
@@ -199,7 +166,6 @@ const App: React.FC = () => {
       setOriginalContentView(true);
       setTranslatedContent(rest);
       setSelectedLanguages(filteredSelectedLanguages);
-      debounceTranslatedDelete();
 
       localStorage.setItem(
         "SelectedLangs",
@@ -207,34 +173,12 @@ const App: React.FC = () => {
       );
       localStorage.setItem("Trans", JSON.stringify(rest));
     } else {
-      const debounceTranslatedSave = debounce(() => {
-        fetch(
-          `https://demo-translation-app.herokuapp.com/api/article/1/${activeLanguage}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              key: `00001/1/${activeLanguage}`,
-              value: content,
-            }),
-          }
-        )
-          .then((response) => {
-            if (!response.ok) console.log("error");
-            return response.json();
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }, 7000);
+      debouncedSaveTranslatedData(content, activeLanguage);
 
       setTranslatedContent((prevState) => ({
         ...prevState,
         [activeLanguage]: content,
       }));
-      debounceTranslatedSave();
 
       localStorage.setItem(
         "Trans",
@@ -297,9 +241,7 @@ const App: React.FC = () => {
         if (!response.ok) console.log("error");
         return response.json();
       })
-      .catch((error) => {
-        
-      });
+      .catch((error) => {});
     const filteredSelectedLanguages = selectedLanguages.filter(
       (languages: any) => languages.value !== value
     );
