@@ -35,16 +35,12 @@ const App: React.FC = () => {
 
   const [autoSaveText, setAutoSavetext] = useState<boolean>(false);
 
-  const debouncedAutoSave = useCallback(
-    debounce(() => {
-      setAutoSavetext(true);
-      setTimeout(() => {
-        setAutoSavetext(false);
-      }, 1500);
-    }, 2000),
-
-    []
-  );
+  const debouncedAutoSaveText = () => {
+    setAutoSavetext(true);
+    setTimeout(() => {
+      setAutoSavetext(false);
+    }, 1500);
+  };
 
   //
 
@@ -87,23 +83,27 @@ const App: React.FC = () => {
   const debouncedDeleteOriginalData = useCallback(
     debounce((sourceLanguages: any) => {
       originalContentDelete(sourceLanguages);
+      debouncedAutoSaveText();
     }),
     []
   );
   const debouncedSaveOriginalData = useCallback(
     debounce((content: any, sourceLanguages: any) => {
       originalContentSave(content, sourceLanguages);
+      debouncedAutoSaveText();
     }, 500),
     []
   );
 
   const debouncedDeleteTranslatedData = debounce((activeLanguage: any) => {
     translatedContentDelete(activeLanguage);
+    debouncedAutoSaveText();
   });
 
   const debouncedSaveTranslatedData = debounce(
     (content: any, activeLanguage: any) => {
       translatedContentSave(content, activeLanguage);
+      debouncedAutoSaveText();
     },
     500
   );
@@ -141,8 +141,6 @@ const App: React.FC = () => {
     localStorage.setItem("ActiveLang", value);
   };
 
- 
-
   const handleEditorChange = (content: string) => {
     if (content === "") {
       debouncedDeleteOriginalData(sourceLanguages.value);
@@ -151,7 +149,6 @@ const App: React.FC = () => {
     }
     setEditorContent(content);
     localStorage.setItem("Orig", content);
-    debouncedAutoSave();
   };
 
   const handleTranslationChange = (content: string) => {
@@ -185,8 +182,6 @@ const App: React.FC = () => {
         JSON.stringify({ ...translatedContent, [activeLanguage]: content })
       );
     }
-
-    debouncedAutoSave();
   };
 
   const handleTranslationSelect = (language: any) => {

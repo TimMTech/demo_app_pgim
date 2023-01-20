@@ -98,6 +98,11 @@ const IKMedia: React.FC<IKMediaProps> = ({
                       lqip={{ quality: 80 }}
                       draggable
                       loading="lazy"
+                      transformation={[
+                        {
+                          f: "webp",
+                        },
+                      ]}
                       onMouseEnter={(event) => {
                         handleMediaSpecs(
                           event.currentTarget.width,
@@ -167,6 +172,9 @@ const IKMedia: React.FC<IKMediaProps> = ({
                             width: "100",
                             height: "100",
                           },
+                          {
+                            f: "webp",
+                          },
                         ]}
                         onMouseEnter={(event) => {
                           handleMediaSpecs(
@@ -234,6 +242,9 @@ const IKMedia: React.FC<IKMediaProps> = ({
                           width: "500",
                           height: "300",
                         },
+                        {
+                          f: "webm",
+                        },
                       ]}
                       onMouseEnter={(event) => {
                         handleMediaSpecs(
@@ -268,6 +279,9 @@ const IKMedia: React.FC<IKMediaProps> = ({
                           {
                             width: "100",
                             height: "100",
+                          },
+                          {
+                            f: "webm",
                           },
                         ]}
                         onMouseEnter={(event) => {
