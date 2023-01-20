@@ -1,13 +1,13 @@
 export const originalContentDelete = (sourceLanguages: any) => {
   fetch(
-    `https://demo-translation-app.herokuapp.com/api/article/0/${sourceLanguages.value}`,
+    `https://demo-translation-app.herokuapp.com/api/article/0/${sourceLanguages}`,
     {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        key: `00001/0/${sourceLanguages.value}`,
+        key: `00001/0/${sourceLanguages}`,
       }),
     }
   )
@@ -20,14 +20,14 @@ export const originalContentDelete = (sourceLanguages: any) => {
 
 export const originalContentSave = (content: any, sourceLanguages: any) => {
   fetch(
-    `https://demo-translation-app.herokuapp.com/api/article/0/${sourceLanguages.value}`,
+    `https://demo-translation-app.herokuapp.com/api/article/0/${sourceLanguages}`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        key: `00001/0/${sourceLanguages.value}`,
+        key: `00001/0/${sourceLanguages}`,
         value: content,
       }),
     }
