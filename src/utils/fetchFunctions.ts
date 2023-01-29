@@ -12,7 +12,8 @@ export const originalContentDelete = (sourceLanguages: any) => {
     }
   )
     .then((response) => {
-      if (!response.ok) console.log("error");
+      if (!response.ok)
+        throw new Error("Failed to save the translated content");
       return response.json();
     })
     .catch((error) => {});
@@ -33,7 +34,8 @@ export const originalContentSave = (content: any, sourceLanguages: any) => {
     }
   )
     .then((response) => {
-      if (!response.ok) console.log("error");
+      if (!response.ok)
+        throw new Error("Failed to save the translated content");
       return response.json();
     })
 
@@ -56,32 +58,33 @@ export const translatedContentDelete = (activeLanguage: any) => {
     }
   )
     .then((response) => {
-      if (!response.ok) console.log("error");
-
+      if (!response.ok)
+        throw new Error("Failed to save the translated content");
       return response.json();
     })
     .catch((error) => {});
 };
 
 export const translatedContentSave = (content: any, activeLanguage: any) => {
-    fetch(
-        `https://demo-translation-app.herokuapp.com/api/article/1/${activeLanguage}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            key: `00001/1/${activeLanguage}`,
-            value: content,
-          }),
-        }
-      )
-        .then((response) => {
-          if (!response.ok) console.log("error");
-          return response.json();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-}
+  fetch(
+    `https://demo-translation-app.herokuapp.com/api/article/1/${activeLanguage}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        key: `00001/1/${activeLanguage}`,
+        value: content,
+      }),
+    }
+  )
+    .then((response) => {
+      if (!response.ok)
+        throw new Error("Failed to save the translated content");
+      return response.json();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};

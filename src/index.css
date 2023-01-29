@@ -23,7 +23,6 @@ iframe {
   max-width: 100% !important;
 }
 
-
 .tox-tinymce {
   height: 100% !important;
   border-radius: 0 !important;
@@ -125,8 +124,10 @@ iframe {
 
 .smartphone .content {
   padding: 16px;
-  overflow-y: auto;
+  overflow-y: scroll;
 }
+
+
 
 .tablet {
   position: relative;
@@ -169,7 +170,7 @@ iframe {
 
 .tablet .content {
   padding: 16px;
-  overflow-y: auto;
+ 
 }
 
 @layer utilities {
@@ -254,6 +255,7 @@ iframe {
     text-indent: initial;
     border-spacing: 2px;
     border-color: grey;
+    
   }
 
   .colgroup-remove table > :first-child {
@@ -301,6 +303,4 @@ iframe {
     margin-inline-end: 0px;
     padding-inline-start: 40px;
   }
-
-
 }

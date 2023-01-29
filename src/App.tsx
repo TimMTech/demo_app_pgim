@@ -31,18 +31,7 @@ const App: React.FC = () => {
 
   //
 
-  //Auto Saving Text Notice Into DB
-
   const [autoSaveText, setAutoSavetext] = useState<boolean>(false);
-
-  const debouncedAutoSaveText = () => {
-    setAutoSavetext(true);
-    setTimeout(() => {
-      setAutoSavetext(false);
-    }, 1500);
-  };
-
-  //
 
   const [step, setStep] = useState<number>(1);
 
@@ -79,6 +68,13 @@ const App: React.FC = () => {
   const [imageFilePath, setImageFilePath] = useState<object[]>([]);
   const [videoFilePath, setVideoFilePath] = useState<object[]>([]);
   const [mediaTypeDisplay, setMediaTypeDisplay] = useState<boolean>(true);
+
+  const debouncedAutoSaveText = () => {
+    setAutoSavetext(true);
+    setTimeout(() => {
+      setAutoSavetext(false);
+    }, 1500);
+  };
 
   const debouncedDeleteOriginalData = useCallback(
     debounce((sourceLanguages: any) => {
